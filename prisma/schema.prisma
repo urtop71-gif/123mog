@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  password      String
+  name          String?
+  age           Int?
+  gender        String?  // male, female
+  height        Float?   // cm
+  weight        Float?   // kg
+  goalWeight    Float?   // kg
+  activityLevel String?  // sedentary, light, moderate, active, very_active
+  bmr           Float?
+  tdee          Float?
+  dailyTarget   Float?   // target daily calories
+  proteinTarget Float?   // g
+  fatTarget     Float?   // g
+  carbsTarget   Float?   // g
+  healthConditions String? // comma-separated: diabetes, high_cholesterol, hypertension
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  meals         Meal[]
+}
+
+model Food {
+  id              String        @id @default(cuid())
+  name            String
+  nameEn          String?
+  category        String        // korean, japanese, western, seasian, singapore
+  subcategory     String?       // soup, rice, meat, side, noodle, etc.
+  caloriesPer100g Float
+  proteinPer100g  Float
+  fatPer100g      Float
+  carbsPer100g    Float
+  healthTags      String?       // comma-separated: ldl_good,ldl_bad,sugar_good,sugar_bad,etc.
+  servings        FoodServing[]
+  mealItems       MealItem[]
+}
+
+model FoodServing {
+  id           String @id @default(cuid())
+  foodId       String
+  food         Food   @relation(fields: [foodId], references: [id])
+  unitName     String // 공기, 그릇, 접시, 개, 조각, 인분, 소, 중, 대, g, ml, ...
+  gramsPerUnit Float  // how many grams this serving unit equals
+}
+
+model Meal {
+  id        String     @id @default(cuid())
+  userId    String
+  user      User       @relation(fields: [userId], references: [id])
+  date      DateTime   @default(now())
+  mealType  String     // breakfast, lunch, dinner, snack
+  items     MealItem[]
+  createdAt DateTime   @default(now())
+}
+
+model MealItem {
+  id              String  @id @default(cuid())
+  mealId          String
+  meal            Meal    @relation(fields: [mealId], references: [id], onDelete: Cascade)
+  foodId          String
+  food            Food    @relation(fields: [foodId], references: [id])
+  quantity        Float   // e.g. 1.5
+  unitName        String  // e.g. 공기, g
+  gramsPerUnit    Float   // snapshot of the serving unit used
+  totalGrams      Float   // quantity * gramsPerUnit
+  totalCalories   Float
+  totalProtein    Float
+  totalFat        Float
+  totalCarbs      Float
+}
