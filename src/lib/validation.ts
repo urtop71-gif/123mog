@@ -38,8 +38,6 @@ const healthConditionsSchema = z
     { message: "Invalid health condition" }
   );
 
-export const FOOD_CATEGORIES = ["korean", "japanese", "western", "seasian", "singapore", "custom"] as const;
-
 export const foodServingCreateSchema = z.object({
   unitName: z.string().trim().min(1).max(30),
   gramsPerUnit: z.number().positive().finite().max(5000),
@@ -48,7 +46,7 @@ export const foodServingCreateSchema = z.object({
 export const foodCreateSchema = z.object({
   name: z.string().trim().min(1).max(100),
   nameEn: z.string().trim().max(100).optional().nullable(),
-  category: z.enum(FOOD_CATEGORIES),
+  category: z.string().trim().min(1).max(50).default("general"),
   subcategory: z.string().trim().max(50).optional().nullable(),
   caloriesPer100g: z.number().min(0).max(2000),
   proteinPer100g: z.number().min(0).max(200),

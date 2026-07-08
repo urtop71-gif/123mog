@@ -3,24 +3,13 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { foodCreateSchema } from "@/lib/validation";
 
-// GET /api/foods?q=searchterm&category=korean
+// GET /api/foods?q=searchterm
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q");
-  const category = searchParams.get("category");
-
-  const where: Record<string, unknown> = {};
-
-  if (q) {
-    where.name = { contains: q };
-  }
-
-  if (category) {
-    where.category = category;
-  }
 
   const foods = await prisma.food.findMany({
-    where,
+    where: q ? { name: { contains: q } } : undefined,
     include: {
       servings: true,
     },

@@ -88,7 +88,6 @@ describe("foodCreateSchema", () => {
   it("accepts a valid custom food", () => {
     const result = foodCreateSchema.safeParse({
       name: "닭가슴살 샐러드",
-      category: "korean",
       caloriesPer100g: 120,
       proteinPer100g: 18,
       fatPer100g: 3,
@@ -96,12 +95,14 @@ describe("foodCreateSchema", () => {
       servings: [{ unitName: "접시", gramsPerUnit: 250 }],
     });
     expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.category).toBe("general");
+    }
   });
 
-  it("rejects an unknown category", () => {
+  it("rejects a blank name", () => {
     const result = foodCreateSchema.safeParse({
-      name: "test",
-      category: "mars",
+      name: "",
       caloriesPer100g: 100,
       proteinPer100g: 1,
       fatPer100g: 1,
@@ -114,7 +115,6 @@ describe("foodCreateSchema", () => {
   it("rejects an empty servings array", () => {
     const result = foodCreateSchema.safeParse({
       name: "test",
-      category: "korean",
       caloriesPer100g: 100,
       proteinPer100g: 1,
       fatPer100g: 1,

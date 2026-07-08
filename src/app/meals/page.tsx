@@ -38,20 +38,11 @@ const MEAL_TYPES = [
   { value: "snack", label: "snack" },
 ];
 
-const CATEGORIES = [
-  { value: "", label: "all" },
-  { value: "korean", label: "korean" },
-  { value: "japanese", label: "japanese" },
-  { value: "western", label: "western" },
-  { value: "seasian", label: "seasian" },
-];
-
 export default function MealsPage() {
   const { t, lang } = useT();
   const router = useRouter();
   const [mealType, setMealType] = useState("lunch");
   const [searchQuery, setSearchQuery] = useState("");
-  const [category, setCategory] = useState("");
   const [foods, setFoods] = useState<FoodItem[]>([]);
   const [searching, setSearching] = useState(false);
   const [selectedFood, setSelectedFood] = useState<FoodItem | null>(null);
@@ -65,17 +56,15 @@ export default function MealsPage() {
 
   useEffect(() => {
     const timer = setTimeout(async () => {
-      if (!searchQuery && !category) { setFoods([]); return; }
+      if (!searchQuery) { setFoods([]); return; }
       setSearching(true);
-      const params = new URLSearchParams();
-      if (searchQuery) params.set("q", searchQuery);
-      if (category) params.set("category", category);
+      const params = new URLSearchParams({ q: searchQuery });
       const res = await fetch(`/api/foods?${params}`);
       if (res.ok) setFoods(await res.json());
       setSearching(false);
     }, 300);
     return () => clearTimeout(timer);
-  }, [searchQuery, category]);
+  }, [searchQuery]);
 
   const addToCart = () => {
     if (!selectedFood || !unitName || quantity <= 0) return;
@@ -122,10 +111,6 @@ export default function MealsPage() {
     const map: Record<string, string> = { breakfast: t.meals.breakfast, lunch: t.meals.lunch, dinner: t.meals.dinner, snack: t.meals.snack };
     return map[mt] || mt;
   };
-  const catLabel = (c: string) => {
-    const map: Record<string, string> = { all: t.meals.all, korean: t.meals.korean, japanese: t.meals.japanese, western: t.meals.western, seasian: t.meals.seasian };
-    return map[c] || c;
-  };
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -155,10 +140,6 @@ export default function MealsPage() {
           <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={t.meals.searchPlaceholder}
             className="flex-1 px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none" />
-          <select value={category} onChange={(e) => setCategory(e.target.value)}
-            className="px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none bg-white dark:bg-gray-800">
-            {CATEGORIES.map((c) => (<option key={c.value} value={c.value}>{catLabel(c.value)}</option>))}
-          </select>
         </div>
 
         {searching && !selectedFood && (
@@ -179,7 +160,7 @@ export default function MealsPage() {
           </ul>
         )}
 
-        {!searching && foods.length === 0 && (searchQuery || category) && !selectedFood && (
+        {!searching && foods.length === 0 && searchQuery && !selectedFood && (
           <div className="py-3 text-center">
             <p className="text-sm text-gray-400 dark:text-gray-500 mb-2">{t.meals.noResults}</p>
             <button onClick={() => setShowCustomFoodForm(true)} className="text-xs text-emerald-600 hover:underline font-medium">
@@ -347,7 +328,6 @@ function CustomFoodForm({
 }) {
   const { t } = useT();
   const [name, setName] = useState(initialName);
-  const [category, setCategory] = useState("korean");
   const [calories, setCalories] = useState("");
   const [protein, setProtein] = useState("");
   const [fat, setFat] = useState("");
@@ -357,8 +337,6 @@ function CustomFoodForm({
   const [servingGrams, setServingGrams] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
-
-  const foodCategories = CATEGORIES.filter((c) => c.value);
 
   const submit = async () => {
     setSubmitting(true);
@@ -372,7 +350,7 @@ function CustomFoodForm({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name,
-        category,
+        category: "general",
         caloriesPer100g: parseFloat(calories) || 0,
         proteinPer100g: parseFloat(protein) || 0,
         fatPer100g: parseFloat(fat) || 0,
@@ -396,10 +374,6 @@ function CustomFoodForm({
       <input type="text" value={name} onChange={(e) => setName(e.target.value)}
         placeholder={t.meals.customFoodName}
         className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none" />
-      <select value={category} onChange={(e) => setCategory(e.target.value)}
-        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none bg-white dark:bg-gray-800">
-        {foodCategories.map((c) => (<option key={c.value} value={c.value}>{c.label}</option>))}
-      </select>
       <div className="grid grid-cols-2 gap-2">
         <input type="number" value={calories} onChange={(e) => setCalories(e.target.value)}
           placeholder={t.meals.customFoodCalories}
