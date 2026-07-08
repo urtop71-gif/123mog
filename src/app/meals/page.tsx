@@ -97,13 +97,13 @@ export default function MealsPage() {
     if (!tags) return null;
     const tagList = tags.split(',');
     const badges: { emoji: string; label: string; color: string }[] = [];
-    if (tagList.includes('ldl_good')) badges.push({ emoji: '💚', label: 'LDL', color: 'bg-green-100 dark:bg-green-900 text-green-700' });
-    else if (tagList.includes('ldl_bad')) badges.push({ emoji: '❤️', label: 'LDL', color: 'bg-red-100 dark:bg-red-900 text-red-700' });
-    else if (tagList.includes('ldl_neutral')) badges.push({ emoji: '💛', label: 'LDL', color: 'bg-yellow-100 dark:bg-yellow-900 text-yellow-700' });
+    if (tagList.includes('ldl_good')) badges.push({ emoji: '🫀', label: 'LDL', color: 'bg-green-100 dark:bg-green-900 text-green-700' });
+    else if (tagList.includes('ldl_bad')) badges.push({ emoji: '🫀', label: 'LDL', color: 'bg-red-100 dark:bg-red-900 text-red-700' });
+    else if (tagList.includes('ldl_neutral')) badges.push({ emoji: '🫀', label: 'LDL', color: 'bg-yellow-100 dark:bg-yellow-900 text-yellow-700' });
     const sugarLabel = lang === 'ko' ? '혈당' : 'Sugar';
-    if (tagList.includes('sugar_good')) badges.push({ emoji: '💚', label: sugarLabel, color: 'bg-green-100 dark:bg-green-900 text-green-700' });
-    else if (tagList.includes('sugar_bad')) badges.push({ emoji: '❤️', label: sugarLabel, color: 'bg-red-100 dark:bg-red-900 text-red-700' });
-    else if (tagList.includes('sugar_neutral')) badges.push({ emoji: '💛', label: sugarLabel, color: 'bg-yellow-100 dark:bg-yellow-900 text-yellow-700' });
+    if (tagList.includes('sugar_good')) badges.push({ emoji: '🩸', label: sugarLabel, color: 'bg-green-100 dark:bg-green-900 text-green-700' });
+    else if (tagList.includes('sugar_bad')) badges.push({ emoji: '🩸', label: sugarLabel, color: 'bg-red-100 dark:bg-red-900 text-red-700' });
+    else if (tagList.includes('sugar_neutral')) badges.push({ emoji: '🩸', label: sugarLabel, color: 'bg-yellow-100 dark:bg-yellow-900 text-yellow-700' });
     const bpLabel = lang === 'ko' ? '혈압' : 'BP';
     if (tagList.includes('sodium_good')) badges.push({ emoji: '💚', label: bpLabel, color: 'bg-green-100 dark:bg-green-900 text-green-700' });
     else if (tagList.includes('sodium_bad')) badges.push({ emoji: '❤️', label: bpLabel, color: 'bg-red-100 dark:bg-red-900 text-red-700' });
@@ -297,12 +297,12 @@ function MealHistory({ onEdit }: { onEdit: (meal: MealHistoryEntry) => void }) {
                   {meal.items?.map((item) => (
                     <span key={item.id} className="mr-2 inline-flex items-center">
                       {item.foodName} {item.quantity}{item.unitName}
-                      {item.healthTags?.includes('ldl_good') && <span className="ml-0.5 text-[9px] bg-green-100 dark:bg-green-900 text-green-700 px-1 rounded">💚LDL</span>}
-                      {item.healthTags?.includes('ldl_bad') && <span className="ml-0.5 text-[9px] bg-red-100 dark:bg-red-900 text-red-700 px-1 rounded">❤️LDL</span>}
-                      {item.healthTags?.includes('ldl_neutral') && <span className="ml-0.5 text-[9px] bg-yellow-100 dark:bg-yellow-900 text-yellow-700 px-1 rounded">💛LDL</span>}
-                      {item.healthTags?.includes('sugar_good') && <span className="ml-0.5 text-[9px] bg-green-100 dark:bg-green-900 text-green-700 px-1 rounded">💚{lang === 'ko' ? '혈당' : 'Sugar'}</span>}
-                      {item.healthTags?.includes('sugar_bad') && <span className="ml-0.5 text-[9px] bg-red-100 dark:bg-red-900 text-red-700 px-1 rounded">❤️{lang === 'ko' ? '혈당' : 'Sugar'}</span>}
-                      {item.healthTags?.includes('sugar_neutral') && <span className="ml-0.5 text-[9px] bg-yellow-100 dark:bg-yellow-900 text-yellow-700 px-1 rounded">💛{lang === 'ko' ? '혈당' : 'Sugar'}</span>}
+                      {item.healthTags?.includes('ldl_good') && <span className="ml-0.5 text-[9px] bg-green-100 dark:bg-green-900 text-green-700 px-1 rounded">🫀LDL</span>}
+                      {item.healthTags?.includes('ldl_bad') && <span className="ml-0.5 text-[9px] bg-red-100 dark:bg-red-900 text-red-700 px-1 rounded">🫀LDL</span>}
+                      {item.healthTags?.includes('ldl_neutral') && <span className="ml-0.5 text-[9px] bg-yellow-100 dark:bg-yellow-900 text-yellow-700 px-1 rounded">🫀LDL</span>}
+                      {item.healthTags?.includes('sugar_good') && <span className="ml-0.5 text-[9px] bg-green-100 dark:bg-green-900 text-green-700 px-1 rounded">🩸{lang === 'ko' ? '혈당' : 'Sugar'}</span>}
+                      {item.healthTags?.includes('sugar_bad') && <span className="ml-0.5 text-[9px] bg-red-100 dark:bg-red-900 text-red-700 px-1 rounded">🩸{lang === 'ko' ? '혈당' : 'Sugar'}</span>}
+                      {item.healthTags?.includes('sugar_neutral') && <span className="ml-0.5 text-[9px] bg-yellow-100 dark:bg-yellow-900 text-yellow-700 px-1 rounded">🩸{lang === 'ko' ? '혈당' : 'Sugar'}</span>}
                       {item.healthTags?.includes('sodium_good') && <span className="ml-0.5 text-[9px] bg-green-100 dark:bg-green-900 text-green-700 px-1 rounded">💚{lang === 'ko' ? '혈압' : 'BP'}</span>}
                       {item.healthTags?.includes('sodium_bad') && <span className="ml-0.5 text-[9px] bg-red-100 dark:bg-red-900 text-red-700 px-1 rounded">❤️{lang === 'ko' ? '혈압' : 'BP'}</span>}
                       {item.healthTags?.includes('sodium_neutral') && <span className="ml-0.5 text-[9px] bg-yellow-100 dark:bg-yellow-900 text-yellow-700 px-1 rounded">💛{lang === 'ko' ? '혈압' : 'BP'}</span>}
