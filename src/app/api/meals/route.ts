@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const { searchParams } = new URL(request.url);
   const dateStr = searchParams.get("date");
 
@@ -14,6 +20,7 @@ export async function GET(request: NextRequest) {
 
   const meals = await prisma.meal.findMany({
     where: {
+      userId: session.user.id,
       date: { gte: startDate, lte: endDate },
     },
     include: {
@@ -48,21 +55,17 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await request.json();
     const { mealType, date, items } = body;
 
     if (!mealType || !items || !Array.isArray(items) || items.length === 0) {
       return NextResponse.json(
         { error: "mealType and items array are required" },
-        { status: 400 }
-      );
-    }
-
-    // Get first user (single-user app for now)
-    const user = await prisma.user.findFirst();
-    if (!user) {
-      return NextResponse.json(
-        { error: "No user found. Please register first." },
         { status: 400 }
       );
     }
@@ -106,7 +109,7 @@ export async function POST(request: NextRequest) {
 
     const meal = await prisma.meal.create({
       data: {
-        userId: user.id,
+        userId: session.user.id,
         mealType,
         date: mealDate,
         items: {

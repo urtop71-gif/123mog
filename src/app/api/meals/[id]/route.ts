@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 // PUT /api/meals/[id] - update a meal (add/remove items)
 export async function PUT(
@@ -7,6 +8,11 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const { id } = await params;
     const body = await request.json();
     const { mealType, date, items } = body;
@@ -14,6 +20,9 @@ export async function PUT(
     const existing = await prisma.meal.findUnique({ where: { id } });
     if (!existing) {
       return NextResponse.json({ error: "Meal not found" }, { status: 404 });
+    }
+    if (existing.userId !== session.user.id) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     // Update meal type/date if provided
@@ -88,10 +97,18 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const { id } = await params;
     const existing = await prisma.meal.findUnique({ where: { id } });
     if (!existing) {
       return NextResponse.json({ error: "Meal not found" }, { status: 404 });
+    }
+    if (existing.userId !== session.user.id) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     await prisma.meal.delete({ where: { id } });

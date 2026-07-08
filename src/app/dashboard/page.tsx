@@ -1,4 +1,6 @@
+import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 import DateNav from "@/components/dashboard/DateNav";
 import SummaryCards from "@/components/dashboard/SummaryCards";
 import MealList from "@/components/dashboard/MealList";
@@ -10,12 +12,18 @@ interface DashboardPageProps {
 }
 
 export default async function DashboardPage({ searchParams }: DashboardPageProps) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    redirect("/login");
+  }
+
   const { date } = await searchParams;
   const today = format(new Date(), "yyyy-MM-dd");
   const dateStr = date || today;
 
-  // Fetch user profile (first user for now)
-  const user = await prisma.user.findFirst({
+  // Fetch signed-in user's profile
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
     select: {
       id: true,
       dailyTarget: true,
@@ -31,6 +39,7 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
 
   const meals = await prisma.meal.findMany({
     where: {
+      userId: session.user.id,
       date: {
         gte: startDate,
         lte: endDate,

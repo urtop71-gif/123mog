@@ -1,11 +1,44 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
+
+const PROFILE_SELECT = {
+  id: true, name: true, email: true,
+  age: true, gender: true, height: true, weight: true,
+  goalWeight: true, activityLevel: true, healthConditions: true,
+  bmr: true, tdee: true, dailyTarget: true,
+  proteinTarget: true, fatTarget: true, carbsTarget: true,
+} as const;
+
+// GET /api/user/profile - fetch current user's profile
+export async function GET() {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: PROFILE_SELECT,
+  });
+
+  if (!user) {
+    return NextResponse.json({ error: "No user found" }, { status: 404 });
+  }
+
+  return NextResponse.json(user);
+}
 
 // PUT /api/user/profile - update body metrics and recalculate targets
 export async function PUT(request: NextRequest) {
   try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await request.json();
-    const user = await prisma.user.findFirst();
+    const user = await prisma.user.findUnique({ where: { id: session.user.id } });
     if (!user) {
       return NextResponse.json({ error: "No user found" }, { status: 404 });
     }
@@ -103,13 +136,7 @@ export async function PUT(request: NextRequest) {
         carbsTarget,
         healthConditions: healthConditions ?? user.healthConditions,
       },
-      select: {
-        id: true, name: true, email: true,
-        age: true, gender: true, height: true, weight: true,
-        goalWeight: true, activityLevel: true, healthConditions: true,
-        bmr: true, tdee: true, dailyTarget: true,
-        proteinTarget: true, fatTarget: true, carbsTarget: true,
-      },
+      select: PROFILE_SELECT,
     });
 
     return NextResponse.json(updated);
