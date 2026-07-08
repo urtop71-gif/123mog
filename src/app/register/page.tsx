@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useT } from "@/lib/LangContext";
 
 export default function RegisterPage() {
+  const { t } = useT();
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,7 +26,7 @@ export default function RegisterPage() {
 
     if (!res.ok) {
       const data = await res.json();
-      setError(data.error || "회원가입에 실패했습니다");
+      setError(data.error || t.register.error);
       setLoading(false);
       return;
     }
@@ -37,8 +39,8 @@ export default function RegisterPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <span className="text-5xl">🥗</span>
-          <h1 className="text-2xl font-bold text-gray-900 mt-4">회원가입</h1>
-          <p className="text-gray-500 mt-2">123MOG와 함께 건강한 식단을 시작하세요</p>
+          <h1 className="text-2xl font-bold text-gray-900 mt-4">{t.register.title}</h1>
+          <p className="text-gray-500 mt-2">{t.register.desc}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 space-y-5">
@@ -49,7 +51,7 @@ export default function RegisterPage() {
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">이름</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.register.name}</label>
             <input
               type="text"
               value={name}
@@ -60,7 +62,7 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">이메일</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.register.email}</label>
             <input
               type="email"
               value={email}
@@ -72,7 +74,7 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">비밀번호 (6자 이상)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">{t.register.password}</label>
             <input
               type="password"
               value={password}
@@ -89,13 +91,13 @@ export default function RegisterPage() {
             disabled={loading}
             className="w-full py-2.5 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors disabled:opacity-50"
           >
-            {loading ? "가입 중..." : "회원가입"}
+            {loading ? t.register.loading : t.register.submit}
           </button>
 
           <p className="text-center text-sm text-gray-500">
-            이미 계정이 있으신가요?{" "}
+            {t.register.hasAccount}{" "}
             <a href="/login" className="text-emerald-600 hover:underline font-medium">
-              로그인
+              {t.register.login}
             </a>
           </p>
         </form>

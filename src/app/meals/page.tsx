@@ -13,6 +13,23 @@ interface FoodItem {
 
 interface MealItemInput { foodId: string; quantity: number; unitName: string; }
 
+interface MealHistoryItem {
+  id: string;
+  foodId: string;
+  foodName: string;
+  healthTags?: string | null;
+  quantity: number;
+  unitName: string;
+  totalCalories: number;
+}
+
+interface MealHistoryEntry {
+  id: string;
+  mealType: string;
+  totalCalories: number;
+  items: MealHistoryItem[];
+}
+
 const MEAL_TYPES = [
   { value: "breakfast", label: "breakfast" },
   { value: "lunch", label: "lunch" },
@@ -199,18 +216,18 @@ export default function MealsPage() {
         </div>
       )}
 
-      <MealHistory onEdit={(meal: any) => {
+      <MealHistory onEdit={(meal: MealHistoryEntry) => {
         setMealType(meal.mealType);
-        setCart(meal.items.map((item: any) => ({ foodId: item.foodId, quantity: item.quantity, unitName: item.unitName })));
+        setCart(meal.items.map((item) => ({ foodId: item.foodId, quantity: item.quantity, unitName: item.unitName })));
         setEditMealId(meal.id);
       }} />
     </div>
   );
 }
 
-function MealHistory({ onEdit }: { onEdit: (meal: any) => void }) {
+function MealHistory({ onEdit }: { onEdit: (meal: MealHistoryEntry) => void }) {
   const { t, lang } = useT();
-  const [meals, setMeals] = useState<any[]>([]);
+  const [meals, setMeals] = useState<MealHistoryEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -243,7 +260,7 @@ function MealHistory({ onEdit }: { onEdit: (meal: any) => void }) {
         <p className="text-sm text-gray-400">{t.meals.empty}</p>
       ) : (
         <div className="space-y-3">
-          {meals.map((meal: any) => (
+          {meals.map((meal) => (
             <div key={meal.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
               <div className="flex-1">
                 <div className="flex items-center gap-2">
@@ -251,7 +268,7 @@ function MealHistory({ onEdit }: { onEdit: (meal: any) => void }) {
                   <span className="text-emerald-600 font-medium">{Math.round(meal.totalCalories)} kcal</span>
                 </div>
                 <div className="text-xs text-gray-400 mt-0.5">
-                  {meal.items?.map((item: any) => (
+                  {meal.items?.map((item) => (
                     <span key={item.id} className="mr-2">
                       {item.foodName} {item.quantity}{item.unitName}
                       {item.healthTags?.includes('ldl_good') && <span className="ml-0.5 text-[9px] bg-green-100 text-green-700 px-1 rounded">💚LDL</span>}

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { computeMealItems } from "@/lib/mealItems";
 
 // PUT /api/meals/[id] - update a meal (add/remove items)
 export async function PUT(
@@ -42,33 +43,7 @@ export async function PUT(
       await prisma.mealItem.deleteMany({ where: { mealId: id } });
 
       // Create new items
-      const mealItems = await Promise.all(
-        items.map(async (item: { foodId: string; quantity: number; unitName: string }) => {
-          const food = await prisma.food.findUnique({
-            where: { id: item.foodId },
-            include: { servings: true },
-          });
-          if (!food) throw new Error(`Food not found: ${item.foodId}`);
-
-          const serving = food.servings.find((s) => s.unitName === item.unitName);
-          if (!serving) throw new Error(`Unit "${item.unitName}" not found for "${food.name}"`);
-
-          const totalGrams = item.quantity * serving.gramsPerUnit;
-          const factor = totalGrams / 100;
-
-          return {
-            foodId: food.id,
-            quantity: item.quantity,
-            unitName: item.unitName,
-            gramsPerUnit: serving.gramsPerUnit,
-            totalGrams,
-            totalCalories: Math.round(food.caloriesPer100g * factor * 10) / 10,
-            totalProtein: Math.round(food.proteinPer100g * factor * 10) / 10,
-            totalFat: Math.round(food.fatPer100g * factor * 10) / 10,
-            totalCarbs: Math.round(food.carbsPer100g * factor * 10) / 10,
-          };
-        })
-      );
+      const mealItems = await computeMealItems(items);
 
       await prisma.mealItem.createMany({ data: mealItems.map(item => ({ ...item, mealId: id })) });
     }

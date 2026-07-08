@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { computeMealItems } from "@/lib/mealItems";
 
 export async function GET(request: NextRequest) {
   const session = await auth();
@@ -71,39 +72,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Look up all foods and calculate nutrition
-    const mealItems = await Promise.all(
-      items.map(async (item: { foodId: string; quantity: number; unitName: string }) => {
-        const food = await prisma.food.findUnique({
-          where: { id: item.foodId },
-          include: { servings: true },
-        });
-
-        if (!food) {
-          throw new Error(`Food not found: ${item.foodId}`);
-        }
-
-        const serving = food.servings.find((s) => s.unitName === item.unitName);
-        if (!serving) {
-          throw new Error(`Unit "${item.unitName}" not found for food "${food.name}"`);
-        }
-
-        const gramsPerUnit = serving.gramsPerUnit;
-        const totalGrams = item.quantity * gramsPerUnit;
-        const factor = totalGrams / 100;
-
-        return {
-          foodId: food.id,
-          quantity: item.quantity,
-          unitName: item.unitName,
-          gramsPerUnit,
-          totalGrams,
-          totalCalories: Math.round(food.caloriesPer100g * factor * 10) / 10,
-          totalProtein: Math.round(food.proteinPer100g * factor * 10) / 10,
-          totalFat: Math.round(food.fatPer100g * factor * 10) / 10,
-          totalCarbs: Math.round(food.carbsPer100g * factor * 10) / 10,
-        };
-      })
-    );
+    const mealItems = await computeMealItems(items);
 
     const mealDate = date ? new Date(date + "T12:00:00") : new Date();
 
