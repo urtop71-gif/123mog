@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { computeMealItems } from "@/lib/mealItems";
+import { mealUpdateSchema } from "@/lib/validation";
 
 // PUT /api/meals/[id] - update a meal (add/remove items)
 export async function PUT(
@@ -16,7 +17,14 @@ export async function PUT(
 
     const { id } = await params;
     const body = await request.json();
-    const { mealType, date, items } = body;
+    const parsed = mealUpdateSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: parsed.error.issues[0]?.message || "Invalid input" },
+        { status: 400 }
+      );
+    }
+    const { mealType, date, items } = parsed.data;
 
     const existing = await prisma.meal.findUnique({ where: { id } });
     if (!existing) {

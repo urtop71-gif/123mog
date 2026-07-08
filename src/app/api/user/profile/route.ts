@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { profileUpdateSchema } from "@/lib/validation";
 
 const PROFILE_SELECT = {
   id: true, name: true, email: true,
@@ -38,12 +39,20 @@ export async function PUT(request: NextRequest) {
     }
 
     const body = await request.json();
+    const parsed = profileUpdateSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: parsed.error.issues[0]?.message || "Invalid input" },
+        { status: 400 }
+      );
+    }
+
     const user = await prisma.user.findUnique({ where: { id: session.user.id } });
     if (!user) {
       return NextResponse.json({ error: "No user found" }, { status: 404 });
     }
 
-    const { age, gender, height, weight, goalWeight, activityLevel, healthConditions } = body;
+    const { age, gender, height, weight, goalWeight, activityLevel, healthConditions } = parsed.data;
 
     // Calculate BMR using Mifflin-St Jeor equation
     let bmr = user.bmr;

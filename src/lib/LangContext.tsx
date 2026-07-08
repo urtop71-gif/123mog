@@ -14,6 +14,7 @@ export function LangProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem('lang') as Lang;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reading localStorage must happen post-mount to avoid an SSR/client hydration mismatch
     if (saved === 'ko' || saved === 'en') setLangState(saved);
   }, []);
 

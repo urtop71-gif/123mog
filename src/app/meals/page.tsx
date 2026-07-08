@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useT } from "@/lib/LangContext";
 
@@ -61,8 +61,8 @@ export default function MealsPage() {
   const [editMealId, setEditMealId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!searchQuery && !category) { setFoods([]); return; }
     const timer = setTimeout(async () => {
+      if (!searchQuery && !category) { setFoods([]); return; }
       const params = new URLSearchParams();
       if (searchQuery) params.set("q", searchQuery);
       if (category) params.set("category", category);
@@ -232,12 +232,13 @@ function MealHistory({ onEdit }: { onEdit: (meal: MealHistoryEntry) => void }) {
   const router = useRouter();
 
   const today = new Date().toISOString().split('T')[0];
-  const fetchMeals = async () => {
+  const fetchMeals = useCallback(async () => {
     const res = await fetch(`/api/meals?date=${today}`);
     if (res.ok) setMeals(await res.json());
     setLoading(false);
-  };
-  useEffect(() => { fetchMeals(); }, []);
+  }, [today]);
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- standard fetch-on-mount; setState only runs after the awaited fetch resolves, not synchronously
+  useEffect(() => { fetchMeals(); }, [fetchMeals]);
 
   const deleteMeal = async (id: string) => {
     if (!confirm(t.meals.confirmDelete)) return;

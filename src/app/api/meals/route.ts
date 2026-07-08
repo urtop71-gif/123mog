@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { computeMealItems } from "@/lib/mealItems";
+import { mealCreateSchema } from "@/lib/validation";
 
 export async function GET(request: NextRequest) {
   const session = await auth();
@@ -62,14 +63,14 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { mealType, date, items } = body;
-
-    if (!mealType || !items || !Array.isArray(items) || items.length === 0) {
+    const parsed = mealCreateSchema.safeParse(body);
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: "mealType and items array are required" },
+        { error: parsed.error.issues[0]?.message || "Invalid input" },
         { status: 400 }
       );
     }
+    const { mealType, date, items } = parsed.data;
 
     // Look up all foods and calculate nutrition
     const mealItems = await computeMealItems(items);

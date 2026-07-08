@@ -9,7 +9,7 @@ interface MealItem {
 
 interface MealGroup {
   mealType: string;
-  items: { id: string; foodName: string; healthTags?: string | null; quantity: number; unitName: string; totalCalories: number }[];
+  items: MealItem[];
   totalCalories: number;
 }
 

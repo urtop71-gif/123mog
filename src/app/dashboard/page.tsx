@@ -57,36 +57,24 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
     orderBy: { createdAt: "asc" },
   });
 
-  // Aggregate totals
-  let totalCalories = 0;
-  let totalProtein = 0;
-  let totalFat = 0;
-  let totalCarbs = 0;
+  const mealGroups = meals.map((meal) => ({
+    mealType: meal.mealType,
+    totalCalories: meal.items.reduce((sum, item) => sum + item.totalCalories, 0),
+    items: meal.items.map((item) => ({
+      id: item.id,
+      foodName: item.food.name,
+      healthTags: item.food.healthTags,
+      quantity: item.quantity,
+      unitName: item.unitName,
+      totalCalories: item.totalCalories,
+    })),
+  }));
 
-  const mealGroups = meals.map((meal) => {
-    const mealCalories = meal.items.reduce((sum, item) => sum + item.totalCalories, 0);
-    const mealProtein = meal.items.reduce((sum, item) => sum + item.totalProtein, 0);
-    const mealFat = meal.items.reduce((sum, item) => sum + item.totalFat, 0);
-    const mealCarbs = meal.items.reduce((sum, item) => sum + item.totalCarbs, 0);
-
-    totalCalories += mealCalories;
-    totalProtein += mealProtein;
-    totalFat += mealFat;
-    totalCarbs += mealCarbs;
-
-    return {
-      mealType: meal.mealType,
-      totalCalories: mealCalories,
-      items: meal.items.map((item) => ({
-        id: item.id,
-        foodName: item.food.name,
-        healthTags: item.food.healthTags,
-        quantity: item.quantity,
-        unitName: item.unitName,
-        totalCalories: item.totalCalories,
-      })),
-    };
-  });
+  // Aggregate totals across all meals for the day
+  const totalCalories = meals.flatMap((m) => m.items).reduce((sum, item) => sum + item.totalCalories, 0);
+  const totalProtein = meals.flatMap((m) => m.items).reduce((sum, item) => sum + item.totalProtein, 0);
+  const totalFat = meals.flatMap((m) => m.items).reduce((sum, item) => sum + item.totalFat, 0);
+  const totalCarbs = meals.flatMap((m) => m.items).reduce((sum, item) => sum + item.totalCarbs, 0);
 
   const targets = {
     calories: user?.dailyTarget ?? 2000,
