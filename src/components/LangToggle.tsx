@@ -33,7 +33,7 @@ export function NavBar() {
     pathname === "/login" || pathname === "/register" || pathname === "/" || pathname === "/onboarding";
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 dark:bg-gray-800/95 backdrop-blur shadow-sm border-b border-gray-200 dark:border-gray-700">
+    <nav className="sticky top-0 z-50 bg-white/95 dark:bg-gray-800/95 backdrop-blur shadow-sm border-b border-gray-200 dark:border-gray-700 pt-[env(safe-area-inset-top)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-14 md:h-16 items-center">
           <div className="flex items-center gap-2">
@@ -66,7 +66,7 @@ export function NavBar() {
             )}
             <button
               onClick={() => setLang(lang === "ko" ? "en" : "ko")}
-              className="px-2 py-1 text-xs font-medium border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              className="min-w-11 min-h-11 px-2 text-xs font-medium border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               aria-label="Toggle language"
             >
               {lang === "ko" ? "EN" : "한글"}
@@ -74,7 +74,7 @@ export function NavBar() {
             <button
               onClick={toggleTheme}
               aria-label="Toggle dark mode"
-              className="px-2 py-1 text-xs font-medium border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              className="min-w-11 min-h-11 px-2 text-xs font-medium border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
               {theme === "dark" ? "☀️" : "🌙"}
             </button>

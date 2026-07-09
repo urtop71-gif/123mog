@@ -493,7 +493,7 @@ function MealsPageInner() {
                     </span>
                     <button
                       onClick={() => removeFromCart(i)}
-                      className="text-red-400 hover:text-red-600 text-xs"
+                      className="text-red-400 hover:text-red-600 text-xs p-1.5 -m-1.5"
                     >
                       {t.meals.remove}
                     </button>
@@ -635,7 +635,7 @@ function MealHistory({
                       <button
                         onClick={() => deleteItem(meal.id, item.id)}
                         title={t.meals.deleteBtn}
-                        className="text-gray-300 dark:text-gray-600 hover:text-red-500"
+                        className="text-gray-300 dark:text-gray-600 hover:text-red-500 p-1.5 -m-1.5"
                         aria-label={t.meals.deleteBtn}
                       >
                         ✕
@@ -647,13 +647,13 @@ function MealHistory({
               <div className="flex gap-1 shrink-0">
                 <button
                   onClick={() => onEdit(meal)}
-                  className="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded hover:bg-blue-200"
+                  className="px-3 py-2 text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded hover:bg-blue-200"
                 >
                   {t.meals.editBtn}
                 </button>
                 <button
                   onClick={() => deleteMeal(meal.id)}
-                  className="px-2 py-1 text-xs bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 rounded hover:bg-red-200"
+                  className="px-3 py-2 text-xs bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 rounded hover:bg-red-200"
                 >
                   {t.meals.deleteBtn}
                 </button>

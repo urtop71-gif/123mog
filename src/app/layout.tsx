@@ -15,10 +15,19 @@ export const metadata: Metadata = {
     icon: "/icon-192.png",
     apple: "/icon-192.png",
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "123MOG",
+  },
 };
 
 export const viewport: Viewport = {
   themeColor: "#059669",
+  // Lets safe-area-inset-* env() values resolve to the notch/home-indicator
+  // insets instead of 0 - required for the bottom tab bar's own safe-area
+  // padding to do anything on an iPhone with a home indicator.
+  viewportFit: "cover",
 };
 
 const themeInitScript = `
