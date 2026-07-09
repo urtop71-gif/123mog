@@ -144,6 +144,11 @@ function MealsPageInner() {
     setCart((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const cancelEdit = () => {
+    setCart([]);
+    setEditMealId(null);
+  };
+
   const cartTotal = useMemo(
     () => cart.reduce((s, i) => s + (i.estCalories ?? 0), 0),
     [cart],
@@ -493,13 +498,24 @@ function MealsPageInner() {
               </li>
             ))}
           </ul>
-          <button
-            onClick={submitMeal}
-            disabled={submitting}
-            className="mt-4 w-full btn-primary"
-          >
-            {submitting ? t.meals.saving : editMealId ? t.meals.edit : t.meals.submit}
-          </button>
+          <div className="mt-4 flex gap-2">
+            {editMealId && (
+              <button
+                onClick={cancelEdit}
+                disabled={submitting}
+                className="btn-secondary"
+              >
+                {t.common.cancel}
+              </button>
+            )}
+            <button
+              onClick={submitMeal}
+              disabled={submitting}
+              className="flex-1 btn-primary"
+            >
+              {submitting ? t.meals.saving : editMealId ? t.meals.edit : t.meals.submit}
+            </button>
+          </div>
         </div>
       )}
 
