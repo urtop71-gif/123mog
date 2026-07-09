@@ -467,7 +467,7 @@ function MealsPageInner() {
         )}
       </div>
 
-      {cart.length > 0 && (
+      {(cart.length > 0 || editMealId) && (
         <div className="card p-5 mb-4">
           <div className="flex justify-between items-center mb-3">
             <h3 className="font-semibold text-gray-900 dark:text-gray-100">{t.meals.cart}</h3>
@@ -475,29 +475,33 @@ function MealsPageInner() {
               {t.meals.cartTotal}: ~{cartTotal} kcal
             </span>
           </div>
-          <ul className="space-y-2">
-            {cart.map((item, i) => (
-              <li
-                key={i}
-                className="flex justify-between items-center text-sm py-2 border-b border-gray-100 dark:border-gray-700 last:border-0"
-              >
-                <span className="text-gray-700 dark:text-gray-300">{item.foodName}</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-gray-400 dark:text-gray-500">
-                    {item.quantity}
-                    {item.unitName}
-                    {item.estCalories != null && ` · ${item.estCalories}kcal`}
-                  </span>
-                  <button
-                    onClick={() => removeFromCart(i)}
-                    className="text-red-400 hover:text-red-600 text-xs"
-                  >
-                    {t.meals.remove}
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+          {cart.length === 0 ? (
+            <p className="text-sm text-gray-400 dark:text-gray-500 py-2">{t.meals.empty}</p>
+          ) : (
+            <ul className="space-y-2">
+              {cart.map((item, i) => (
+                <li
+                  key={i}
+                  className="flex justify-between items-center text-sm py-2 border-b border-gray-100 dark:border-gray-700 last:border-0"
+                >
+                  <span className="text-gray-700 dark:text-gray-300">{item.foodName}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-400 dark:text-gray-500">
+                      {item.quantity}
+                      {item.unitName}
+                      {item.estCalories != null && ` · ${item.estCalories}kcal`}
+                    </span>
+                    <button
+                      onClick={() => removeFromCart(i)}
+                      className="text-red-400 hover:text-red-600 text-xs"
+                    >
+                      {t.meals.remove}
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
           <div className="mt-4 flex gap-2">
             {editMealId && (
               <button
@@ -510,7 +514,7 @@ function MealsPageInner() {
             )}
             <button
               onClick={submitMeal}
-              disabled={submitting}
+              disabled={submitting || cart.length === 0}
               className="flex-1 btn-primary"
             >
               {submitting ? t.meals.saving : editMealId ? t.meals.edit : t.meals.submit}
