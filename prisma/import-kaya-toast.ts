@@ -1,10 +1,6 @@
 // Additive import: Kaya toast variants (only generic "카야토스트" and the
 // "Kaya" jam itself existed before). Never deletes existing data.
-import { PrismaClient } from '@prisma/client'
-import { PrismaLibSql } from '@prisma/adapter-libsql'
-
-const adapter = new PrismaLibSql({ url: 'file:./dev.db' })
-const prisma = new PrismaClient({ adapter })
+import { importFoods, runImport } from './importUtils'
 
 const foods = [
   { name: "카야토스트_탄토스트", nameEn: "Charcoal Kaya Toast", category: "singapore", subcategory: "bread", caloriesPer100g: 260, proteinPer100g: 6.0, fatPer100g: 12.0, carbsPer100g: 32.0, sodiumPer100g: 380, servings: [{ unitName: "세트", gramsPerUnit: 70 }, { unitName: "g", gramsPerUnit: 1 }] },
@@ -17,29 +13,4 @@ const foods = [
   { name: "반숙계란_카야세트용", nameEn: "Soft-boiled Eggs (Kaya Set Style)", category: "singapore", subcategory: "side", caloriesPer100g: 145, proteinPer100g: 12.0, fatPer100g: 10.0, carbsPer100g: 1.0, sodiumPer100g: 350, servings: [{ unitName: "개", gramsPerUnit: 55 }, { unitName: "g", gramsPerUnit: 1 }] },
 ]
 
-async function main() {
-  const existing = await prisma.food.findMany({ select: { name: true } })
-  const existingNames = new Set(existing.map((f) => f.name))
-
-  let added = 0
-  let skipped = 0
-  for (const food of foods) {
-    if (existingNames.has(food.name)) {
-      skipped++
-      continue
-    }
-    const { servings, ...data } = food
-    await prisma.food.create({ data: { ...data, servings: { create: servings } } })
-    existingNames.add(food.name)
-    added++
-  }
-
-  console.log(`Added ${added} new kaya toast items, skipped ${skipped} already present.`)
-}
-
-main()
-  .catch((e) => {
-    console.error(e)
-    process.exit(1)
-  })
-  .finally(() => prisma.$disconnect())
+runImport(() => importFoods(foods, "kaya toast items"))

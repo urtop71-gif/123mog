@@ -87,9 +87,14 @@ function MealsPageInner() {
         return;
       }
       setSearching(true);
-      const res = await fetch(`/api/foods?q=${encodeURIComponent(searchQuery)}`);
-      if (res.ok) setFoods(await res.json());
-      setSearching(false);
+      try {
+        const res = await fetch(`/api/foods?q=${encodeURIComponent(searchQuery)}`);
+        if (res.ok) setFoods(await res.json());
+      } catch {
+        setFoods([]);
+      } finally {
+        setSearching(false);
+      }
     }, 300);
     return () => clearTimeout(timer);
   }, [searchQuery]);
