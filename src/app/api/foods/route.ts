@@ -60,6 +60,12 @@ export async function GET(request: NextRequest) {
     ? { OR: [{ userId: null }, { userId }] }
     : { userId: null };
 
+  // When searching, cast a wider net than the 20 we actually return: a common
+  // substring (e.g. "우유") can match dozens of unrelated compound names
+  // (donuts, cakes, breads with the word buried in the middle) that sort
+  // ahead of the short, directly-relevant matches alphabetically. Fetch more,
+  // then rank by relevance below before truncating to the response page size.
+  const PAGE_SIZE = 20;
   const foods = await prisma.food.findMany({
     where: q
       ? {
@@ -77,9 +83,23 @@ export async function GET(request: NextRequest) {
     include: {
       servings: true,
     },
-    take: 20,
+    take: q ? PAGE_SIZE * 4 : PAGE_SIZE,
     orderBy: { name: "asc" },
   });
+
+  if (q) {
+    const qLower = q.toLowerCase();
+    const startsWithQuery = (food: (typeof foods)[number]) =>
+      food.name.startsWith(q) || (food.nameEn?.toLowerCase().startsWith(qLower) ?? false);
+    foods.sort((a, b) => {
+      const aStarts = startsWithQuery(a);
+      const bStarts = startsWithQuery(b);
+      if (aStarts !== bStarts) return aStarts ? -1 : 1;
+      if (a.name.length !== b.name.length) return a.name.length - b.name.length;
+      return a.name.localeCompare(b.name);
+    });
+    foods.length = Math.min(foods.length, PAGE_SIZE);
+  }
 
   let favoriteIds = new Set<string>();
   if (userId) {
