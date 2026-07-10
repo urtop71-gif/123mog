@@ -59,15 +59,15 @@ export function augmentHealthTags(
   const result = [...existing];
   if (!hasSugarTag) {
     const tag = carbsTagFor(macros.carbsPer100g);
-    if (tag) result.push(tag);
+    if (tag && !tag.endsWith("_neutral")) result.push(tag);
   }
   if (!hasLdlTag) {
     const tag = fatTagFor(macros.fatPer100g);
-    if (tag) result.push(tag);
+    if (tag && !tag.endsWith("_neutral")) result.push(tag);
   }
   if (!hasSodiumTag) {
     const sodiumTag = sodiumTagFor(macros.sodiumPer100g);
-    if (sodiumTag) result.push(sodiumTag);
+    if (sodiumTag && !sodiumTag.endsWith("_neutral")) result.push(sodiumTag);
   }
 
   // de-dupe while preserving order
