@@ -1,0 +1,86 @@
+[
+  [
+    "Tuna",
+    {
+      "size": "239",
+      "cal": "507",
+      "pro": "22",
+      "fat": "29.1",
+      "car": "39",
+      "source": "subway.com.tw",
+      "na_est": "700"
+    }
+  ],
+  [
+    "Diced Beef (Beef Brisket eqv.)",
+    {
+      "size": "236",
+      "cal": "366",
+      "pro": "26",
+      "fat": "10.6",
+      "car": "40",
+      "source": "subway.com.tw",
+      "na_est": "850"
+    }
+  ],
+  [
+    "Black Pepper Pork",
+    {
+      "size": "235",
+      "cal": "343",
+      "pro": "24",
+      "fat": "9.3",
+      "car": "38",
+      "source": "subway.com.tw",
+      "na_est": "800"
+    }
+  ],
+  [
+    "Hash Brown",
+    {
+      "size": "53",
+      "cal": "115",
+      "pro": "1.4",
+      "fat": "6.7",
+      "car": "12",
+      "source": "subway.com.tw",
+      "na_est": "200"
+    }
+  ],
+  [
+    "Corn Chowder Soup",
+    {
+      "size": "236",
+      "cal": "153",
+      "pro": "3",
+      "fat": "4.7",
+      "car": "25",
+      "source": "subway.com.tw",
+      "na_est": "500"
+    }
+  ],
+  [
+    "Broccoli Cheese Soup",
+    {
+      "size": "236",
+      "cal": "187",
+      "pro": "4",
+      "fat": "13.1",
+      "car": "45",
+      "source": "subway.com.tw",
+      "na_est": "600"
+    }
+  ],
+  [
+    "Bacon (2 strips)",
+    {
+      "size": "9",
+      "cal": "48",
+      "pro": "3",
+      "fat": "3.6",
+      "car": "0",
+      "source": "subway.com.tw",
+      "na_est": "150"
+    }
+  ]
+]
