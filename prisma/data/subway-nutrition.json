@@ -339,5 +339,81 @@
       "car": "45.2",
       "na": "1054"
     }
+  ],
+  [
+    "White Chip Macadamia Nut Cookie",
+    {
+      "size": "45",
+      "cal": "214",
+      "pro": "3.6",
+      "fat": "11.3",
+      "car": "25.4",
+      "na": "152",
+      "source": "subwaymenusg.com"
+    }
+  ],
+  [
+    "Oatmeal Raisin Cookie",
+    {
+      "size": "45",
+      "cal": "190",
+      "pro": "2.5",
+      "fat": "6.9",
+      "car": "29.3",
+      "na": "176",
+      "source": "subwaymenusg.com"
+    }
+  ],
+  [
+    "Raspberry Cheesecake Cookie",
+    {
+      "size": "45",
+      "cal": "200",
+      "pro": "2",
+      "fat": "9",
+      "car": "29",
+      "na": null,
+      "source": "fatsecret.sg (no sodium)",
+      "partial": true
+    }
+  ],
+  [
+    "Peanut Butter Cookie",
+    {
+      "size": "45",
+      "cal": "220",
+      "pro": "4",
+      "fat": "12",
+      "car": "26",
+      "na": null,
+      "source": "fatsecret.sg (no sodium)",
+      "partial": true
+    }
+  ],
+  [
+    "Chicken Bacon Ranch",
+    {
+      "size": "291",
+      "cal": "540",
+      "pro": "35",
+      "fat": "28",
+      "car": "47",
+      "na": null,
+      "source": "fatsecret.sg (no sodium)",
+      "partial": true
+    }
+  ],
+  [
+    "Tuna",
+    {
+      "size": "236",
+      "cal": "507",
+      "pro": "21",
+      "fat": "30",
+      "car": "36",
+      "na": null,
+      "source": "fatsecret.sg (no sodium)",
+      "partial": true
+    }
   ]
 ]
