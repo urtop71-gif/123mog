@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-07-10T11:34:49.211Z",
+  "updatedAt": "2026-07-10T11:43:49.939Z",
   "command": "init",
-  "gitHead": "721b6b769285d0ed22185fda592a39d3ef8c4c26",
-  "model": "deepseek/deepseek-chat"
+  "gitHead": "5bb5483dc6955f7e795a081d0e14a2867dced9dd",
+  "model": "deepseek-v4-flash"
 }
