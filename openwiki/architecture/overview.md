@@ -59,14 +59,15 @@ Server component that:
 1. Verifies auth and redirects unauthenticated users
 2. Redirects to onboarding if profile incomplete
 3. Fetches user targets + meals for the selected date
-4. Renders sub-components via props (no client-side data fetching for the day view)
+4. Computes **adaptive TDEE** via `computeAdaptiveTdee()` from `src/lib/adaptiveTdee.ts` (requires 7+ days of weight logs + meal data; null otherwise)
+5. Renders sub-components via props (no client-side data fetching for the day view)
 
 Sub-components (all in `src/components/dashboard/`):
 
 | Component | Responsibility |
 |-----------|---------------|
 | `DateNav` | Date picker, copy yesterday, prev/next day |
-| `SummaryCards` | Daily totals: calories, protein, fat, carbs, sodium |
+| `SummaryCards` | Daily totals: calories, protein, fat, carbs, sodium; adaptive TDEE display |
 | `MealList` | Meal-type sections with items and health-tag badges |
 | `MacroChart` | Donut chart of macro distribution |
 | `DayExtras` | Water + weight quick-log widgets |
@@ -129,6 +130,24 @@ Zod schemas for all API inputs: register, meal CRUD, food create, profile update
 ### `src/lib/rateLimit.ts`
 In-memory sliding-window rate limiter. Single-instance only; swap for Redis in multi-instance deployment.
 
+### `src/lib/adaptiveTdee.ts`
+Replaces static BMR×activity-multiplier TDEE with a feedback-loop estimate from real weight and calorie data. Algorithm:
+- Fetches last 30 days of weight logs + daily calorie intake from meals
+- Aligns dates where both weight and intake exist (requires ≥7 overlapping days)
+- Computes EMA weight trend (14-day span)
+- Back-solves actual TDEE: `avgIntake - (Δweight × 7700 kcal/kg / Δdays)`
+- Clamps to [1200, 5000] kcal; confidence: low (<14d), medium (14-20d), high (≥21d)
+- `adjustTargets()` recomputes macro targets from adaptive TDEE + goal deficit + macro split
+- Returns `null` (falls back to static TDEE) when insufficient data
+
+### `src/lib/foodRanking.ts`
+Content-based search result ranking for `/api/foods?q=`. Scores foods on three dimensions:
+1. **Macro gap fill** (45%): how well a 150g serving fits remaining daily macro targets
+2. **Personal affinity** (35%): frequency × recency (14-day half-life) from meal history + 0.2 boost for favorites
+3. **Health compatibility** (20%): penalizes high sodium (hypertension), high carbs (diabetes), high fat (high_cholesterol)
+
+Only applied for logged-in users with a `dailyTarget` set. Results are sorted by score and limited to top 20.
+
 ## Git History Summary
 
 Key development phases (from `git log`):
@@ -139,3 +158,7 @@ Key development phases (from `git log`):
 5. **Expanded food DB** (commits `b3c39db`-`cb4c2a8`): Fruits, SE Asian, Kaya toast, McDonald's
 6. **Health tag expansion** (commits `3199c0a`, `8da71d9`): Sugar/LDL + sodium tags
 7. **Final polish** (commit `2cc545b`): Codebase review fixes, water/weight routes, onboarding, favorites API
+8. **USDA importer** (commit `559bfea`): USDA FoodData Central importer for basic ingredients
+9. **Adaptive TDEE** (commits `f692c31`-`98a5ae5`): Feedback-loop TDEE module + dashboard integration
+10. **Smart food ranking** (commit `e434461`): Content-based search ranking (Phase 3)
+11. **Subway Singapore** (commits `19aa091`-`a7055f1`): 31-item Subway Singapore nutrition data + import script

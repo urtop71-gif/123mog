@@ -56,7 +56,9 @@ Search foods or list recent/favorites.
 | `favorites` | `1` | Returns last 30 favorited foods |
 | (none) | | Returns up to 20 matching foods |
 
-**Response**: Array of `Food` objects with `servings[]` and augmented `healthTags`
+**Smart ranking**: For logged-in users with a `dailyTarget` set, search results (up to 50 fetched, top 20 returned) are ranked by `rankFoods()` from `src/lib/foodRanking.ts`. Ranking scores each food on macro gap fill (45%), personal affinity from meal history (35%), and health compatibility against user conditions (20%). Anonymous users or users without targets get unranked results.
+
+**Response**: Array of `Food` objects with `servings[]`, augmented `healthTags`, and `isFavorite`
 
 ### `POST /api/foods`
 

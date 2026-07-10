@@ -75,6 +75,7 @@ npx vitest
 | `DATABASE_URL` | Yes | `file:./dev.db` | SQLite database path |
 | `NEXTAUTH_SECRET` | Yes | — | JWT signing secret |
 | `NEXTAUTH_URL` | Yes | — | App URL (e.g., http://localhost:3000) |
+| `USDA_API_KEY` | Only for USDA import | — | USDA FoodData Central API key (https://fdc.nal.usda.gov/api-guide.html) |
 
 ## Food Data Import Pipeline
 
@@ -96,6 +97,8 @@ These scripts add new foods without affecting existing data (meals, items, or fo
 | `prisma/import-southeast-asian-foods.ts` | Singapore hawker + SE Asian | ~300+ items |
 | `prisma/import-kaya-toast.ts` | Kaya toast variants | ~10+ items |
 | `prisma/import-mcdonalds-burgers.ts` | McDonald's burger menu | ~20+ items |
+| `prisma/import-usda.ts` | USDA FoodData Central (Foundation + SR Legacy) | Basic ingredients; requires `USDA_API_KEY` |
+| `prisma/import-subway.ts` | Subway Singapore menu (`prisma/data/subway-nutrition.json`) | 31 items (sandwiches + soups) |
 | `prisma/add-mfds-servings.ts` | Adds serving units to MFDS-only foods | — |
 
 Usage:

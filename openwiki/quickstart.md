@@ -80,6 +80,8 @@ src/
     validation.ts # Zod schemas
     healthTags.ts # Computed food tags
     mealItems.ts # Nutrition calculation engine
+    adaptiveTdee.ts # Feedback-loop TDEE from weight + meal history
+    foodRanking.ts # Content-based food search ranking
     dates.ts     # Local date key helpers
     rateLimit.ts # In-memory sliding-window limiter
 prisma/
@@ -108,4 +110,6 @@ Refer to `AGENTS.md` for full agent notes. Key rules:
 - The scheduled GitHub Action (`.github/workflows/openwiki-update.yml`) refreshes this wiki daily via OpenWiki
 - Do not hand-edit generated OpenWiki pages unless explicitly asked
 - When adding new API routes, update both the route handler and this wiki
+- Tests live alongside source: `src/lib/*.test.ts`, run via `npm test`
+andler and this wiki
 - Tests live alongside source: `src/lib/*.test.ts`, run via `npm test`
