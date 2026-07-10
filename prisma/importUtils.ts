@@ -11,7 +11,10 @@
 import { PrismaClient } from '@prisma/client'
 import { PrismaLibSql } from '@prisma/adapter-libsql'
 
-const adapter = new PrismaLibSql({ url: 'file:./dev.db' })
+// Respects DATABASE_URL (e.g. a libsql://...?authToken=... Turso URL) so
+// these scripts can target a remote database, falling back to the local
+// dev.db file when unset.
+const adapter = new PrismaLibSql({ url: process.env.DATABASE_URL || 'file:./dev.db' })
 export const prisma = new PrismaClient({ adapter })
 
 export interface ServingInput {

@@ -1,7 +1,10 @@
 import { PrismaClient } from '@prisma/client'
 import { PrismaLibSql } from '@prisma/adapter-libsql'
 
-const adapter = new PrismaLibSql({ url: 'file:./dev.db' })
+// Respects DATABASE_URL (e.g. a libsql://...?authToken=... Turso URL) so
+// this script can seed a remote database, falling back to the local dev.db
+// file when unset. Destructive either way - see the deleteMany calls below.
+const adapter = new PrismaLibSql({ url: process.env.DATABASE_URL || 'file:./dev.db' })
 const prisma = new PrismaClient({ adapter })
 
 const foods = [
