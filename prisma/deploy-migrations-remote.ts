@@ -6,6 +6,8 @@
 // stays consistent with what a local `file:` deploy would show.
 //
 // Usage: DATABASE_URL="libsql://...?authToken=..." npx tsx prisma/deploy-migrations-remote.ts
+// (or just set DATABASE_URL in .env - this script loads it automatically)
+import 'dotenv/config'
 import { createClient } from '@libsql/client'
 import fs from 'fs'
 import path from 'path'

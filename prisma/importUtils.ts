@@ -8,6 +8,7 @@
 // shared global foods (Food.userId === null), so every existing-food lookup
 // below is scoped to userId: null to avoid matching or colliding with a
 // private custom food that happens to share the same name.
+import 'dotenv/config'
 import { PrismaClient } from '@prisma/client'
 import { PrismaLibSql } from '@prisma/adapter-libsql'
 
