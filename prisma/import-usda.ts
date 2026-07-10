@@ -195,10 +195,10 @@ async function main() {
             nameEn,
             category,
             subcategory,
-            caloriesPer100g: macros.caloriesPer100g,
-            proteinPer100g: macros.proteinPer100g,
-            fatPer100g: macros.fatPer100g,
-            carbsPer100g: macros.carbsPer100g,
+            caloriesPer100g: Math.round(macros.caloriesPer100g * 10) / 10,
+            proteinPer100g: Math.round(macros.proteinPer100g * 10) / 10,
+            fatPer100g: Math.round(macros.fatPer100g * 10) / 10,
+            carbsPer100g: Math.round(macros.carbsPer100g * 10) / 10,
             sodiumPer100g: macros.sodiumPer100g,
             servings: {
               create: servings.map(s => ({

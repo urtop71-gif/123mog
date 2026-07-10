@@ -133,11 +133,10 @@ export async function PUT(request: NextRequest) {
         proteinTarget = Math.round(w * 2.0 * 10) / 10;
       }
       if (dailyTarget) {
-        fatTarget = Math.round((dailyTarget * 0.25) / 9 * 10) / 10;
-        carbsTarget =
-          Math.round(
-            ((dailyTarget - (proteinTarget ?? 50) * 4 - (fatTarget ?? 50) * 9) / 4) * 10,
-          ) / 10;
+        fatTarget = Math.round((dailyTarget * 0.25) / 9);
+        carbsTarget = Math.round(
+          (dailyTarget - (proteinTarget ?? 50) * 4 - (fatTarget ?? 50) * 9) / 4
+        );
       }
 
       const conditions = (healthConditions ?? user.healthConditions ?? "").toLowerCase();
@@ -145,11 +144,10 @@ export async function PUT(request: NextRequest) {
         if (conditions.includes("diabetes") || conditions.includes("당뇨")) {
           if (w) proteinTarget = Math.round(w * 1.5 * 10) / 10;
           if (dailyTarget) {
-            fatTarget = Math.round((dailyTarget * 0.3) / 9 * 10) / 10;
-            carbsTarget =
-              Math.round(
-                ((dailyTarget - (proteinTarget ?? 60) * 4 - (fatTarget ?? 50) * 9) / 4) * 10,
-              ) / 10;
+            fatTarget = Math.round((dailyTarget * 0.3) / 9);
+            carbsTarget = Math.round(
+              (dailyTarget - (proteinTarget ?? 60) * 4 - (fatTarget ?? 50) * 9) / 4
+            );
             if (carbsTarget && carbsTarget > 200) carbsTarget = 200;
           }
         }
@@ -159,11 +157,10 @@ export async function PUT(request: NextRequest) {
           conditions.includes("콜레스테롤")
         ) {
           if (dailyTarget) {
-            fatTarget = Math.round((dailyTarget * 0.2) / 9 * 10) / 10;
-            carbsTarget =
-              Math.round(
-                ((dailyTarget - (proteinTarget ?? 60) * 4 - (fatTarget ?? 40) * 9) / 4) * 10,
-              ) / 10;
+            fatTarget = Math.round((dailyTarget * 0.2) / 9);
+            carbsTarget = Math.round(
+              (dailyTarget - (proteinTarget ?? 60) * 4 - (fatTarget ?? 40) * 9) / 4
+            );
           }
         }
         if (conditions.includes("hypertension") || conditions.includes("고혈압")) {
