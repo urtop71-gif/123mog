@@ -9,6 +9,7 @@ import DayExtras from "@/components/dashboard/DayExtras";
 import ChartsToggle from "@/components/dashboard/ChartsToggle";
 import { augmentHealthTags } from "@/lib/healthTags";
 import { isValidDateKey, localDayRange, toLocalDateKey } from "@/lib/dates";
+import { computeAdaptiveTdee } from "@/lib/adaptiveTdee";
 
 interface DashboardPageProps {
   searchParams: Promise<{ date?: string }>;
@@ -44,6 +45,11 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
   if (user && !user.onboardingDone && (!user.height || !user.weight || !user.age)) {
     redirect("/onboarding");
   }
+
+  // Adaptive TDEE — compute from weight logs + meal history
+  const adaptiveTdee = user?.dailyTarget
+    ? await computeAdaptiveTdee(session.user.id, user.dailyTarget)
+    : null;
 
   const { start: startDate, end: endDate } = localDayRange(dateStr);
 
@@ -120,6 +126,7 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
             ? { current: totalSodium, target: targets.sodium }
             : { current: 0, target: targets.sodium }
         }
+        adaptiveTdee={adaptiveTdee}
       />
 
       <DayExtras

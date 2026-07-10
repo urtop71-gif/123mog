@@ -7,12 +7,22 @@ interface Macro {
   target: number;
 }
 
+interface AdaptiveTdeeData {
+  tdee: number;
+  weightTrend: number;
+  avgIntake: number;
+  daysOfData: number;
+  confidence: "low" | "medium" | "high";
+  initialEstimate: number;
+}
+
 interface SummaryCardsProps {
   calories: Macro;
   protein: Macro;
   fat: Macro;
   carbs: Macro;
   sodium?: Macro;
+  adaptiveTdee?: AdaptiveTdeeData | null;
 }
 
 function MacroCard({
@@ -90,10 +100,15 @@ export default function SummaryCards({
   fat,
   carbs,
   sodium,
+  adaptiveTdee,
 }: SummaryCardsProps) {
   const { t } = useT();
+  const tdeeDiff = adaptiveTdee
+    ? adaptiveTdee.tdee - adaptiveTdee.initialEstimate
+    : 0;
+
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 mb-6">
+    <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 mb-3">
       <MacroCard
         current={calories.current}
         target={calories.target}
@@ -135,6 +150,29 @@ export default function SummaryCards({
         />
       ) : (
         <div className="hidden lg:block" />
+      )}
+
+      {adaptiveTdee && (
+        <div className="col-span-full flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-800/50 rounded-lg px-4 py-2">
+          <span className="font-medium text-gray-600 dark:text-gray-300">
+            🧠 Adaptive TDEE:{adaptiveTdee.tdee} kcal
+          </span>
+          <span>·</span>
+          <span>
+            vs static {adaptiveTdee.initialEstimate} kcal
+            {tdeeDiff !== 0 && (
+              <span className={tdeeDiff > 0 ? "text-emerald-500 ml-1" : "text-rose-500 ml-1"}>
+                ({tdeeDiff > 0 ? "+" : ""}{tdeeDiff} kcal)
+              </span>
+            )}
+          </span>
+          <span>·</span>
+          <span>
+            {adaptiveTdee.daysOfData}d data
+            {adaptiveTdee.confidence === "high" ? " ✅" : adaptiveTdee.confidence === "medium" ? " ⚡" : " 🔍"}
+          </span>
+          <span className="text-gray-300 dark:text-gray-600">{t.common.estimateNote}</span>
+        </div>
       )}
     </div>
   );

@@ -237,7 +237,7 @@ async function main() {
   });
   console.log("\n📊 Database summary:");
   for (const c of counts) {
-    console.log(`  ${c.category}: ${c._count.category} foods`);
+    console.log(`  ${c.category}: ${c._count} foods`);
   }
 }
 
