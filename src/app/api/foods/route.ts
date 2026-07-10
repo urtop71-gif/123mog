@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
   // (donuts, cakes, breads with the word buried in the middle) that sort
   // ahead of the short, directly-relevant matches alphabetically. Fetch more,
   // then rank by relevance below before truncating to the response page size.
-  const PAGE_SIZE = 20;
+  const PAGE_SIZE = 40;
   const foods = await prisma.food.findMany({
     where: q
       ? {
