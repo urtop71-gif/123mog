@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { LangProvider } from "@/lib/LangContext";
 import { ThemeProvider } from "@/lib/ThemeContext";
@@ -14,10 +15,19 @@ export const metadata: Metadata = {
     icon: "/icon-192.png",
     apple: "/icon-192.png",
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "123MOG",
+  },
 };
 
 export const viewport: Viewport = {
   themeColor: "#059669",
+  // Lets safe-area-inset-* env() values resolve to the notch/home-indicator
+  // insets instead of 0 - required for the bottom tab bar's own safe-area
+  // padding to do anything on an iPhone with a home indicator.
+  viewportFit: "cover",
 };
 
 const themeInitScript = `
@@ -37,10 +47,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      </head>
       <body className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased">
+        <Script id="theme-init" strategy="beforeInteractive">
+          {themeInitScript}
+        </Script>
         <ThemeProvider>
           <LangProvider>
             <ToastProvider>

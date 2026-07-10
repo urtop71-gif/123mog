@@ -3,13 +3,13 @@
 // reference amount column was empty. It does have a "식품중량" (product/
 // analysis weight) column though, so add that as a "인분" (portion) serving
 // on top of the existing "g" one. Never deletes or modifies existing data.
-import { PrismaClient } from '@prisma/client'
-import { PrismaLibSql } from '@prisma/adapter-libsql'
+//
+// Food.name has no unique constraint (users can have private custom foods
+// that share a name with a shared food), so the lookup below is scoped to
+// userId: null to avoid ever matching/modifying a private custom food.
 import fs from 'fs'
 import path from 'path'
-
-const adapter = new PrismaLibSql({ url: 'file:./dev.db' })
-const prisma = new PrismaClient({ adapter })
+import { prisma } from './importUtils'
 
 async function main() {
   const dataPath = path.join(__dirname, 'data', 'mfds-servings.json')
@@ -21,7 +21,7 @@ async function main() {
 
   for (const [name, grams] of Object.entries(servingsByName)) {
     const food = await prisma.food.findFirst({
-      where: { name },
+      where: { name, userId: null },
       include: { servings: true },
     })
     if (!food) {

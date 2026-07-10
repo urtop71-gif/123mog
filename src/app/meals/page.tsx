@@ -87,9 +87,14 @@ function MealsPageInner() {
         return;
       }
       setSearching(true);
-      const res = await fetch(`/api/foods?q=${encodeURIComponent(searchQuery)}`);
-      if (res.ok) setFoods(await res.json());
-      setSearching(false);
+      try {
+        const res = await fetch(`/api/foods?q=${encodeURIComponent(searchQuery)}`);
+        if (res.ok) setFoods(await res.json());
+      } catch {
+        setFoods([]);
+      } finally {
+        setSearching(false);
+      }
     }, 300);
     return () => clearTimeout(timer);
   }, [searchQuery]);
@@ -137,6 +142,11 @@ function MealsPageInner() {
 
   const removeFromCart = (index: number) => {
     setCart((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const cancelEdit = () => {
+    setCart([]);
+    setEditMealId(null);
   };
 
   const cartTotal = useMemo(
@@ -457,7 +467,7 @@ function MealsPageInner() {
         )}
       </div>
 
-      {cart.length > 0 && (
+      {(cart.length > 0 || editMealId) && (
         <div className="card p-5 mb-4">
           <div className="flex justify-between items-center mb-3">
             <h3 className="font-semibold text-gray-900 dark:text-gray-100">{t.meals.cart}</h3>
@@ -465,36 +475,51 @@ function MealsPageInner() {
               {t.meals.cartTotal}: ~{cartTotal} kcal
             </span>
           </div>
-          <ul className="space-y-2">
-            {cart.map((item, i) => (
-              <li
-                key={i}
-                className="flex justify-between items-center text-sm py-2 border-b border-gray-100 dark:border-gray-700 last:border-0"
+          {cart.length === 0 ? (
+            <p className="text-sm text-gray-400 dark:text-gray-500 py-2">{t.meals.empty}</p>
+          ) : (
+            <ul className="space-y-2">
+              {cart.map((item, i) => (
+                <li
+                  key={i}
+                  className="flex justify-between items-center text-sm py-2 border-b border-gray-100 dark:border-gray-700 last:border-0"
+                >
+                  <span className="text-gray-700 dark:text-gray-300">{item.foodName}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-400 dark:text-gray-500">
+                      {item.quantity}
+                      {item.unitName}
+                      {item.estCalories != null && ` · ${item.estCalories}kcal`}
+                    </span>
+                    <button
+                      onClick={() => removeFromCart(i)}
+                      className="text-red-400 hover:text-red-600 text-xs p-1.5 -m-1.5"
+                    >
+                      {t.meals.remove}
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="mt-4 flex gap-2">
+            {editMealId && (
+              <button
+                onClick={cancelEdit}
+                disabled={submitting}
+                className="btn-secondary"
               >
-                <span className="text-gray-700 dark:text-gray-300">{item.foodName}</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-gray-400 dark:text-gray-500">
-                    {item.quantity}
-                    {item.unitName}
-                    {item.estCalories != null && ` · ${item.estCalories}kcal`}
-                  </span>
-                  <button
-                    onClick={() => removeFromCart(i)}
-                    className="text-red-400 hover:text-red-600 text-xs"
-                  >
-                    {t.meals.remove}
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <button
-            onClick={submitMeal}
-            disabled={submitting}
-            className="mt-4 w-full btn-primary"
-          >
-            {submitting ? t.meals.saving : editMealId ? t.meals.edit : t.meals.submit}
-          </button>
+                {t.common.cancel}
+              </button>
+            )}
+            <button
+              onClick={submitMeal}
+              disabled={submitting || cart.length === 0}
+              className="flex-1 btn-primary"
+            >
+              {submitting ? t.meals.saving : editMealId ? t.meals.edit : t.meals.submit}
+            </button>
+          </div>
         </div>
       )}
 
@@ -610,7 +635,7 @@ function MealHistory({
                       <button
                         onClick={() => deleteItem(meal.id, item.id)}
                         title={t.meals.deleteBtn}
-                        className="text-gray-300 dark:text-gray-600 hover:text-red-500"
+                        className="text-gray-300 dark:text-gray-600 hover:text-red-500 p-1.5 -m-1.5"
                         aria-label={t.meals.deleteBtn}
                       >
                         ✕
@@ -622,13 +647,13 @@ function MealHistory({
               <div className="flex gap-1 shrink-0">
                 <button
                   onClick={() => onEdit(meal)}
-                  className="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded hover:bg-blue-200"
+                  className="px-3 py-2 text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded hover:bg-blue-200"
                 >
                   {t.meals.editBtn}
                 </button>
                 <button
                   onClick={() => deleteMeal(meal.id)}
-                  className="px-2 py-1 text-xs bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 rounded hover:bg-red-200"
+                  className="px-3 py-2 text-xs bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 rounded hover:bg-red-200"
                 >
                   {t.meals.deleteBtn}
                 </button>

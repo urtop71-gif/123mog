@@ -32,6 +32,12 @@ export async function PUT(
     }
     if (existing.userId !== session.user.id) return forbidden();
 
+    // Resolve food/serving lookups before opening the transaction: these are
+    // plain reads on the shared `prisma` client, and running them inside the
+    // transaction (against a separate connection than `tx`) can contend with
+    // its lock on SQLite and burn through the interactive transaction timeout.
+    const mealItems = items && Array.isArray(items) ? await computeMealItems(items) : null;
+
     const updated = await prisma.$transaction(async (tx) => {
       if (mealType || date) {
         await tx.meal.update({
@@ -43,8 +49,7 @@ export async function PUT(
         });
       }
 
-      if (items && Array.isArray(items)) {
-        const mealItems = await computeMealItems(items);
+      if (mealItems) {
         await tx.mealItem.deleteMany({ where: { mealId: id } });
         if (mealItems.length > 0) {
           await tx.mealItem.createMany({

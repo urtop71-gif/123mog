@@ -1,10 +1,6 @@
 // Additive import: expands Singapore hawker fare and broader Southeast Asian
 // dishes. Never deletes existing data — safe to run on a live database.
-import { PrismaClient } from '@prisma/client'
-import { PrismaLibSql } from '@prisma/adapter-libsql'
-
-const adapter = new PrismaLibSql({ url: 'file:./dev.db' })
-const prisma = new PrismaClient({ adapter })
+import { importFoods, runImport } from './importUtils'
 
 // category: "singapore" for Singapore hawker/local dishes, "seasian" for broader SEA
 const foods = [
@@ -54,29 +50,4 @@ const foods = [
   { name: "인도네시아사테", nameEn: "Sate Ayam (Indonesian Satay)", category: "seasian", subcategory: "meat", caloriesPer100g: 200, proteinPer100g: 18.0, fatPer100g: 12.0, carbsPer100g: 6.0, sodiumPer100g: 450, servings: [{ unitName: "꼬치", gramsPerUnit: 80 }, { unitName: "g", gramsPerUnit: 1 }] },
 ]
 
-async function main() {
-  const existing = await prisma.food.findMany({ select: { name: true } })
-  const existingNames = new Set(existing.map((f) => f.name))
-
-  let added = 0
-  let skipped = 0
-  for (const food of foods) {
-    if (existingNames.has(food.name)) {
-      skipped++
-      continue
-    }
-    const { servings, ...data } = food
-    await prisma.food.create({ data: { ...data, servings: { create: servings } } })
-    existingNames.add(food.name)
-    added++
-  }
-
-  console.log(`Added ${added} new Singapore/SEA foods, skipped ${skipped} already present.`)
-}
-
-main()
-  .catch((e) => {
-    console.error(e)
-    process.exit(1)
-  })
-  .finally(() => prisma.$disconnect())
+runImport(() => importFoods(foods, "Singapore/SEA foods"))

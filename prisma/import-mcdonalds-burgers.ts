@@ -1,11 +1,7 @@
 // Additive import: McDonald's burger menu items with approximate per-100g
 // nutrition (derived from typical published per-burger figures). Never
 // deletes existing data — safe to run on a live database.
-import { PrismaClient } from '@prisma/client'
-import { PrismaLibSql } from '@prisma/adapter-libsql'
-
-const adapter = new PrismaLibSql({ url: 'file:./dev.db' })
-const prisma = new PrismaClient({ adapter })
+import { importFoods, runImport } from './importUtils'
 
 const foods = [
   { name: "빅맥", nameEn: "Big Mac", category: "western", subcategory: "burger", caloriesPer100g: 251, proteinPer100g: 12.0, fatPer100g: 14.0, carbsPer100g: 19.0, sodiumPer100g: 460, servings: [{ unitName: "개", gramsPerUnit: 219 }, { unitName: "g", gramsPerUnit: 1 }] },
@@ -24,29 +20,4 @@ const foods = [
   { name: "맥치킨", nameEn: "McChicken", category: "western", subcategory: "burger", caloriesPer100g: 252, proteinPer100g: 11.0, fatPer100g: 12.0, carbsPer100g: 25.0, sodiumPer100g: 400, servings: [{ unitName: "개", gramsPerUnit: 143 }, { unitName: "g", gramsPerUnit: 1 }] },
 ]
 
-async function main() {
-  const existing = await prisma.food.findMany({ select: { name: true } })
-  const existingNames = new Set(existing.map((f) => f.name))
-
-  let added = 0
-  let skipped = 0
-  for (const food of foods) {
-    if (existingNames.has(food.name)) {
-      skipped++
-      continue
-    }
-    const { servings, ...data } = food
-    await prisma.food.create({ data: { ...data, servings: { create: servings } } })
-    existingNames.add(food.name)
-    added++
-  }
-
-  console.log(`Added ${added} new McDonald's burgers, skipped ${skipped} already present.`)
-}
-
-main()
-  .catch((e) => {
-    console.error(e)
-    process.exit(1)
-  })
-  .finally(() => prisma.$disconnect())
+runImport(() => importFoods(foods, "McDonald's burgers"))

@@ -38,7 +38,7 @@ export const mealUpdateSchema = z.object({
     .regex(/^\d{4}-\d{2}-\d{2}$/)
     .optional()
     .nullable(),
-  items: z.array(mealItemSchema).optional(),
+  items: z.array(mealItemSchema).min(1).optional(),
 });
 
 export const GENDERS = ["male", "female"] as const;
