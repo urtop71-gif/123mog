@@ -82,7 +82,7 @@ npx vitest
 The app has a multi-source food database pipeline:
 
 ### Pre-packaged Seed
-`prisma/seed.ts` contains ~317,000+ foods bundled directly. Run:
+`prisma/seed.ts` contains ~317,000+ MFDS foods plus ~3,800 curated/branded items (Subway, Starbucks, Guzman Y Gomez, etc.). Run:
 ```bash
 npx prisma db seed
 ```
@@ -98,7 +98,9 @@ These scripts add new foods without affecting existing data (meals, items, or fo
 | `prisma/import-kaya-toast.ts` | Kaya toast variants | ~10+ items |
 | `prisma/import-mcdonalds-burgers.ts` | McDonald's burger menu | ~20+ items |
 | `prisma/import-usda.ts` | USDA FoodData Central (Foundation + SR Legacy) | Basic ingredients; requires `USDA_API_KEY` |
-| `prisma/import-subway.ts` | Subway Singapore menu (`prisma/data/subway-nutrition.json`) | 31 items (sandwiches + soups) |
+| `prisma/import-subway.ts` | Subway Singapore + Taiwan menu (`prisma/data/subway-nutrition.json`, `prisma/data/subway-tw-nutrition.json`) | 44 items total (37 SG + 7 TW) |
+| `prisma/import_gyg.py` | Guzman Y Gomez menu (`prisma/data/gyg-nutrition.json`) | 196 items (burritos, tacos, nachos, salads, etc.) |
+| `prisma/data/starbucks-nutrition.json` | Starbucks Summer 2026 menu (manual import) | 1,974 items (espresso × size × milk, bakery, frappuccinos) |
 | `prisma/add-mfds-servings.ts` | Adds serving units to MFDS-only foods | — |
 
 Usage:

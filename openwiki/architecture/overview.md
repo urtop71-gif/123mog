@@ -50,7 +50,7 @@ Key file: `src/lib/auth.ts` — single `authOptions` export
 - **Prisma 7** + SQLite via `@libsql/client` and `@prisma/adapter-libsql`
 - Prisma client singleton at `src/lib/prisma.ts` with resolved DB URL
 - Migrations in `prisma/migrations/`
-- Seed data: ~317,000+ foods (MFDS + curated menus) in `prisma/seed.ts`
+- Seed data: ~317,000+ MFDS items plus ~3,800 curated/branded foods (Subway, Starbucks, GYG, etc.) in `prisma/seed.ts`
 
 ## Component Architecture
 
@@ -108,6 +108,7 @@ Computes sodium/LDL/sugar estimates from macro values when manual curation is ab
 - **Carbs**: low ≤10 g, high ≥40 g per 100g
 - **Fat**: low ≤3 g, high ≥20 g per 100g
 - `augmentHealthTags()` fills in missing tags without overwriting curated values
+- **Neutral tags suppressed**: `augmentHealthTags()` skips `_neutral` results — only `*_good` and `*_bad` tags are emitted for auto-computed foods. Curated foods with manual tags are unchanged.
 
 ### `src/lib/mealItems.ts`
 Looks up each food + serving unit, calculates total nutrition:
@@ -162,3 +163,7 @@ Key development phases (from `git log`):
 9. **Adaptive TDEE** (commits `f692c31`-`98a5ae5`): Feedback-loop TDEE module + dashboard integration
 10. **Smart food ranking** (commit `e434461`): Content-based search ranking (Phase 3)
 11. **Subway Singapore** (commits `19aa091`-`a7055f1`): 31-item Subway Singapore nutrition data + import script
+12. **Subway expansion** (commits `25c04d4`-`0e2369a`): Subway SG expanded to 37 items (+6 from secondary sources), then 7-item Subway Taiwan added (44 Subway total)
+13. **Starbucks nutrition** (commit `80295f7`): 1,974-item Starbucks Summer 2026 menu (all espresso drink × size × milk-type combinations, bakery, sandwiches, frappuccinos)
+14. **Guzman Y Gomez nutrition** (commit `6afe72d`): 196-item GYG menu from Apr 2024 PDF (burritos, tacos, nachos, salads, mini variants, breakfast)
+15. **Health tag fix** (commit `a414a0f`): `augmentHealthTags()` now suppresses `_neutral` tags — only good/bad shown for auto-computed foods

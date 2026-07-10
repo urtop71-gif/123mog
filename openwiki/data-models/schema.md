@@ -57,7 +57,7 @@ Food ──1:N──> FoodServing
 | `fatPer100g` | Float | g |
 | `carbsPer100g` | Float | g |
 | `sodiumPer100g` | Float? | mg; null if unknown |
-| `healthTags` | String? | Comma-separated: `ldl_good`, `ldl_bad`, `sugar_good`, `sugar_bad`, `sodium_good`, `sodium_bad`, `sodium_neutral`, etc. |
+| `healthTags` | String? | Comma-separated: `ldl_good`, `ldl_bad`, `sugar_good`, `sugar_bad`, `sodium_good`, `sodium_bad`, etc. Auto-computed neutral tags are suppressed (only good/bad shown). |
 | `userId` | String? | Null = shared global food; set = private custom food |
 | `isCustom` | Boolean | Default false |
 

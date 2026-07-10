@@ -6,7 +6,7 @@
 
 **Key features:**
 - Meal logging (breakfast / lunch / dinner / snack) with serving-unit selection
-- Shared food DB (~317,000+ MFDS items from the Korean FDA) + private custom foods per user
+- Shared food DB (~317,000+ MFDS items from the Korean FDA + ~3,800 curated/branded items including Subway, Starbucks, Guzman Y Gomez) and private custom foods per user
 - Favorites, recent foods, copy yesterday's meal
 - BMR/TDEE auto-calculation with manual target override
 - Health-condition tags (sodium, LDL, blood-sugar estimates) — not medical advice
@@ -30,7 +30,7 @@
 npm install
 cp .env.example .env   # configure DATABASE_URL, NEXTAUTH_SECRET, NEXTAUTH_URL
 npx prisma db push
-npx prisma db seed     # optional: loads food catalog (~1.4k curated + ~315k MFDS)
+npx prisma db seed     # optional: loads food catalog (~317k MFDS + ~3.8k curated/branded)
 npm run dev
 ```
 
