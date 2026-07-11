@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { useT } from "@/lib/LangContext";
 import { HealthTagBadges } from "@/components/HealthTagBadges";
+import { foodDisplayName } from "@/lib/foodLabel";
 
 interface MealItem {
   id: string;
   foodName: string;
+  foodNameEn?: string | null;
   healthTags?: string | null;
   quantity: number;
   unitName: string;
@@ -25,7 +27,7 @@ interface MealListProps {
 }
 
 export default function MealList({ meals, dateKey }: MealListProps) {
-  const { t } = useT();
+  const { t, lang } = useT();
 
   const MEAL_TYPE_CONFIG: Record<string, { emoji: string; color: string; label: string }> = {
     breakfast: { emoji: "🌅", color: "border-l-emerald-500", label: t.meals.breakfast },
@@ -99,7 +101,10 @@ export default function MealList({ meals, dateKey }: MealListProps) {
                   {meal.items.map((item) => (
                     <li key={item.id} className="flex justify-between items-start gap-2 text-sm">
                       <span className="text-gray-700 dark:text-gray-300 flex flex-wrap items-center gap-1">
-                        {item.foodName}
+                        {foodDisplayName(
+                          { name: item.foodName, nameEn: item.foodNameEn },
+                          lang,
+                        )}
                         <HealthTagBadges tags={item.healthTags} size="xs" />
                       </span>
                       <span className="text-gray-400 dark:text-gray-500 whitespace-nowrap">
