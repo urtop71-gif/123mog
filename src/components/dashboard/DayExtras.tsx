@@ -46,26 +46,28 @@ export default function DayExtras({
     load();
   }, [load]);
 
-  const addWater = async () => {
+  const adjustWater = async (deltaMl: number) => {
     if (addingWater) return;
+    if (deltaMl < 0 && waterMl <= 0) return;
     setAddingWater(true);
-    // Optimistic UI so taps feel instant on mobile
-    setWaterMl((prev) => prev + 250);
+    const prevMl = waterMl;
+    // Optimistic UI so taps feel instant on mobile (never below 0)
+    setWaterMl((prev) => Math.max(0, prev + deltaMl));
     try {
       const res = await fetch("/api/water", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ date: dateKey, deltaMl: 250 }),
+        body: JSON.stringify({ date: dateKey, deltaMl }),
       });
       if (res.ok) {
         const data = await res.json();
         setWaterMl(data.ml);
       } else {
-        setWaterMl((prev) => Math.max(0, prev - 250));
+        setWaterMl(prevMl);
         toast(t.common.error, "error");
       }
     } catch {
-      setWaterMl((prev) => Math.max(0, prev - 250));
+      setWaterMl(prevMl);
       toast(t.common.error, "error");
     } finally {
       setAddingWater(false);
@@ -118,15 +120,26 @@ export default function DayExtras({
             {waterMl}
             <span className="text-sm font-normal text-gray-400"> / {waterTarget} ml</span>
           </div>
-          <button
-            type="button"
-            onClick={addWater}
-            disabled={addingWater}
-            className="shrink-0 min-h-12 min-w-[7.5rem] px-4 py-3 rounded-xl bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white text-base font-bold shadow-md shadow-sky-500/30 disabled:opacity-60 touch-manipulation select-none"
-            aria-label={t.dashboard.addWater}
-          >
-            {t.dashboard.addWater}
-          </button>
+          <div className="flex shrink-0 gap-2">
+            <button
+              type="button"
+              onClick={() => adjustWater(-250)}
+              disabled={addingWater || waterMl <= 0}
+              className="min-h-12 min-w-[5.5rem] px-3 py-3 rounded-xl border-2 border-sky-400 bg-white dark:bg-gray-800 text-sky-700 dark:text-sky-300 text-base font-bold hover:bg-sky-50 dark:hover:bg-sky-950 active:bg-sky-100 disabled:opacity-40 touch-manipulation select-none"
+              aria-label={t.dashboard.removeWater}
+            >
+              {t.dashboard.removeWater}
+            </button>
+            <button
+              type="button"
+              onClick={() => adjustWater(250)}
+              disabled={addingWater}
+              className="min-h-12 min-w-[5.5rem] px-3 py-3 rounded-xl bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white text-base font-bold shadow-md shadow-sky-500/30 disabled:opacity-60 touch-manipulation select-none"
+              aria-label={t.dashboard.addWater}
+            >
+              {t.dashboard.addWater}
+            </button>
+          </div>
         </div>
         <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2.5">
           <div className="h-full rounded-full bg-sky-500 transition-[width]" style={{ width: `${waterPct}%` }} />
