@@ -4,6 +4,7 @@ import {
   mealCreateSchema,
   profileUpdateSchema,
   foodCreateSchema,
+  waterLogSchema,
 } from "@/lib/validation";
 
 describe("registerSchema", () => {
@@ -133,5 +134,19 @@ describe("foodCreateSchema", () => {
       servings: [],
     });
     expect(result.success).toBe(false);
+  });
+});
+
+describe("waterLogSchema", () => {
+  it("accepts delta-only updates used by +250ml button", () => {
+    expect(waterLogSchema.safeParse({ date: "2026-07-11", deltaMl: 250 }).success).toBe(true);
+  });
+
+  it("accepts absolute ml", () => {
+    expect(waterLogSchema.safeParse({ ml: 1500 }).success).toBe(true);
+  });
+
+  it("rejects empty body", () => {
+    expect(waterLogSchema.safeParse({}).success).toBe(false);
   });
 });

@@ -19,6 +19,7 @@ export default function DayExtras({
   const { toast } = useToast();
   const [waterMl, setWaterMl] = useState(0);
   const [waterTarget, setWaterTarget] = useState(2000);
+  const [addingWater, setAddingWater] = useState(false);
   const [streak, setStreak] = useState(0);
   const [weekDays, setWeekDays] = useState({ logged: 0, onTarget: 0 });
   const [weight, setWeight] = useState("");
@@ -46,14 +47,28 @@ export default function DayExtras({
   }, [load]);
 
   const addWater = async () => {
-    const res = await fetch("/api/water", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ date: dateKey, deltaMl: 250 }),
-    });
-    if (res.ok) {
-      const data = await res.json();
-      setWaterMl(data.ml);
+    if (addingWater) return;
+    setAddingWater(true);
+    // Optimistic UI so taps feel instant on mobile
+    setWaterMl((prev) => prev + 250);
+    try {
+      const res = await fetch("/api/water", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ date: dateKey, deltaMl: 250 }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setWaterMl(data.ml);
+      } else {
+        setWaterMl((prev) => Math.max(0, prev - 250));
+        toast(t.common.error, "error");
+      }
+    } catch {
+      setWaterMl((prev) => Math.max(0, prev - 250));
+      toast(t.common.error, "error");
+    } finally {
+      setAddingWater(false);
     }
   };
 
@@ -97,18 +112,24 @@ export default function DayExtras({
       </div>
 
       <div className="card p-4">
-        <div className="flex justify-between items-center mb-1">
-          <span className="text-xs text-gray-500 dark:text-gray-400">{t.dashboard.water}</span>
-          <button onClick={addWater} className="text-xs font-medium text-emerald-600 hover:underline">
+        <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">{t.dashboard.water}</div>
+        <div className="flex items-end justify-between gap-3 mb-2">
+          <div className="text-2xl font-bold leading-none">
+            {waterMl}
+            <span className="text-sm font-normal text-gray-400"> / {waterTarget} ml</span>
+          </div>
+          <button
+            type="button"
+            onClick={addWater}
+            disabled={addingWater}
+            className="shrink-0 min-h-12 min-w-[7.5rem] px-4 py-3 rounded-xl bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white text-base font-bold shadow-md shadow-sky-500/30 disabled:opacity-60 touch-manipulation select-none"
+            aria-label={t.dashboard.addWater}
+          >
             {t.dashboard.addWater}
           </button>
         </div>
-        <div className="text-2xl font-bold">
-          {waterMl}
-          <span className="text-sm font-normal text-gray-400"> / {waterTarget} ml</span>
-        </div>
-        <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2 mt-2">
-          <div className="h-full rounded-full bg-sky-500" style={{ width: `${waterPct}%` }} />
+        <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2.5">
+          <div className="h-full rounded-full bg-sky-500 transition-[width]" style={{ width: `${waterPct}%` }} />
         </div>
       </div>
 
