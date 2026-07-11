@@ -59,7 +59,7 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
       items: {
         include: {
           food: {
-            select: { name: true, healthTags: true },
+            select: { name: true, nameEn: true, healthTags: true },
           },
         },
       },
@@ -73,6 +73,7 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
     items: meal.items.map((item) => ({
       id: item.id,
       foodName: item.food.name,
+      foodNameEn: item.food.nameEn,
       healthTags: augmentHealthTags(item.food.healthTags, {
         carbsPer100g: item.totalGrams > 0 ? (item.totalCarbs / item.totalGrams) * 100 : null,
         fatPer100g: item.totalGrams > 0 ? (item.totalFat / item.totalGrams) * 100 : null,
