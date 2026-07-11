@@ -1,0 +1,2279 @@
+[
+  {
+    "name": "[USDA] Abiyuch, raw",
+    "nameEn": "Abiyuch, raw",
+    "caloriesPer100g": 69.0,
+    "proteinPer100g": 1.5,
+    "fatPer100g": 0.1,
+    "carbsPer100g": 17.6,
+    "sodiumPer100g": 20.0
+  },
+  {
+    "name": "[USDA] Alcoholic beverage, wine, table, all",
+    "nameEn": "Alcoholic beverage, wine, table, all",
+    "caloriesPer100g": 83.0,
+    "proteinPer100g": 0.07,
+    "fatPer100g": 0.0,
+    "carbsPer100g": 2.72,
+    "sodiumPer100g": 5.0
+  },
+  {
+    "name": "[USDA] Alcoholic beverage, wine, table, red",
+    "nameEn": "Alcoholic beverage, wine, table, red",
+    "caloriesPer100g": 85.0,
+    "proteinPer100g": 0.07,
+    "fatPer100g": 0.0,
+    "carbsPer100g": 2.61,
+    "sodiumPer100g": 4.0
+  },
+  {
+    "name": "[USDA] Apples, fuji, with skin, raw",
+    "nameEn": "Apples, fuji, with skin, raw",
+    "caloriesPer100g": 64.6609,
+    "proteinPer100g": 0.1484375,
+    "fatPer100g": 0.1625,
+    "carbsPer100g": 15.6511625,
+    "sodiumPer100g": 1.013
+  },
+  {
+    "name": "[USDA] Apples, gala, with skin, raw",
+    "nameEn": "Apples, gala, with skin, raw",
+    "caloriesPer100g": 60.9536,
+    "proteinPer100g": 0.1328125,
+    "fatPer100g": 0.15,
+    "carbsPer100g": 14.7680875,
+    "sodiumPer100g": 0.2788
+  },
+  {
+    "name": "[USDA] Apples, honeycrisp, with skin, raw",
+    "nameEn": "Apples, honeycrisp, with skin, raw",
+    "caloriesPer100g": 60.034,
+    "proteinPer100g": 0.1015625,
+    "fatPer100g": 0.1,
+    "carbsPer100g": 14.6819375,
+    "sodiumPer100g": 0.1375
+  },
+  {
+    "name": "[USDA] Apples, raw, without skin",
+    "nameEn": "Apples, raw, without skin",
+    "caloriesPer100g": 48.0,
+    "proteinPer100g": 0.27,
+    "fatPer100g": 0.13,
+    "carbsPer100g": 12.76,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Apricots, raw",
+    "nameEn": "Apricots, raw",
+    "caloriesPer100g": 48.0,
+    "proteinPer100g": 1.4,
+    "fatPer100g": 0.39,
+    "carbsPer100g": 11.12,
+    "sodiumPer100g": 1.0
+  },
+  {
+    "name": "[USDA] Arrowhead, raw",
+    "nameEn": "Arrowhead, raw",
+    "caloriesPer100g": 99.0,
+    "proteinPer100g": 5.33,
+    "fatPer100g": 0.29,
+    "carbsPer100g": 20.23,
+    "sodiumPer100g": 22.0
+  },
+  {
+    "name": "[USDA] Arrowroot, raw",
+    "nameEn": "Arrowroot, raw",
+    "caloriesPer100g": 65.0,
+    "proteinPer100g": 4.24,
+    "fatPer100g": 0.2,
+    "carbsPer100g": 13.39,
+    "sodiumPer100g": 26.0
+  },
+  {
+    "name": "[USDA] Avocado, Hass, peeled, raw",
+    "nameEn": "Avocado, Hass, peeled, raw",
+    "caloriesPer100g": 223.334,
+    "proteinPer100g": 1.8125,
+    "fatPer100g": 20.31,
+    "carbsPer100g": 8.3235,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Avocados, raw, California",
+    "nameEn": "Avocados, raw, California",
+    "caloriesPer100g": 167.0,
+    "proteinPer100g": 1.96,
+    "fatPer100g": 15.41,
+    "carbsPer100g": 8.64,
+    "sodiumPer100g": 8.0
+  },
+  {
+    "name": "[USDA] Avocados, raw, Florida",
+    "nameEn": "Avocados, raw, Florida",
+    "caloriesPer100g": 120.0,
+    "proteinPer100g": 2.23,
+    "fatPer100g": 10.06,
+    "carbsPer100g": 7.82,
+    "sodiumPer100g": 2.0
+  },
+  {
+    "name": "[USDA] Babyfood, cereal, oatmeal, with honey, dry",
+    "nameEn": "Babyfood, cereal, oatmeal, with honey, dry",
+    "caloriesPer100g": 391.0,
+    "proteinPer100g": 13.5,
+    "fatPer100g": 7.0,
+    "carbsPer100g": 69.3,
+    "sodiumPer100g": 47.0
+  },
+  {
+    "name": "[USDA] Bananas, overripe, raw",
+    "nameEn": "Bananas, overripe, raw",
+    "caloriesPer100g": 85.0,
+    "proteinPer100g": 0.73,
+    "fatPer100g": 0.22,
+    "carbsPer100g": 20.1,
+    "sodiumPer100g": null
+  },
+  {
+    "name": "[USDA] Bananas, raw",
+    "nameEn": "Bananas, raw",
+    "caloriesPer100g": 89.0,
+    "proteinPer100g": 1.09,
+    "fatPer100g": 0.33,
+    "carbsPer100g": 22.84,
+    "sodiumPer100g": 1.0
+  },
+  {
+    "name": "[USDA] Bananas, ripe and slightly ripe, raw",
+    "nameEn": "Bananas, ripe and slightly ripe, raw",
+    "caloriesPer100g": 97.0,
+    "proteinPer100g": 0.74,
+    "fatPer100g": 0.29,
+    "carbsPer100g": 23.0,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Beef, grass-fed, ground, raw",
+    "nameEn": "Beef, grass-fed, ground, raw",
+    "caloriesPer100g": 198.0,
+    "proteinPer100g": 19.42,
+    "fatPer100g": 12.73,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 68.0
+  },
+  {
+    "name": "[USDA] Beef, top sirloin steak, raw",
+    "nameEn": "Beef, top sirloin steak, raw",
+    "caloriesPer100g": 140.144,
+    "proteinPer100g": 21.975,
+    "fatPer100g": 5.708,
+    "carbsPer100g": 0.218,
+    "sodiumPer100g": 42.85
+  },
+  {
+    "name": "[USDA] Beef, top sirloin, steak, separable lean and fat, trimmed to 1/8\" fat, choice, raw",
+    "nameEn": "Beef, top sirloin, steak, separable lean and fat, trimmed to 1/8\" fat, choice, raw",
+    "caloriesPer100g": 214.0,
+    "proteinPer100g": 19.92,
+    "fatPer100g": 14.28,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 51.0
+  },
+  {
+    "name": "[USDA] Beef, top sirloin, steak, separable lean and fat, trimmed to 1/8\" fat, select, raw",
+    "nameEn": "Beef, top sirloin, steak, separable lean and fat, trimmed to 1/8\" fat, select, raw",
+    "caloriesPer100g": 189.0,
+    "proteinPer100g": 20.68,
+    "fatPer100g": 11.13,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 53.0
+  },
+  {
+    "name": "[USDA] Bison, ground, raw",
+    "nameEn": "Bison, ground, raw",
+    "caloriesPer100g": 158.8468,
+    "proteinPer100g": 19.88125,
+    "fatPer100g": 8.88,
+    "carbsPer100g": -0.14955,
+    "sodiumPer100g": 55.7
+  },
+  {
+    "name": "[USDA] Blueberries, raw",
+    "nameEn": "Blueberries, raw",
+    "caloriesPer100g": 63.8563,
+    "proteinPer100g": 0.703125,
+    "fatPer100g": 0.3063,
+    "carbsPer100g": 14.571775,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Blueberries, wild, raw (Alaska Native)",
+    "nameEn": "Blueberries, wild, raw (Alaska Native)",
+    "caloriesPer100g": 61.0,
+    "proteinPer100g": 1.22,
+    "fatPer100g": 0.76,
+    "carbsPer100g": 12.31,
+    "sodiumPer100g": 6.0
+  },
+  {
+    "name": "[USDA] Bockwurst, pork, veal, raw",
+    "nameEn": "Bockwurst, pork, veal, raw",
+    "caloriesPer100g": 301.0,
+    "proteinPer100g": 14.03,
+    "fatPer100g": 25.87,
+    "carbsPer100g": 2.95,
+    "sodiumPer100g": 756.0
+  },
+  {
+    "name": "[USDA] Bread, french or vienna, whole wheat",
+    "nameEn": "Bread, french or vienna, whole wheat",
+    "caloriesPer100g": 239.0,
+    "proteinPer100g": 8.33,
+    "fatPer100g": 1.04,
+    "carbsPer100g": 49.1,
+    "sodiumPer100g": 375.0
+  },
+  {
+    "name": "[USDA] Bread, oatmeal",
+    "nameEn": "Bread, oatmeal",
+    "caloriesPer100g": 269.0,
+    "proteinPer100g": 8.4,
+    "fatPer100g": 4.4,
+    "carbsPer100g": 48.5,
+    "sodiumPer100g": 447.0
+  },
+  {
+    "name": "[USDA] Bread, oatmeal, toasted",
+    "nameEn": "Bread, oatmeal, toasted",
+    "caloriesPer100g": 292.0,
+    "proteinPer100g": 9.2,
+    "fatPer100g": 4.8,
+    "carbsPer100g": 52.7,
+    "sodiumPer100g": 486.0
+  },
+  {
+    "name": "[USDA] Bread, pita, whole-wheat",
+    "nameEn": "Bread, pita, whole-wheat",
+    "caloriesPer100g": 262.0,
+    "proteinPer100g": 9.8,
+    "fatPer100g": 1.71,
+    "carbsPer100g": 55.89,
+    "sodiumPer100g": 421.0
+  },
+  {
+    "name": "[USDA] Bread, reduced-calorie, oatmeal",
+    "nameEn": "Bread, reduced-calorie, oatmeal",
+    "caloriesPer100g": 210.0,
+    "proteinPer100g": 7.6,
+    "fatPer100g": 3.5,
+    "carbsPer100g": 43.3,
+    "sodiumPer100g": 388.0
+  },
+  {
+    "name": "[USDA] Bread, whole-wheat, commercially prepared",
+    "nameEn": "Bread, whole-wheat, commercially prepared",
+    "caloriesPer100g": 252.0,
+    "proteinPer100g": 12.45,
+    "fatPer100g": 3.5,
+    "carbsPer100g": 42.71,
+    "sodiumPer100g": 455.0
+  },
+  {
+    "name": "[USDA] Bread, whole-wheat, commercially prepared, toasted",
+    "nameEn": "Bread, whole-wheat, commercially prepared, toasted",
+    "caloriesPer100g": 306.0,
+    "proteinPer100g": 16.27,
+    "fatPer100g": 4.07,
+    "carbsPer100g": 51.16,
+    "sodiumPer100g": 565.0
+  },
+  {
+    "name": "[USDA] Broccoli raab, raw",
+    "nameEn": "Broccoli raab, raw",
+    "caloriesPer100g": 22.0,
+    "proteinPer100g": 3.17,
+    "fatPer100g": 0.49,
+    "carbsPer100g": 2.85,
+    "sodiumPer100g": 33.0
+  },
+  {
+    "name": "[USDA] Broccoli, chinese, raw",
+    "nameEn": "Broccoli, chinese, raw",
+    "caloriesPer100g": 26.0,
+    "proteinPer100g": 1.2,
+    "fatPer100g": 0.76,
+    "carbsPer100g": 4.67,
+    "sodiumPer100g": 7.0
+  },
+  {
+    "name": "[USDA] Broccoli, leaves, raw",
+    "nameEn": "Broccoli, leaves, raw",
+    "caloriesPer100g": 28.0,
+    "proteinPer100g": 2.98,
+    "fatPer100g": 0.35,
+    "carbsPer100g": 5.06,
+    "sodiumPer100g": 27.0
+  },
+  {
+    "name": "[USDA] Broccoli, raw",
+    "nameEn": "Broccoli, raw",
+    "caloriesPer100g": 34.0,
+    "proteinPer100g": 2.82,
+    "fatPer100g": 0.37,
+    "carbsPer100g": 6.64,
+    "sodiumPer100g": 33.0
+  },
+  {
+    "name": "[USDA] Bulgur, cooked",
+    "nameEn": "Bulgur, cooked",
+    "caloriesPer100g": 83.0,
+    "proteinPer100g": 3.08,
+    "fatPer100g": 0.24,
+    "carbsPer100g": 18.58,
+    "sodiumPer100g": 5.0
+  },
+  {
+    "name": "[USDA] Butter, light, stick, with salt",
+    "nameEn": "Butter, light, stick, with salt",
+    "caloriesPer100g": 499.0,
+    "proteinPer100g": 3.3,
+    "fatPer100g": 55.1,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 450.0
+  },
+  {
+    "name": "[USDA] Butter, salted",
+    "nameEn": "Butter, salted",
+    "caloriesPer100g": 717.0,
+    "proteinPer100g": 0.85,
+    "fatPer100g": 81.11,
+    "carbsPer100g": 0.06,
+    "sodiumPer100g": 643.0
+  },
+  {
+    "name": "[USDA] Butter, stick, salted",
+    "nameEn": "Butter, stick, salted",
+    "caloriesPer100g": 0.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 82.2,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 524.0
+  },
+  {
+    "name": "[USDA] Butter, whipped, with salt",
+    "nameEn": "Butter, whipped, with salt",
+    "caloriesPer100g": 731.0,
+    "proteinPer100g": 0.49,
+    "fatPer100g": 78.3,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 583.0
+  },
+  {
+    "name": "[USDA] Butter, without salt",
+    "nameEn": "Butter, without salt",
+    "caloriesPer100g": 717.0,
+    "proteinPer100g": 0.85,
+    "fatPer100g": 81.11,
+    "carbsPer100g": 0.06,
+    "sodiumPer100g": 11.0
+  },
+  {
+    "name": "[USDA] Cabbage, green, raw",
+    "nameEn": "Cabbage, green, raw",
+    "caloriesPer100g": 31.4275,
+    "proteinPer100g": 0.96125,
+    "fatPer100g": 0.2275,
+    "carbsPer100g": 6.38375,
+    "sodiumPer100g": 16.1
+  },
+  {
+    "name": "[USDA] Cabbage, raw",
+    "nameEn": "Cabbage, raw",
+    "caloriesPer100g": 25.0,
+    "proteinPer100g": 1.28,
+    "fatPer100g": 0.1,
+    "carbsPer100g": 5.8,
+    "sodiumPer100g": 18.0
+  },
+  {
+    "name": "[USDA] Cabbage, red, raw",
+    "nameEn": "Cabbage, red, raw",
+    "caloriesPer100g": 31.0,
+    "proteinPer100g": 1.43,
+    "fatPer100g": 0.16,
+    "carbsPer100g": 7.37,
+    "sodiumPer100g": 27.0
+  },
+  {
+    "name": "[USDA] Cabbage, savoy, raw",
+    "nameEn": "Cabbage, savoy, raw",
+    "caloriesPer100g": 27.0,
+    "proteinPer100g": 2.0,
+    "fatPer100g": 0.1,
+    "carbsPer100g": 6.1,
+    "sodiumPer100g": 28.0
+  },
+  {
+    "name": "[USDA] Candies, sesame crunch",
+    "nameEn": "Candies, sesame crunch",
+    "caloriesPer100g": 516.0,
+    "proteinPer100g": 11.6,
+    "fatPer100g": 33.3,
+    "carbsPer100g": 50.3,
+    "sodiumPer100g": 167.0
+  },
+  {
+    "name": "[USDA] Carrot, dehydrated",
+    "nameEn": "Carrot, dehydrated",
+    "caloriesPer100g": 341.0,
+    "proteinPer100g": 8.1,
+    "fatPer100g": 1.49,
+    "carbsPer100g": 79.57,
+    "sodiumPer100g": 275.0
+  },
+  {
+    "name": "[USDA] Carrots, baby, raw",
+    "nameEn": "Carrots, baby, raw",
+    "caloriesPer100g": 40.7723,
+    "proteinPer100g": 0.805,
+    "fatPer100g": 0.1375,
+    "carbsPer100g": 9.0787,
+    "sodiumPer100g": 62.66
+  },
+  {
+    "name": "[USDA] Carrots, mature, raw",
+    "nameEn": "Carrots, mature, raw",
+    "caloriesPer100g": 47.9906,
+    "proteinPer100g": 0.94125,
+    "fatPer100g": 0.3506,
+    "carbsPer100g": 10.26755,
+    "sodiumPer100g": 86.65
+  },
+  {
+    "name": "[USDA] Carrots, raw",
+    "nameEn": "Carrots, raw",
+    "caloriesPer100g": 41.0,
+    "proteinPer100g": 0.93,
+    "fatPer100g": 0.24,
+    "carbsPer100g": 9.58,
+    "sodiumPer100g": 69.0
+  },
+  {
+    "name": "[USDA] Celery, cooked, boiled, drained, with salt",
+    "nameEn": "Celery, cooked, boiled, drained, with salt",
+    "caloriesPer100g": 18.0,
+    "proteinPer100g": 0.83,
+    "fatPer100g": 0.16,
+    "carbsPer100g": 4.0,
+    "sodiumPer100g": 327.0
+  },
+  {
+    "name": "[USDA] Celery, raw",
+    "nameEn": "Celery, raw",
+    "caloriesPer100g": 16.6973,
+    "proteinPer100g": 0.4921875,
+    "fatPer100g": 0.1625,
+    "carbsPer100g": 3.3165125,
+    "sodiumPer100g": 97.21
+  },
+  {
+    "name": "[USDA] Cereals ready-to-eat, POST, HONEY BUNCHES OF OATS, honey roasted",
+    "nameEn": "Cereals ready-to-eat, POST, HONEY BUNCHES OF OATS, honey roasted",
+    "caloriesPer100g": 401.0,
+    "proteinPer100g": 7.12,
+    "fatPer100g": 5.46,
+    "carbsPer100g": 81.19,
+    "sodiumPer100g": 454.0
+  },
+  {
+    "name": "[USDA] Cheese, american cheddar, imitation",
+    "nameEn": "Cheese, american cheddar, imitation",
+    "caloriesPer100g": 239.0,
+    "proteinPer100g": 16.7,
+    "fatPer100g": 14.0,
+    "carbsPer100g": 11.6,
+    "sodiumPer100g": 1345.0
+  },
+  {
+    "name": "[USDA] Cheese, cheddar, nonfat or fat free",
+    "nameEn": "Cheese, cheddar, nonfat or fat free",
+    "caloriesPer100g": 157.0,
+    "proteinPer100g": 32.14,
+    "fatPer100g": 0.0,
+    "carbsPer100g": 7.14,
+    "sodiumPer100g": 1000.0
+  },
+  {
+    "name": "[USDA] Cheese, cheddar, sharp, sliced",
+    "nameEn": "Cheese, cheddar, sharp, sliced",
+    "caloriesPer100g": 410.0,
+    "proteinPer100g": 24.25,
+    "fatPer100g": 33.82,
+    "carbsPer100g": 2.13,
+    "sodiumPer100g": 644.0
+  },
+  {
+    "name": "[USDA] Cheese, low fat, cheddar or colby",
+    "nameEn": "Cheese, low fat, cheddar or colby",
+    "caloriesPer100g": 173.0,
+    "proteinPer100g": 24.35,
+    "fatPer100g": 7.0,
+    "carbsPer100g": 1.91,
+    "sodiumPer100g": 873.0
+  },
+  {
+    "name": "[USDA] Cheese, mozzarella, part skim milk",
+    "nameEn": "Cheese, mozzarella, part skim milk",
+    "caloriesPer100g": 254.0,
+    "proteinPer100g": 24.26,
+    "fatPer100g": 15.92,
+    "carbsPer100g": 2.77,
+    "sodiumPer100g": 619.0
+  },
+  {
+    "name": "[USDA] Cheese, mozzarella, whole milk",
+    "nameEn": "Cheese, mozzarella, whole milk",
+    "caloriesPer100g": 299.0,
+    "proteinPer100g": 22.17,
+    "fatPer100g": 22.14,
+    "carbsPer100g": 2.4,
+    "sodiumPer100g": 486.0
+  },
+  {
+    "name": "[USDA] Cheese, ricotta, part skim milk",
+    "nameEn": "Cheese, ricotta, part skim milk",
+    "caloriesPer100g": 138.0,
+    "proteinPer100g": 11.39,
+    "fatPer100g": 7.91,
+    "carbsPer100g": 5.14,
+    "sodiumPer100g": 99.0
+  },
+  {
+    "name": "[USDA] Cheese, ricotta, whole milk",
+    "nameEn": "Cheese, ricotta, whole milk",
+    "caloriesPer100g": 150.0,
+    "proteinPer100g": 7.54,
+    "fatPer100g": 10.18,
+    "carbsPer100g": 7.27,
+    "sodiumPer100g": 110.0
+  },
+  {
+    "name": "[USDA] Cherries, sweet, raw",
+    "nameEn": "Cherries, sweet, raw",
+    "caloriesPer100g": 63.0,
+    "proteinPer100g": 1.06,
+    "fatPer100g": 0.2,
+    "carbsPer100g": 16.01,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Chicken, breast, boneless, skinless, raw",
+    "nameEn": "Chicken, breast, boneless, skinless, raw",
+    "caloriesPer100g": 106.034,
+    "proteinPer100g": 22.525,
+    "fatPer100g": 1.934,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 65.75
+  },
+  {
+    "name": "[USDA] Chicken, breast, meat and skin, raw",
+    "nameEn": "Chicken, breast, meat and skin, raw",
+    "caloriesPer100g": 126.905,
+    "proteinPer100g": 21.40625,
+    "fatPer100g": 4.777,
+    "carbsPer100g": -0.42825,
+    "sodiumPer100g": 48.07
+  },
+  {
+    "name": "[USDA] Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw",
+    "nameEn": "Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw",
+    "caloriesPer100g": 120.0,
+    "proteinPer100g": 22.5,
+    "fatPer100g": 2.62,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 45.0
+  },
+  {
+    "name": "[USDA] Chicken, broilers or fryers, breast, meat and skin, raw",
+    "nameEn": "Chicken, broilers or fryers, breast, meat and skin, raw",
+    "caloriesPer100g": 172.0,
+    "proteinPer100g": 20.85,
+    "fatPer100g": 9.25,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 63.0
+  },
+  {
+    "name": "[USDA] Chicken, broilers or fryers, thigh, meat and skin, raw",
+    "nameEn": "Chicken, broilers or fryers, thigh, meat and skin, raw",
+    "caloriesPer100g": 221.0,
+    "proteinPer100g": 16.52,
+    "fatPer100g": 16.61,
+    "carbsPer100g": 0.25,
+    "sodiumPer100g": 81.0
+  },
+  {
+    "name": "[USDA] Chicken, ground, raw",
+    "nameEn": "Chicken, ground, raw",
+    "caloriesPer100g": 143.0,
+    "proteinPer100g": 17.44,
+    "fatPer100g": 8.1,
+    "carbsPer100g": 0.04,
+    "sodiumPer100g": 60.0
+  },
+  {
+    "name": "[USDA] Chicken, skin (drumsticks and thighs), raw",
+    "nameEn": "Chicken, skin (drumsticks and thighs), raw",
+    "caloriesPer100g": 440.0,
+    "proteinPer100g": 9.58,
+    "fatPer100g": 44.23,
+    "carbsPer100g": 0.79,
+    "sodiumPer100g": 51.0
+  },
+  {
+    "name": "[USDA] Chicken, skin (drumsticks and thighs), with added solution, raw",
+    "nameEn": "Chicken, skin (drumsticks and thighs), with added solution, raw",
+    "caloriesPer100g": 386.0,
+    "proteinPer100g": 11.11,
+    "fatPer100g": 37.9,
+    "carbsPer100g": 0.01,
+    "sodiumPer100g": 139.0
+  },
+  {
+    "name": "[USDA] Chicken, thigh, boneless, skinless, raw",
+    "nameEn": "Chicken, thigh, boneless, skinless, raw",
+    "caloriesPer100g": 144.07,
+    "proteinPer100g": 18.6125,
+    "fatPer100g": 7.916,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 62.33
+  },
+  {
+    "name": "[USDA] Chicken, thigh, meat and skin, raw",
+    "nameEn": "Chicken, thigh, meat and skin, raw",
+    "caloriesPer100g": 187.8848,
+    "proteinPer100g": 17.10625,
+    "fatPer100g": 13.35,
+    "carbsPer100g": -0.17255,
+    "sodiumPer100g": 63.55
+  },
+  {
+    "name": "[USDA] Cookies, oatmeal, dry mix",
+    "nameEn": "Cookies, oatmeal, dry mix",
+    "caloriesPer100g": 462.0,
+    "proteinPer100g": 6.5,
+    "fatPer100g": 19.2,
+    "carbsPer100g": 67.3,
+    "sodiumPer100g": 473.0
+  },
+  {
+    "name": "[USDA] Cookies, oatmeal, with raisins",
+    "nameEn": "Cookies, oatmeal, with raisins",
+    "caloriesPer100g": 441.0,
+    "proteinPer100g": 5.86,
+    "fatPer100g": 15.76,
+    "carbsPer100g": 68.95,
+    "sodiumPer100g": 322.0
+  },
+  {
+    "name": "[USDA] Crustaceans, shrimp, cooked",
+    "nameEn": "Crustaceans, shrimp, cooked",
+    "caloriesPer100g": 99.0,
+    "proteinPer100g": 23.98,
+    "fatPer100g": 0.28,
+    "carbsPer100g": 0.2,
+    "sodiumPer100g": 111.0
+  },
+  {
+    "name": "[USDA] Crustaceans, shrimp, farm raised, raw",
+    "nameEn": "Crustaceans, shrimp, farm raised, raw",
+    "caloriesPer100g": 71.4265,
+    "proteinPer100g": 15.56875,
+    "fatPer100g": 0.8013,
+    "carbsPer100g": 0.48495,
+    "sodiumPer100g": 474.9
+  },
+  {
+    "name": "[USDA] Crustaceans, shrimp, mixed species, raw (may contain additives to retain moisture)",
+    "nameEn": "Crustaceans, shrimp, mixed species, raw (may contain additives to retain moisture)",
+    "caloriesPer100g": 71.0,
+    "proteinPer100g": 13.61,
+    "fatPer100g": 1.01,
+    "carbsPer100g": 0.91,
+    "sodiumPer100g": 566.0
+  },
+  {
+    "name": "[USDA] Crustaceans, shrimp, raw",
+    "nameEn": "Crustaceans, shrimp, raw",
+    "caloriesPer100g": 85.0,
+    "proteinPer100g": 20.1,
+    "fatPer100g": 0.51,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 119.0
+  },
+  {
+    "name": "[USDA] Cucumber, peeled, raw",
+    "nameEn": "Cucumber, peeled, raw",
+    "caloriesPer100g": 10.0,
+    "proteinPer100g": 0.59,
+    "fatPer100g": 0.16,
+    "carbsPer100g": 2.16,
+    "sodiumPer100g": 2.0
+  },
+  {
+    "name": "[USDA] Cucumber, with peel, raw",
+    "nameEn": "Cucumber, with peel, raw",
+    "caloriesPer100g": 15.9075,
+    "proteinPer100g": 0.625,
+    "fatPer100g": 0.1775,
+    "carbsPer100g": 2.9525,
+    "sodiumPer100g": 1.515
+  },
+  {
+    "name": "[USDA] Egg, duck, whole, fresh, raw",
+    "nameEn": "Egg, duck, whole, fresh, raw",
+    "caloriesPer100g": 185.0,
+    "proteinPer100g": 12.81,
+    "fatPer100g": 13.77,
+    "carbsPer100g": 1.45,
+    "sodiumPer100g": 146.0
+  },
+  {
+    "name": "[USDA] Egg, goose, whole, fresh, raw",
+    "nameEn": "Egg, goose, whole, fresh, raw",
+    "caloriesPer100g": 185.0,
+    "proteinPer100g": 13.87,
+    "fatPer100g": 13.27,
+    "carbsPer100g": 1.35,
+    "sodiumPer100g": 138.0
+  },
+  {
+    "name": "[USDA] Egg, quail, whole, fresh, raw",
+    "nameEn": "Egg, quail, whole, fresh, raw",
+    "caloriesPer100g": 158.0,
+    "proteinPer100g": 13.05,
+    "fatPer100g": 11.09,
+    "carbsPer100g": 0.41,
+    "sodiumPer100g": 141.0
+  },
+  {
+    "name": "[USDA] Egg, turkey, whole, fresh, raw",
+    "nameEn": "Egg, turkey, whole, fresh, raw",
+    "caloriesPer100g": 171.0,
+    "proteinPer100g": 13.68,
+    "fatPer100g": 11.88,
+    "carbsPer100g": 1.15,
+    "sodiumPer100g": 151.0
+  },
+  {
+    "name": "[USDA] Egg, whole, raw, fresh",
+    "nameEn": "Egg, whole, raw, fresh",
+    "caloriesPer100g": 143.0,
+    "proteinPer100g": 12.56,
+    "fatPer100g": 9.51,
+    "carbsPer100g": 0.72,
+    "sodiumPer100g": 142.0
+  },
+  {
+    "name": "[USDA] Emu, ground, raw",
+    "nameEn": "Emu, ground, raw",
+    "caloriesPer100g": 134.0,
+    "proteinPer100g": 22.77,
+    "fatPer100g": 4.03,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 56.0
+  },
+  {
+    "name": "[USDA] Fish, salmon, Atlantic, farmed, raw",
+    "nameEn": "Fish, salmon, Atlantic, farmed, raw",
+    "caloriesPer100g": 208.0,
+    "proteinPer100g": 20.42,
+    "fatPer100g": 13.42,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 59.0
+  },
+  {
+    "name": "[USDA] Fish, salmon, chinook, raw",
+    "nameEn": "Fish, salmon, chinook, raw",
+    "caloriesPer100g": 179.0,
+    "proteinPer100g": 19.93,
+    "fatPer100g": 10.43,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 47.0
+  },
+  {
+    "name": "[USDA] Fish, salmon, chum, raw",
+    "nameEn": "Fish, salmon, chum, raw",
+    "caloriesPer100g": 120.0,
+    "proteinPer100g": 20.14,
+    "fatPer100g": 3.77,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 50.0
+  },
+  {
+    "name": "[USDA] Fish, salmon, pink, raw",
+    "nameEn": "Fish, salmon, pink, raw",
+    "caloriesPer100g": 127.0,
+    "proteinPer100g": 20.5,
+    "fatPer100g": 4.4,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 75.0
+  },
+  {
+    "name": "[USDA] Fish, salmon, sockeye, raw",
+    "nameEn": "Fish, salmon, sockeye, raw",
+    "caloriesPer100g": 131.0,
+    "proteinPer100g": 22.25,
+    "fatPer100g": 4.69,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 78.0
+  },
+  {
+    "name": "[USDA] Fish, tuna salad",
+    "nameEn": "Fish, tuna salad",
+    "caloriesPer100g": 187.0,
+    "proteinPer100g": 16.04,
+    "fatPer100g": 9.26,
+    "carbsPer100g": 9.41,
+    "sodiumPer100g": 402.0
+  },
+  {
+    "name": "[USDA] Fish, tuna, fresh, bluefin, raw",
+    "nameEn": "Fish, tuna, fresh, bluefin, raw",
+    "caloriesPer100g": 144.0,
+    "proteinPer100g": 23.33,
+    "fatPer100g": 4.9,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 39.0
+  },
+  {
+    "name": "[USDA] Fish, tuna, fresh, skipjack, raw",
+    "nameEn": "Fish, tuna, fresh, skipjack, raw",
+    "caloriesPer100g": 103.0,
+    "proteinPer100g": 22.0,
+    "fatPer100g": 1.01,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 37.0
+  },
+  {
+    "name": "[USDA] Fish, tuna, fresh, yellowfin, raw",
+    "nameEn": "Fish, tuna, fresh, yellowfin, raw",
+    "caloriesPer100g": 109.0,
+    "proteinPer100g": 24.4,
+    "fatPer100g": 0.49,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 45.0
+  },
+  {
+    "name": "[USDA] Flour, quinoa",
+    "nameEn": "Flour, quinoa",
+    "caloriesPer100g": 385.197,
+    "proteinPer100g": 11.92235,
+    "fatPer100g": 6.601,
+    "carbsPer100g": 69.52465,
+    "sodiumPer100g": 6.321
+  },
+  {
+    "name": "[USDA] Flour, rice, brown",
+    "nameEn": "Flour, rice, brown",
+    "caloriesPer100g": 365.25,
+    "proteinPer100g": 7.19,
+    "fatPer100g": 3.85,
+    "carbsPer100g": 75.5,
+    "sodiumPer100g": 1.0
+  },
+  {
+    "name": "[USDA] Garlic, raw",
+    "nameEn": "Garlic, raw",
+    "caloriesPer100g": 143.0,
+    "proteinPer100g": 6.62,
+    "fatPer100g": 0.38,
+    "carbsPer100g": 28.2,
+    "sodiumPer100g": null
+  },
+  {
+    "name": "[USDA] Grape leaves, raw",
+    "nameEn": "Grape leaves, raw",
+    "caloriesPer100g": 93.0,
+    "proteinPer100g": 5.6,
+    "fatPer100g": 2.12,
+    "carbsPer100g": 17.31,
+    "sodiumPer100g": 9.0
+  },
+  {
+    "name": "[USDA] Grapes, green, seedless, raw",
+    "nameEn": "Grapes, green, seedless, raw",
+    "caloriesPer100g": 80.1025,
+    "proteinPer100g": 0.89875,
+    "fatPer100g": 0.2325,
+    "carbsPer100g": 18.60375,
+    "sodiumPer100g": 3.171
+  },
+  {
+    "name": "[USDA] Grapes, muscadine, raw",
+    "nameEn": "Grapes, muscadine, raw",
+    "caloriesPer100g": 57.0,
+    "proteinPer100g": 0.81,
+    "fatPer100g": 0.47,
+    "carbsPer100g": 13.93,
+    "sodiumPer100g": 1.0
+  },
+  {
+    "name": "[USDA] Grapes, red, seedless, raw",
+    "nameEn": "Grapes, red, seedless, raw",
+    "caloriesPer100g": 85.919,
+    "proteinPer100g": 0.914375,
+    "fatPer100g": 0.1638,
+    "carbsPer100g": 20.196825,
+    "sodiumPer100g": 6.999
+  },
+  {
+    "name": "[USDA] Guavas, strawberry, raw",
+    "nameEn": "Guavas, strawberry, raw",
+    "caloriesPer100g": 69.0,
+    "proteinPer100g": 0.58,
+    "fatPer100g": 0.6,
+    "carbsPer100g": 17.36,
+    "sodiumPer100g": 37.0
+  },
+  {
+    "name": "[USDA] HOUSE FOODS Premium Firm Tofu",
+    "nameEn": "HOUSE FOODS Premium Firm Tofu",
+    "caloriesPer100g": 85.0,
+    "proteinPer100g": 10.92,
+    "fatPer100g": 4.19,
+    "carbsPer100g": 0.97,
+    "sodiumPer100g": 33.0
+  },
+  {
+    "name": "[USDA] HOUSE FOODS Premium Soft Tofu",
+    "nameEn": "HOUSE FOODS Premium Soft Tofu",
+    "caloriesPer100g": 59.0,
+    "proteinPer100g": 6.38,
+    "fatPer100g": 2.71,
+    "carbsPer100g": 2.19,
+    "sodiumPer100g": 34.0
+  },
+  {
+    "name": "[USDA] Ham, honey, smoked, cooked",
+    "nameEn": "Ham, honey, smoked, cooked",
+    "caloriesPer100g": 122.0,
+    "proteinPer100g": 17.93,
+    "fatPer100g": 2.37,
+    "carbsPer100g": 7.27,
+    "sodiumPer100g": 900.0
+  },
+  {
+    "name": "[USDA] Honey",
+    "nameEn": "Honey",
+    "caloriesPer100g": 304.0,
+    "proteinPer100g": 0.3,
+    "fatPer100g": 0.0,
+    "carbsPer100g": 82.4,
+    "sodiumPer100g": 4.0
+  },
+  {
+    "name": "[USDA] Honey roll sausage, beef",
+    "nameEn": "Honey roll sausage, beef",
+    "caloriesPer100g": 182.0,
+    "proteinPer100g": 18.58,
+    "fatPer100g": 10.5,
+    "carbsPer100g": 2.18,
+    "sodiumPer100g": 1322.0
+  },
+  {
+    "name": "[USDA] Kale, frozen, unprepared",
+    "nameEn": "Kale, frozen, unprepared",
+    "caloriesPer100g": 28.0,
+    "proteinPer100g": 2.66,
+    "fatPer100g": 0.46,
+    "carbsPer100g": 4.88,
+    "sodiumPer100g": 15.0
+  },
+  {
+    "name": "[USDA] Kale, raw",
+    "nameEn": "Kale, raw",
+    "caloriesPer100g": 35.0,
+    "proteinPer100g": 2.92,
+    "fatPer100g": 1.49,
+    "carbsPer100g": 4.42,
+    "sodiumPer100g": 53.0
+  },
+  {
+    "name": "[USDA] Lamb, ground, raw",
+    "nameEn": "Lamb, ground, raw",
+    "caloriesPer100g": 282.0,
+    "proteinPer100g": 16.56,
+    "fatPer100g": 23.41,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 59.0
+  },
+  {
+    "name": "[USDA] Lettuce, cos or romaine, raw",
+    "nameEn": "Lettuce, cos or romaine, raw",
+    "caloriesPer100g": 17.0,
+    "proteinPer100g": 1.23,
+    "fatPer100g": 0.3,
+    "carbsPer100g": 3.29,
+    "sodiumPer100g": 8.0
+  },
+  {
+    "name": "[USDA] Lettuce, green leaf, raw",
+    "nameEn": "Lettuce, green leaf, raw",
+    "caloriesPer100g": 15.0,
+    "proteinPer100g": 1.36,
+    "fatPer100g": 0.15,
+    "carbsPer100g": 2.87,
+    "sodiumPer100g": 28.0
+  },
+  {
+    "name": "[USDA] Lettuce, iceberg, raw",
+    "nameEn": "Lettuce, iceberg, raw",
+    "caloriesPer100g": 17.10875,
+    "proteinPer100g": 0.7425,
+    "fatPer100g": 0.07375,
+    "carbsPer100g": 3.36875,
+    "sodiumPer100g": 16.11
+  },
+  {
+    "name": "[USDA] Lettuce, romaine, green, raw",
+    "nameEn": "Lettuce, romaine, green, raw",
+    "caloriesPer100g": 20.77105,
+    "proteinPer100g": 0.976875,
+    "fatPer100g": 0.07125,
+    "carbsPer100g": 4.055575,
+    "sodiumPer100g": 23.0
+  },
+  {
+    "name": "[USDA] MORI-NU, Tofu, silken, extra firm",
+    "nameEn": "MORI-NU, Tofu, silken, extra firm",
+    "caloriesPer100g": 55.0,
+    "proteinPer100g": 7.4,
+    "fatPer100g": 1.9,
+    "carbsPer100g": 2.0,
+    "sodiumPer100g": 63.0
+  },
+  {
+    "name": "[USDA] MORI-NU, Tofu, silken, firm",
+    "nameEn": "MORI-NU, Tofu, silken, firm",
+    "caloriesPer100g": 62.0,
+    "proteinPer100g": 6.9,
+    "fatPer100g": 2.7,
+    "carbsPer100g": 2.4,
+    "sodiumPer100g": 36.0
+  },
+  {
+    "name": "[USDA] MORI-NU, Tofu, silken, soft",
+    "nameEn": "MORI-NU, Tofu, silken, soft",
+    "caloriesPer100g": 55.0,
+    "proteinPer100g": 4.8,
+    "fatPer100g": 2.7,
+    "carbsPer100g": 2.9,
+    "sodiumPer100g": 5.0
+  },
+  {
+    "name": "[USDA] Margarine, industrial, soy and partially hydrogenated soy oil, use for baking, sauces and candy",
+    "nameEn": "Margarine, industrial, soy and partially hydrogenated soy oil, use for baking, sauces and candy",
+    "caloriesPer100g": 714.0,
+    "proteinPer100g": 0.18,
+    "fatPer100g": 80.0,
+    "carbsPer100g": 0.71,
+    "sodiumPer100g": 886.0
+  },
+  {
+    "name": "[USDA] Mayonnaise, reduced fat, with olive oil",
+    "nameEn": "Mayonnaise, reduced fat, with olive oil",
+    "caloriesPer100g": 361.0,
+    "proteinPer100g": 0.37,
+    "fatPer100g": 40.0,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 800.0
+  },
+  {
+    "name": "[USDA] Milk, buttermilk, fluid, whole",
+    "nameEn": "Milk, buttermilk, fluid, whole",
+    "caloriesPer100g": 62.0,
+    "proteinPer100g": 3.21,
+    "fatPer100g": 3.31,
+    "carbsPer100g": 4.88,
+    "sodiumPer100g": 105.0
+  },
+  {
+    "name": "[USDA] Milk, fluid, nonfat, calcium fortified (fat free or skim)",
+    "nameEn": "Milk, fluid, nonfat, calcium fortified (fat free or skim)",
+    "caloriesPer100g": 35.0,
+    "proteinPer100g": 3.4,
+    "fatPer100g": 0.18,
+    "carbsPer100g": 4.85,
+    "sodiumPer100g": 52.0
+  },
+  {
+    "name": "[USDA] Milk, nonfat, fluid, with added nonfat milk solids, vitamin A and vitamin D (fat free or skim)",
+    "nameEn": "Milk, nonfat, fluid, with added nonfat milk solids, vitamin A and vitamin D (fat free or skim)",
+    "caloriesPer100g": 37.0,
+    "proteinPer100g": 3.57,
+    "fatPer100g": 0.25,
+    "carbsPer100g": 5.02,
+    "sodiumPer100g": 53.0
+  },
+  {
+    "name": "[USDA] Mushrooms, Chanterelle, raw",
+    "nameEn": "Mushrooms, Chanterelle, raw",
+    "caloriesPer100g": 32.0,
+    "proteinPer100g": 1.49,
+    "fatPer100g": 0.53,
+    "carbsPer100g": 6.86,
+    "sodiumPer100g": 9.0
+  },
+  {
+    "name": "[USDA] Mushrooms, enoki, raw",
+    "nameEn": "Mushrooms, enoki, raw",
+    "caloriesPer100g": 37.0,
+    "proteinPer100g": 2.66,
+    "fatPer100g": 0.29,
+    "carbsPer100g": 7.81,
+    "sodiumPer100g": 3.0
+  },
+  {
+    "name": "[USDA] Mushrooms, maitake, raw",
+    "nameEn": "Mushrooms, maitake, raw",
+    "caloriesPer100g": 31.0,
+    "proteinPer100g": 1.94,
+    "fatPer100g": 0.19,
+    "carbsPer100g": 6.97,
+    "sodiumPer100g": 1.0
+  },
+  {
+    "name": "[USDA] Mushrooms, morel, raw",
+    "nameEn": "Mushrooms, morel, raw",
+    "caloriesPer100g": 31.0,
+    "proteinPer100g": 3.12,
+    "fatPer100g": 0.57,
+    "carbsPer100g": 5.1,
+    "sodiumPer100g": 21.0
+  },
+  {
+    "name": "[USDA] Mushrooms, oyster, raw",
+    "nameEn": "Mushrooms, oyster, raw",
+    "caloriesPer100g": 33.0,
+    "proteinPer100g": 3.31,
+    "fatPer100g": 0.41,
+    "carbsPer100g": 6.09,
+    "sodiumPer100g": 18.0
+  },
+  {
+    "name": "[USDA] Mustard spinach, (tendergreen), raw",
+    "nameEn": "Mustard spinach, (tendergreen), raw",
+    "caloriesPer100g": 22.0,
+    "proteinPer100g": 2.2,
+    "fatPer100g": 0.3,
+    "carbsPer100g": 3.9,
+    "sodiumPer100g": 21.0
+  },
+  {
+    "name": "[USDA] New Zealand spinach, raw",
+    "nameEn": "New Zealand spinach, raw",
+    "caloriesPer100g": 14.0,
+    "proteinPer100g": 1.5,
+    "fatPer100g": 0.2,
+    "carbsPer100g": 2.5,
+    "sodiumPer100g": 130.0
+  },
+  {
+    "name": "[USDA] Nuts, almonds, whole, raw",
+    "nameEn": "Nuts, almonds, whole, raw",
+    "caloriesPer100g": 625.75,
+    "proteinPer100g": 21.45038,
+    "fatPer100g": 51.09,
+    "carbsPer100g": 20.03462,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Nuts, walnuts, English, halves, raw",
+    "nameEn": "Nuts, walnuts, English, halves, raw",
+    "caloriesPer100g": 729.556,
+    "proteinPer100g": 14.5644,
+    "fatPer100g": 69.74,
+    "carbsPer100g": 10.9096,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Nuts, walnuts, black, dried",
+    "nameEn": "Nuts, walnuts, black, dried",
+    "caloriesPer100g": 619.0,
+    "proteinPer100g": 24.06,
+    "fatPer100g": 59.33,
+    "carbsPer100g": 9.58,
+    "sodiumPer100g": 2.0
+  },
+  {
+    "name": "[USDA] Nuts, walnuts, english",
+    "nameEn": "Nuts, walnuts, english",
+    "caloriesPer100g": 654.0,
+    "proteinPer100g": 15.23,
+    "fatPer100g": 65.21,
+    "carbsPer100g": 13.71,
+    "sodiumPer100g": 2.0
+  },
+  {
+    "name": "[USDA] Nuts, walnuts, glazed",
+    "nameEn": "Nuts, walnuts, glazed",
+    "caloriesPer100g": 500.0,
+    "proteinPer100g": 8.28,
+    "fatPer100g": 35.71,
+    "carbsPer100g": 47.59,
+    "sodiumPer100g": 446.0
+  },
+  {
+    "name": "[USDA] Oil, avocado",
+    "nameEn": "Oil, avocado",
+    "caloriesPer100g": 884.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 100.0,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Oil, corn, peanut, and olive",
+    "nameEn": "Oil, corn, peanut, and olive",
+    "caloriesPer100g": 884.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 100.0,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Oil, olive, salad or cooking",
+    "nameEn": "Oil, olive, salad or cooking",
+    "caloriesPer100g": 884.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 100.0,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 2.0
+  },
+  {
+    "name": "[USDA] Oil, sesame, salad or cooking",
+    "nameEn": "Oil, sesame, salad or cooking",
+    "caloriesPer100g": 884.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 100.0,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Oil, vegetable, soybean, refined",
+    "nameEn": "Oil, vegetable, soybean, refined",
+    "caloriesPer100g": 884.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 100.0,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Oil, walnut",
+    "nameEn": "Oil, walnut",
+    "caloriesPer100g": 884.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 100.0,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Onions, raw",
+    "nameEn": "Onions, raw",
+    "caloriesPer100g": 40.0,
+    "proteinPer100g": 1.1,
+    "fatPer100g": 0.1,
+    "carbsPer100g": 9.34,
+    "sodiumPer100g": 4.0
+  },
+  {
+    "name": "[USDA] Onions, red, raw",
+    "nameEn": "Onions, red, raw",
+    "caloriesPer100g": 44.0,
+    "proteinPer100g": 0.94,
+    "fatPer100g": 0.1,
+    "carbsPer100g": 9.93,
+    "sodiumPer100g": 1.0
+  },
+  {
+    "name": "[USDA] Onions, sweet, raw",
+    "nameEn": "Onions, sweet, raw",
+    "caloriesPer100g": 32.0,
+    "proteinPer100g": 0.8,
+    "fatPer100g": 0.08,
+    "carbsPer100g": 7.55,
+    "sodiumPer100g": 8.0
+  },
+  {
+    "name": "[USDA] Onions, welsh, raw",
+    "nameEn": "Onions, welsh, raw",
+    "caloriesPer100g": 34.0,
+    "proteinPer100g": 1.9,
+    "fatPer100g": 0.4,
+    "carbsPer100g": 6.5,
+    "sodiumPer100g": 17.0
+  },
+  {
+    "name": "[USDA] Onions, white, raw",
+    "nameEn": "Onions, white, raw",
+    "caloriesPer100g": 35.0,
+    "proteinPer100g": 0.89,
+    "fatPer100g": 0.13,
+    "carbsPer100g": 7.68,
+    "sodiumPer100g": 2.0
+  },
+  {
+    "name": "[USDA] Orange peel, raw",
+    "nameEn": "Orange peel, raw",
+    "caloriesPer100g": 97.0,
+    "proteinPer100g": 1.5,
+    "fatPer100g": 0.2,
+    "carbsPer100g": 25.0,
+    "sodiumPer100g": 3.0
+  },
+  {
+    "name": "[USDA] Oranges, raw, Florida",
+    "nameEn": "Oranges, raw, Florida",
+    "caloriesPer100g": 46.0,
+    "proteinPer100g": 0.7,
+    "fatPer100g": 0.21,
+    "carbsPer100g": 11.54,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Oranges, raw, with peel",
+    "nameEn": "Oranges, raw, with peel",
+    "caloriesPer100g": 63.0,
+    "proteinPer100g": 1.3,
+    "fatPer100g": 0.3,
+    "carbsPer100g": 15.5,
+    "sodiumPer100g": 2.0
+  },
+  {
+    "name": "[USDA] Pasta, cooked, enriched, with added salt",
+    "nameEn": "Pasta, cooked, enriched, with added salt",
+    "caloriesPer100g": 157.0,
+    "proteinPer100g": 5.8,
+    "fatPer100g": 0.93,
+    "carbsPer100g": 30.59,
+    "sodiumPer100g": 131.0
+  },
+  {
+    "name": "[USDA] Pasta, cooked, unenriched, with added salt",
+    "nameEn": "Pasta, cooked, unenriched, with added salt",
+    "caloriesPer100g": 157.0,
+    "proteinPer100g": 5.8,
+    "fatPer100g": 0.93,
+    "carbsPer100g": 30.59,
+    "sodiumPer100g": 131.0
+  },
+  {
+    "name": "[USDA] Pasta, fresh-refrigerated, plain, cooked",
+    "nameEn": "Pasta, fresh-refrigerated, plain, cooked",
+    "caloriesPer100g": 131.0,
+    "proteinPer100g": 5.15,
+    "fatPer100g": 1.05,
+    "carbsPer100g": 24.93,
+    "sodiumPer100g": 6.0
+  },
+  {
+    "name": "[USDA] Pasta, fresh-refrigerated, spinach, cooked",
+    "nameEn": "Pasta, fresh-refrigerated, spinach, cooked",
+    "caloriesPer100g": 130.0,
+    "proteinPer100g": 5.06,
+    "fatPer100g": 0.94,
+    "carbsPer100g": 25.04,
+    "sodiumPer100g": 6.0
+  },
+  {
+    "name": "[USDA] Pasta, gluten-free, brown rice flour, cooked, TINKYADA",
+    "nameEn": "Pasta, gluten-free, brown rice flour, cooked, TINKYADA",
+    "caloriesPer100g": 138.0,
+    "proteinPer100g": 3.46,
+    "fatPer100g": 1.67,
+    "carbsPer100g": 32.2,
+    "sodiumPer100g": 4.0
+  },
+  {
+    "name": "[USDA] Pasta, gluten-free, corn flour and quinoa flour, cooked, ANCIENT HARVEST",
+    "nameEn": "Pasta, gluten-free, corn flour and quinoa flour, cooked, ANCIENT HARVEST",
+    "caloriesPer100g": 152.0,
+    "proteinPer100g": 3.23,
+    "fatPer100g": 2.07,
+    "carbsPer100g": 31.11,
+    "sodiumPer100g": 4.0
+  },
+  {
+    "name": "[USDA] Pasta, gluten-free, corn, cooked",
+    "nameEn": "Pasta, gluten-free, corn, cooked",
+    "caloriesPer100g": 126.0,
+    "proteinPer100g": 2.63,
+    "fatPer100g": 0.73,
+    "carbsPer100g": 27.91,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Peanuts, all types, raw",
+    "nameEn": "Peanuts, all types, raw",
+    "caloriesPer100g": 567.0,
+    "proteinPer100g": 25.8,
+    "fatPer100g": 49.24,
+    "carbsPer100g": 16.13,
+    "sodiumPer100g": 18.0
+  },
+  {
+    "name": "[USDA] Peanuts, raw",
+    "nameEn": "Peanuts, raw",
+    "caloriesPer100g": 588.332,
+    "proteinPer100g": 23.205,
+    "fatPer100g": 43.28,
+    "carbsPer100g": 26.498,
+    "sodiumPer100g": 1.493
+  },
+  {
+    "name": "[USDA] Peanuts, spanish, raw",
+    "nameEn": "Peanuts, spanish, raw",
+    "caloriesPer100g": 570.0,
+    "proteinPer100g": 26.15,
+    "fatPer100g": 49.6,
+    "carbsPer100g": 15.83,
+    "sodiumPer100g": 22.0
+  },
+  {
+    "name": "[USDA] Peanuts, valencia, raw",
+    "nameEn": "Peanuts, valencia, raw",
+    "caloriesPer100g": 570.0,
+    "proteinPer100g": 25.09,
+    "fatPer100g": 47.58,
+    "carbsPer100g": 20.91,
+    "sodiumPer100g": 1.0
+  },
+  {
+    "name": "[USDA] Peanuts, virginia, raw",
+    "nameEn": "Peanuts, virginia, raw",
+    "caloriesPer100g": 563.0,
+    "proteinPer100g": 25.19,
+    "fatPer100g": 48.75,
+    "carbsPer100g": 16.54,
+    "sodiumPer100g": 10.0
+  },
+  {
+    "name": "[USDA] Pepper, banana, raw",
+    "nameEn": "Pepper, banana, raw",
+    "caloriesPer100g": 27.0,
+    "proteinPer100g": 1.66,
+    "fatPer100g": 0.45,
+    "carbsPer100g": 5.35,
+    "sodiumPer100g": 13.0
+  },
+  {
+    "name": "[USDA] Peppers, banana or Hungarian wax, seeded, raw",
+    "nameEn": "Peppers, banana or Hungarian wax, seeded, raw",
+    "caloriesPer100g": 23.9398,
+    "proteinPer100g": 0.723125,
+    "fatPer100g": 0.1314,
+    "carbsPer100g": 4.966175,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Peppers, bell, green, raw",
+    "nameEn": "Peppers, bell, green, raw",
+    "caloriesPer100g": 22.9291,
+    "proteinPer100g": 0.715,
+    "fatPer100g": 0.1063,
+    "carbsPer100g": 4.7781,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Peppers, bell, orange, raw",
+    "nameEn": "Peppers, bell, orange, raw",
+    "caloriesPer100g": 31.7404,
+    "proteinPer100g": 0.881875,
+    "fatPer100g": 0.1556,
+    "carbsPer100g": 6.703125,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Peppers, bell, red, raw",
+    "nameEn": "Peppers, bell, red, raw",
+    "caloriesPer100g": 31.3256,
+    "proteinPer100g": 0.895625,
+    "fatPer100g": 0.1256,
+    "carbsPer100g": 6.653175,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Peppers, bell, yellow, raw",
+    "nameEn": "Peppers, bell, yellow, raw",
+    "caloriesPer100g": 30.7743,
+    "proteinPer100g": 0.819375,
+    "fatPer100g": 0.1211,
+    "carbsPer100g": 6.601725,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Pickles, cucumber, sour",
+    "nameEn": "Pickles, cucumber, sour",
+    "caloriesPer100g": 11.0,
+    "proteinPer100g": 0.33,
+    "fatPer100g": 0.2,
+    "carbsPer100g": 2.26,
+    "sodiumPer100g": 1208.0
+  },
+  {
+    "name": "[USDA] Pork sausage rice links, brown and serve, cooked",
+    "nameEn": "Pork sausage rice links, brown and serve, cooked",
+    "caloriesPer100g": 407.0,
+    "proteinPer100g": 13.7,
+    "fatPer100g": 37.63,
+    "carbsPer100g": 2.36,
+    "sodiumPer100g": 689.0
+  },
+  {
+    "name": "[USDA] Pork, belly, with skin, raw",
+    "nameEn": "Pork, belly, with skin, raw",
+    "caloriesPer100g": 380.45,
+    "proteinPer100g": 15.2,
+    "fatPer100g": 35.83,
+    "carbsPer100g": -0.705,
+    "sodiumPer100g": 49.7
+  },
+  {
+    "name": "[USDA] Pork, cured, salt pork, raw",
+    "nameEn": "Pork, cured, salt pork, raw",
+    "caloriesPer100g": 748.0,
+    "proteinPer100g": 5.05,
+    "fatPer100g": 80.5,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 2684.0
+  },
+  {
+    "name": "[USDA] Pork, fresh, belly, raw",
+    "nameEn": "Pork, fresh, belly, raw",
+    "caloriesPer100g": 518.0,
+    "proteinPer100g": 9.34,
+    "fatPer100g": 53.01,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 32.0
+  },
+  {
+    "name": "[USDA] Pork, fresh, loin, center loin (chops), bone-in, separable lean and fat, raw",
+    "nameEn": "Pork, fresh, loin, center loin (chops), bone-in, separable lean and fat, raw",
+    "caloriesPer100g": 170.0,
+    "proteinPer100g": 20.71,
+    "fatPer100g": 9.03,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 55.0
+  },
+  {
+    "name": "[USDA] Pork, fresh, loin, top loin (roasts), boneless, separable lean and fat, raw",
+    "nameEn": "Pork, fresh, loin, top loin (roasts), boneless, separable lean and fat, raw",
+    "caloriesPer100g": 166.0,
+    "proteinPer100g": 21.34,
+    "fatPer100g": 8.33,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 47.0
+  },
+  {
+    "name": "[USDA] Pork, fresh, loin, top loin (roasts), boneless, separable lean only, raw",
+    "nameEn": "Pork, fresh, loin, top loin (roasts), boneless, separable lean only, raw",
+    "caloriesPer100g": 132.0,
+    "proteinPer100g": 22.39,
+    "fatPer100g": 4.06,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 49.0
+  },
+  {
+    "name": "[USDA] Pork, ground, raw",
+    "nameEn": "Pork, ground, raw",
+    "caloriesPer100g": 228.2728,
+    "proteinPer100g": 17.80625,
+    "fatPer100g": 17.49,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 53.63
+  },
+  {
+    "name": "[USDA] Pork, loin, boneless, raw",
+    "nameEn": "Pork, loin, boneless, raw",
+    "caloriesPer100g": 167.769,
+    "proteinPer100g": 21.11875,
+    "fatPer100g": 9.469,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 40.2
+  },
+  {
+    "name": "[USDA] Pork, loin, tenderloin, boneless, raw",
+    "nameEn": "Pork, loin, tenderloin, boneless, raw",
+    "caloriesPer100g": 119.039,
+    "proteinPer100g": 21.58125,
+    "fatPer100g": 3.899,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 41.39
+  },
+  {
+    "name": "[USDA] Potatoes, flesh and skin, raw",
+    "nameEn": "Potatoes, flesh and skin, raw",
+    "caloriesPer100g": 77.0,
+    "proteinPer100g": 2.05,
+    "fatPer100g": 0.09,
+    "carbsPer100g": 17.49,
+    "sodiumPer100g": 6.0
+  },
+  {
+    "name": "[USDA] Potatoes, gold, without skin, raw",
+    "nameEn": "Potatoes, gold, without skin, raw",
+    "caloriesPer100g": 73.4738,
+    "proteinPer100g": 1.8125,
+    "fatPer100g": 0.2638,
+    "carbsPer100g": 15.9624,
+    "sodiumPer100g": 2.238
+  },
+  {
+    "name": "[USDA] Potatoes, raw, skin",
+    "nameEn": "Potatoes, raw, skin",
+    "caloriesPer100g": 58.0,
+    "proteinPer100g": 2.57,
+    "fatPer100g": 0.1,
+    "carbsPer100g": 12.44,
+    "sodiumPer100g": 10.0
+  },
+  {
+    "name": "[USDA] Potatoes, red, flesh and skin, raw",
+    "nameEn": "Potatoes, red, flesh and skin, raw",
+    "caloriesPer100g": 70.0,
+    "proteinPer100g": 1.89,
+    "fatPer100g": 0.14,
+    "carbsPer100g": 15.9,
+    "sodiumPer100g": 18.0
+  },
+  {
+    "name": "[USDA] Quinoa, cooked",
+    "nameEn": "Quinoa, cooked",
+    "caloriesPer100g": 120.0,
+    "proteinPer100g": 4.4,
+    "fatPer100g": 1.92,
+    "carbsPer100g": 21.3,
+    "sodiumPer100g": 7.0
+  },
+  {
+    "name": "[USDA] Quinoa, uncooked",
+    "nameEn": "Quinoa, uncooked",
+    "caloriesPer100g": 368.0,
+    "proteinPer100g": 14.12,
+    "fatPer100g": 6.07,
+    "carbsPer100g": 64.16,
+    "sodiumPer100g": 5.0
+  },
+  {
+    "name": "[USDA] Restaurant, Chinese, sesame chicken",
+    "nameEn": "Restaurant, Chinese, sesame chicken",
+    "caloriesPer100g": 293.0,
+    "proteinPer100g": 14.33,
+    "fatPer100g": 14.25,
+    "carbsPer100g": 26.88,
+    "sodiumPer100g": 482.0
+  },
+  {
+    "name": "[USDA] Rice crackers",
+    "nameEn": "Rice crackers",
+    "caloriesPer100g": 416.0,
+    "proteinPer100g": 10.0,
+    "fatPer100g": 5.0,
+    "carbsPer100g": 82.64,
+    "sodiumPer100g": 233.0
+  },
+  {
+    "name": "[USDA] Rice flour, brown",
+    "nameEn": "Rice flour, brown",
+    "caloriesPer100g": 363.0,
+    "proteinPer100g": 7.23,
+    "fatPer100g": 2.78,
+    "carbsPer100g": 76.48,
+    "sodiumPer100g": 8.0
+  },
+  {
+    "name": "[USDA] Rice, brown, parboiled, cooked, UNCLE BENS",
+    "nameEn": "Rice, brown, parboiled, cooked, UNCLE BENS",
+    "caloriesPer100g": 147.0,
+    "proteinPer100g": 3.09,
+    "fatPer100g": 0.85,
+    "carbsPer100g": 31.33,
+    "sodiumPer100g": 4.0
+  },
+  {
+    "name": "[USDA] Rice, white, glutinous, unenriched, cooked",
+    "nameEn": "Rice, white, glutinous, unenriched, cooked",
+    "caloriesPer100g": 97.0,
+    "proteinPer100g": 2.02,
+    "fatPer100g": 0.19,
+    "carbsPer100g": 21.09,
+    "sodiumPer100g": 5.0
+  },
+  {
+    "name": "[USDA] Rice, white, medium-grain, cooked, unenriched",
+    "nameEn": "Rice, white, medium-grain, cooked, unenriched",
+    "caloriesPer100g": 130.0,
+    "proteinPer100g": 2.38,
+    "fatPer100g": 0.21,
+    "carbsPer100g": 28.59,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Rice, white, medium-grain, enriched, cooked",
+    "nameEn": "Rice, white, medium-grain, enriched, cooked",
+    "caloriesPer100g": 130.0,
+    "proteinPer100g": 2.38,
+    "fatPer100g": 0.21,
+    "carbsPer100g": 28.59,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Rice, white, short-grain, cooked, unenriched",
+    "nameEn": "Rice, white, short-grain, cooked, unenriched",
+    "caloriesPer100g": 130.0,
+    "proteinPer100g": 2.36,
+    "fatPer100g": 0.19,
+    "carbsPer100g": 28.73,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Rice, white, short-grain, enriched, cooked",
+    "nameEn": "Rice, white, short-grain, enriched, cooked",
+    "caloriesPer100g": 130.0,
+    "proteinPer100g": 2.36,
+    "fatPer100g": 0.19,
+    "carbsPer100g": 28.73,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Rose-apples, raw",
+    "nameEn": "Rose-apples, raw",
+    "caloriesPer100g": 25.0,
+    "proteinPer100g": 0.6,
+    "fatPer100g": 0.3,
+    "carbsPer100g": 5.7,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] SILK Plain soy yogurt",
+    "nameEn": "SILK Plain soy yogurt",
+    "caloriesPer100g": 66.0,
+    "proteinPer100g": 2.64,
+    "fatPer100g": 1.76,
+    "carbsPer100g": 9.69,
+    "sodiumPer100g": 13.0
+  },
+  {
+    "name": "[USDA] Sauce, peanut, made from peanut butter, water, soy sauce",
+    "nameEn": "Sauce, peanut, made from peanut butter, water, soy sauce",
+    "caloriesPer100g": 257.0,
+    "proteinPer100g": 6.31,
+    "fatPer100g": 16.02,
+    "carbsPer100g": 22.02,
+    "sodiumPer100g": 1338.0
+  },
+  {
+    "name": "[USDA] Seeds, breadfruit seeds, raw",
+    "nameEn": "Seeds, breadfruit seeds, raw",
+    "caloriesPer100g": 191.0,
+    "proteinPer100g": 7.4,
+    "fatPer100g": 5.59,
+    "carbsPer100g": 29.24,
+    "sodiumPer100g": 25.0
+  },
+  {
+    "name": "[USDA] Seeds, lotus seeds, raw",
+    "nameEn": "Seeds, lotus seeds, raw",
+    "caloriesPer100g": 89.0,
+    "proteinPer100g": 4.13,
+    "fatPer100g": 0.53,
+    "carbsPer100g": 17.28,
+    "sodiumPer100g": 1.0
+  },
+  {
+    "name": "[USDA] Seeds, sesame butter, paste",
+    "nameEn": "Seeds, sesame butter, paste",
+    "caloriesPer100g": 586.0,
+    "proteinPer100g": 18.08,
+    "fatPer100g": 50.87,
+    "carbsPer100g": 24.05,
+    "sodiumPer100g": 12.0
+  },
+  {
+    "name": "[USDA] Seeds, sunflower seed butter, without salt",
+    "nameEn": "Seeds, sunflower seed butter, without salt",
+    "caloriesPer100g": 617.0,
+    "proteinPer100g": 17.28,
+    "fatPer100g": 55.2,
+    "carbsPer100g": 23.32,
+    "sodiumPer100g": 3.0
+  },
+  {
+    "name": "[USDA] Seeds, sunflower seed kernels, dried",
+    "nameEn": "Seeds, sunflower seed kernels, dried",
+    "caloriesPer100g": 584.0,
+    "proteinPer100g": 20.78,
+    "fatPer100g": 51.46,
+    "carbsPer100g": 20.0,
+    "sodiumPer100g": 9.0
+  },
+  {
+    "name": "[USDA] Seeds, sunflower seed, kernel, raw",
+    "nameEn": "Seeds, sunflower seed, kernel, raw",
+    "caloriesPer100g": 609.456,
+    "proteinPer100g": 18.8733,
+    "fatPer100g": 48.44,
+    "carbsPer100g": 24.5007,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Sesame butter, creamy",
+    "nameEn": "Sesame butter, creamy",
+    "caloriesPer100g": 697.1376,
+    "proteinPer100g": 19.7054,
+    "fatPer100g": 62.4,
+    "carbsPer100g": 14.179,
+    "sodiumPer100g": 63.63
+  },
+  {
+    "name": "[USDA] Shortening industrial, lard and vegetable oil",
+    "nameEn": "Shortening industrial, lard and vegetable oil",
+    "caloriesPer100g": 900.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 100.0,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Shortening, household, lard and vegetable oil",
+    "nameEn": "Shortening, household, lard and vegetable oil",
+    "caloriesPer100g": 900.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 100.0,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Snacks, shrimp cracker",
+    "nameEn": "Snacks, shrimp cracker",
+    "caloriesPer100g": 426.0,
+    "proteinPer100g": 7.14,
+    "fatPer100g": 17.86,
+    "carbsPer100g": 59.09,
+    "sodiumPer100g": 571.0
+  },
+  {
+    "name": "[USDA] Soup, cream of celery, canned, condensed",
+    "nameEn": "Soup, cream of celery, canned, condensed",
+    "caloriesPer100g": 72.0,
+    "proteinPer100g": 1.32,
+    "fatPer100g": 4.46,
+    "carbsPer100g": 7.03,
+    "sodiumPer100g": 516.0
+  },
+  {
+    "name": "[USDA] Soy sauce made from soy (tamari)",
+    "nameEn": "Soy sauce made from soy (tamari)",
+    "caloriesPer100g": 60.0,
+    "proteinPer100g": 10.51,
+    "fatPer100g": 0.1,
+    "carbsPer100g": 5.57,
+    "sodiumPer100g": 5586.0
+  },
+  {
+    "name": "[USDA] Soy sauce made from soy and wheat (shoyu)",
+    "nameEn": "Soy sauce made from soy and wheat (shoyu)",
+    "caloriesPer100g": 53.0,
+    "proteinPer100g": 8.14,
+    "fatPer100g": 0.57,
+    "carbsPer100g": 4.93,
+    "sodiumPer100g": 5493.0
+  },
+  {
+    "name": "[USDA] Soy sauce made from soy and wheat (shoyu), low sodium",
+    "nameEn": "Soy sauce made from soy and wheat (shoyu), low sodium",
+    "caloriesPer100g": 57.0,
+    "proteinPer100g": 9.05,
+    "fatPer100g": 0.3,
+    "carbsPer100g": 5.59,
+    "sodiumPer100g": 3598.0
+  },
+  {
+    "name": "[USDA] Spices, celery seed",
+    "nameEn": "Spices, celery seed",
+    "caloriesPer100g": 392.0,
+    "proteinPer100g": 18.07,
+    "fatPer100g": 25.27,
+    "carbsPer100g": 41.35,
+    "sodiumPer100g": 160.0
+  },
+  {
+    "name": "[USDA] Spinach souffle",
+    "nameEn": "Spinach souffle",
+    "caloriesPer100g": 172.0,
+    "proteinPer100g": 7.89,
+    "fatPer100g": 12.95,
+    "carbsPer100g": 5.9,
+    "sodiumPer100g": 566.0
+  },
+  {
+    "name": "[USDA] Spinach, baby",
+    "nameEn": "Spinach, baby",
+    "caloriesPer100g": 26.602,
+    "proteinPer100g": 2.851875,
+    "fatPer100g": 0.6188,
+    "carbsPer100g": 2.406325,
+    "sodiumPer100g": 111.4
+  },
+  {
+    "name": "[USDA] Spinach, raw",
+    "nameEn": "Spinach, raw",
+    "caloriesPer100g": 23.0,
+    "proteinPer100g": 2.86,
+    "fatPer100g": 0.39,
+    "carbsPer100g": 3.63,
+    "sodiumPer100g": 79.0
+  },
+  {
+    "name": "[USDA] Squash, summer, green, zucchini, includes skin, raw",
+    "nameEn": "Squash, summer, green, zucchini, includes skin, raw",
+    "caloriesPer100g": 19.0,
+    "proteinPer100g": 0.984375,
+    "fatPer100g": 0.205,
+    "carbsPer100g": 3.27,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Squash, summer, zucchini, includes skin, frozen, unprepared",
+    "nameEn": "Squash, summer, zucchini, includes skin, frozen, unprepared",
+    "caloriesPer100g": 17.0,
+    "proteinPer100g": 1.16,
+    "fatPer100g": 0.13,
+    "carbsPer100g": 3.58,
+    "sodiumPer100g": 2.0
+  },
+  {
+    "name": "[USDA] Squash, summer, zucchini, includes skin, raw",
+    "nameEn": "Squash, summer, zucchini, includes skin, raw",
+    "caloriesPer100g": 17.0,
+    "proteinPer100g": 1.21,
+    "fatPer100g": 0.32,
+    "carbsPer100g": 3.11,
+    "sodiumPer100g": 8.0
+  },
+  {
+    "name": "[USDA] Squash, summer, zucchini, italian style, canned",
+    "nameEn": "Squash, summer, zucchini, italian style, canned",
+    "caloriesPer100g": 29.0,
+    "proteinPer100g": 1.03,
+    "fatPer100g": 0.11,
+    "carbsPer100g": 6.85,
+    "sodiumPer100g": 374.0
+  },
+  {
+    "name": "[USDA] Squash, zucchini, baby, raw",
+    "nameEn": "Squash, zucchini, baby, raw",
+    "caloriesPer100g": 21.0,
+    "proteinPer100g": 2.71,
+    "fatPer100g": 0.4,
+    "carbsPer100g": 3.11,
+    "sodiumPer100g": 3.0
+  },
+  {
+    "name": "[USDA] Strawberries, raw",
+    "nameEn": "Strawberries, raw",
+    "caloriesPer100g": 32.0,
+    "proteinPer100g": 0.67,
+    "fatPer100g": 0.3,
+    "carbsPer100g": 7.68,
+    "sodiumPer100g": 1.0
+  },
+  {
+    "name": "[USDA] Sugar, turbinado",
+    "nameEn": "Sugar, turbinado",
+    "caloriesPer100g": 399.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 0.0,
+    "carbsPer100g": 99.8,
+    "sodiumPer100g": 3.0
+  },
+  {
+    "name": "[USDA] Sugars, brown",
+    "nameEn": "Sugars, brown",
+    "caloriesPer100g": 380.0,
+    "proteinPer100g": 0.12,
+    "fatPer100g": 0.0,
+    "carbsPer100g": 98.09,
+    "sodiumPer100g": 28.0
+  },
+  {
+    "name": "[USDA] Sugars, granulated",
+    "nameEn": "Sugars, granulated",
+    "caloriesPer100g": 385.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 0.32,
+    "carbsPer100g": 99.6,
+    "sodiumPer100g": 1.0
+  },
+  {
+    "name": "[USDA] Sugars, maple",
+    "nameEn": "Sugars, maple",
+    "caloriesPer100g": 354.0,
+    "proteinPer100g": 0.1,
+    "fatPer100g": 0.2,
+    "carbsPer100g": 90.9,
+    "sodiumPer100g": 11.0
+  },
+  {
+    "name": "[USDA] Sweet potato leaves, raw",
+    "nameEn": "Sweet potato leaves, raw",
+    "caloriesPer100g": 42.0,
+    "proteinPer100g": 2.49,
+    "fatPer100g": 0.51,
+    "carbsPer100g": 8.82,
+    "sodiumPer100g": 6.0
+  },
+  {
+    "name": "[USDA] Sweet potatoes, orange flesh, without skin, raw",
+    "nameEn": "Sweet potatoes, orange flesh, without skin, raw",
+    "caloriesPer100g": 78.999,
+    "proteinPer100g": 1.578125,
+    "fatPer100g": 0.375,
+    "carbsPer100g": 17.327875,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Syrups, table blends, pancake",
+    "nameEn": "Syrups, table blends, pancake",
+    "caloriesPer100g": 234.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 0.0,
+    "carbsPer100g": 61.47,
+    "sodiumPer100g": 82.0
+  },
+  {
+    "name": "[USDA] Tofu yogurt",
+    "nameEn": "Tofu yogurt",
+    "caloriesPer100g": 94.0,
+    "proteinPer100g": 3.5,
+    "fatPer100g": 1.8,
+    "carbsPer100g": 15.96,
+    "sodiumPer100g": 35.0
+  },
+  {
+    "name": "[USDA] Tofu, extra firm, prepared with nigari",
+    "nameEn": "Tofu, extra firm, prepared with nigari",
+    "caloriesPer100g": 83.0,
+    "proteinPer100g": 9.98,
+    "fatPer100g": 5.26,
+    "carbsPer100g": 1.18,
+    "sodiumPer100g": 4.0
+  },
+  {
+    "name": "[USDA] Tofu, soft, prepared with calcium sulfate and magnesium chloride (nigari)",
+    "nameEn": "Tofu, soft, prepared with calcium sulfate and magnesium chloride (nigari)",
+    "caloriesPer100g": 61.0,
+    "proteinPer100g": 7.17,
+    "fatPer100g": 3.69,
+    "carbsPer100g": 1.18,
+    "sodiumPer100g": 8.0
+  },
+  {
+    "name": "[USDA] Tomatoes, green, raw",
+    "nameEn": "Tomatoes, green, raw",
+    "caloriesPer100g": 23.0,
+    "proteinPer100g": 1.2,
+    "fatPer100g": 0.2,
+    "carbsPer100g": 5.1,
+    "sodiumPer100g": 13.0
+  },
+  {
+    "name": "[USDA] Tomatoes, orange, raw",
+    "nameEn": "Tomatoes, orange, raw",
+    "caloriesPer100g": 16.0,
+    "proteinPer100g": 1.16,
+    "fatPer100g": 0.19,
+    "carbsPer100g": 3.18,
+    "sodiumPer100g": 42.0
+  },
+  {
+    "name": "[USDA] Tomatoes, red, ripe, raw, year round average",
+    "nameEn": "Tomatoes, red, ripe, raw, year round average",
+    "caloriesPer100g": 18.0,
+    "proteinPer100g": 0.88,
+    "fatPer100g": 0.2,
+    "carbsPer100g": 3.89,
+    "sodiumPer100g": 5.0
+  },
+  {
+    "name": "[USDA] Tomatoes, yellow, raw",
+    "nameEn": "Tomatoes, yellow, raw",
+    "caloriesPer100g": 15.0,
+    "proteinPer100g": 0.98,
+    "fatPer100g": 0.26,
+    "carbsPer100g": 2.98,
+    "sodiumPer100g": 23.0
+  },
+  {
+    "name": "[USDA] Veal, sirloin, separable lean and fat, raw",
+    "nameEn": "Veal, sirloin, separable lean and fat, raw",
+    "caloriesPer100g": 152.0,
+    "proteinPer100g": 19.07,
+    "fatPer100g": 7.81,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 76.0
+  },
+  {
+    "name": "[USDA] Veal, sirloin, separable lean only, raw",
+    "nameEn": "Veal, sirloin, separable lean only, raw",
+    "caloriesPer100g": 110.0,
+    "proteinPer100g": 20.2,
+    "fatPer100g": 2.59,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 80.0
+  },
+  {
+    "name": "[USDA] Vegetable oil, palm kernel",
+    "nameEn": "Vegetable oil, palm kernel",
+    "caloriesPer100g": 862.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 100.0,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Vegetable oil-butter spread, reduced calorie",
+    "nameEn": "Vegetable oil-butter spread, reduced calorie",
+    "caloriesPer100g": 465.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 53.0,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 581.0
+  },
+  {
+    "name": "[USDA] Vinegar, balsamic",
+    "nameEn": "Vinegar, balsamic",
+    "caloriesPer100g": 88.0,
+    "proteinPer100g": 0.49,
+    "fatPer100g": 0.0,
+    "carbsPer100g": 17.03,
+    "sodiumPer100g": 23.0
+  },
+  {
+    "name": "[USDA] Vinegar, cider",
+    "nameEn": "Vinegar, cider",
+    "caloriesPer100g": 21.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 0.0,
+    "carbsPer100g": 0.93,
+    "sodiumPer100g": 5.0
+  },
+  {
+    "name": "[USDA] Vinegar, distilled",
+    "nameEn": "Vinegar, distilled",
+    "caloriesPer100g": 18.0,
+    "proteinPer100g": 0.0,
+    "fatPer100g": 0.0,
+    "carbsPer100g": 0.04,
+    "sodiumPer100g": 2.0
+  },
+  {
+    "name": "[USDA] Vinegar, red wine",
+    "nameEn": "Vinegar, red wine",
+    "caloriesPer100g": 19.0,
+    "proteinPer100g": 0.04,
+    "fatPer100g": 0.0,
+    "carbsPer100g": 0.27,
+    "sodiumPer100g": 8.0
+  },
+  {
+    "name": "[USDA] Vitasoy USA Azumaya, Firm Tofu",
+    "nameEn": "Vitasoy USA Azumaya, Firm Tofu",
+    "caloriesPer100g": 80.0,
+    "proteinPer100g": 9.08,
+    "fatPer100g": 4.2,
+    "carbsPer100g": 1.52,
+    "sodiumPer100g": 23.0
+  },
+  {
+    "name": "[USDA] Vitasoy USA Organic Nasoya, Soft Tofu",
+    "nameEn": "Vitasoy USA Organic Nasoya, Soft Tofu",
+    "caloriesPer100g": 70.0,
+    "proteinPer100g": 8.76,
+    "fatPer100g": 3.5,
+    "carbsPer100g": 0.74,
+    "sodiumPer100g": 4.0
+  },
+  {
+    "name": "[USDA] Watermelon, raw",
+    "nameEn": "Watermelon, raw",
+    "caloriesPer100g": 30.0,
+    "proteinPer100g": 0.61,
+    "fatPer100g": 0.15,
+    "carbsPer100g": 7.55,
+    "sodiumPer100g": 1.0
+  },
+  {
+    "name": "[USDA] Watermelon, seedless, flesh only, raw",
+    "nameEn": "Watermelon, seedless, flesh only, raw",
+    "caloriesPer100g": 0.0,
+    "proteinPer100g": 0.87125,
+    "fatPer100g": 0.0,
+    "carbsPer100g": 0.0,
+    "sodiumPer100g": 0.0
+  },
+  {
+    "name": "[USDA] Watermelon, seedless, rind only, raw",
+    "nameEn": "Watermelon, seedless, rind only, raw",
+    "caloriesPer100g": 19.419,
+    "proteinPer100g": 0.53125,
+    "fatPer100g": 0.07,
+    "carbsPer100g": 4.166,
+    "sodiumPer100g": 3.763
+  },
+  {
+    "name": "[USDA] Yogurt, Greek, plain, lowfat",
+    "nameEn": "Yogurt, Greek, plain, lowfat",
+    "caloriesPer100g": 73.0,
+    "proteinPer100g": 9.95,
+    "fatPer100g": 1.92,
+    "carbsPer100g": 3.94,
+    "sodiumPer100g": 34.0
+  },
+  {
+    "name": "[USDA] Yogurt, plain, low fat",
+    "nameEn": "Yogurt, plain, low fat",
+    "caloriesPer100g": 63.0,
+    "proteinPer100g": 5.25,
+    "fatPer100g": 1.55,
+    "carbsPer100g": 7.04,
+    "sodiumPer100g": 70.0
+  },
+  {
+    "name": "[USDA] Yogurt, plain, nonfat",
+    "nameEn": "Yogurt, plain, nonfat",
+    "caloriesPer100g": 50.0015,
+    "proteinPer100g": 4.22675,
+    "fatPer100g": 0.0875,
+    "carbsPer100g": 8.07675,
+    "sodiumPer100g": 51.48
+  },
+  {
+    "name": "[USDA] Yogurt, plain, skim milk",
+    "nameEn": "Yogurt, plain, skim milk",
+    "caloriesPer100g": 56.0,
+    "proteinPer100g": 5.73,
+    "fatPer100g": 0.18,
+    "carbsPer100g": 7.68,
+    "sodiumPer100g": 77.0
+  },
+  {
+    "name": "[USDA] Yogurt, plain, whole milk",
+    "nameEn": "Yogurt, plain, whole milk",
+    "caloriesPer100g": 61.0,
+    "proteinPer100g": 3.47,
+    "fatPer100g": 3.25,
+    "carbsPer100g": 4.66,
+    "sodiumPer100g": 46.0
+  }
+]

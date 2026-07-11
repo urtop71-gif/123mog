@@ -1,0 +1,419 @@
+[
+  [
+    "Roasted Chicken Thigh",
+    {
+      "size": "241",
+      "cal": "316",
+      "pro": "21.9",
+      "fat": "8.1",
+      "car": "33.8",
+      "na": "667"
+    }
+  ],
+  [
+    "Beef & Mushroom Melt",
+    {
+      "size": "240",
+      "cal": "513",
+      "pro": "29.8",
+      "fat": "22.0",
+      "car": "49.1",
+      "na": "1262"
+    }
+  ],
+  [
+    "Smoky BBQ Beef Brisket",
+    {
+      "size": "251",
+      "cal": "517",
+      "pro": "26.4",
+      "fat": "22.0",
+      "car": "53.0",
+      "na": "1107"
+    }
+  ],
+  [
+    "Fiery Mexican Chicken",
+    {
+      "size": "282",
+      "cal": "460",
+      "pro": "22.7",
+      "fat": "19.6",
+      "car": "48.5",
+      "na": "1290"
+    }
+  ],
+  [
+    "Chicken & Mushroom Melt",
+    {
+      "size": "244",
+      "cal": "477",
+      "pro": "25.8",
+      "fat": "20.6",
+      "car": "47.5",
+      "na": "1365"
+    }
+  ],
+  [
+    "Avo Chicken Caesar",
+    {
+      "size": "320",
+      "cal": "501",
+      "pro": "25.6",
+      "fat": "21.5",
+      "car": "49.7",
+      "na": "1021"
+    }
+  ],
+  [
+    "Falafel",
+    {
+      "size": "229",
+      "cal": "391",
+      "pro": "15.4",
+      "fat": "12.3",
+      "car": "49.7",
+      "na": "732"
+    }
+  ],
+  [
+    "Cold Cut Trio",
+    {
+      "size": "214",
+      "cal": "272",
+      "pro": "19.8",
+      "fat": "4.0",
+      "car": "33.7",
+      "na": "812"
+    }
+  ],
+  [
+    "Egg Mayo",
+    {
+      "size": "228",
+      "cal": "354",
+      "pro": "14.0",
+      "fat": "16.9",
+      "car": "31.2",
+      "na": "469"
+    }
+  ],
+  [
+    "Roasted Chicken Breast",
+    {
+      "size": "225",
+      "cal": "286",
+      "pro": "24.8",
+      "fat": "3.7",
+      "car": "33.2",
+      "na": "615"
+    }
+  ],
+  [
+    "Chicken Ham",
+    {
+      "size": "214",
+      "cal": "272",
+      "pro": "18.9",
+      "fat": "4.6",
+      "car": "33.4",
+      "na": "749"
+    }
+  ],
+  [
+    "Subway Melt",
+    {
+      "size": "241",
+      "cal": "326",
+      "pro": "24.0",
+      "fat": "7.4",
+      "car": "34.8",
+      "na": "1087"
+    }
+  ],
+  [
+    "Veggie Delite",
+    {
+      "size": "154",
+      "cal": "207",
+      "pro": "10.2",
+      "fat": "2.2",
+      "car": "31.1",
+      "na": "278"
+    }
+  ],
+  [
+    "Italian B.M.T.",
+    {
+      "size": "220",
+      "cal": "330",
+      "pro": "20.4",
+      "fat": "10.5",
+      "car": "33.4",
+      "na": "892"
+    }
+  ],
+  [
+    "Chicken Teriyaki",
+    {
+      "size": "247",
+      "cal": "320",
+      "pro": "27.2",
+      "fat": "4.1",
+      "car": "38.2",
+      "na": "789"
+    }
+  ],
+  [
+    "Rotisserie Chicken Energy Bowl",
+    {
+      "size": "395",
+      "cal": "306",
+      "pro": "20.4",
+      "fat": "11.4",
+      "car": "31.7",
+      "na": "831"
+    }
+  ],
+  [
+    "Beef Brisket Energy Bowl",
+    {
+      "size": "368",
+      "cal": "390",
+      "pro": "23.8",
+      "fat": "26.9",
+      "car": "17.6",
+      "na": "1043"
+    }
+  ],
+  [
+    "Avo Caesar Chicken Energy Bowl",
+    {
+      "size": "409",
+      "cal": "380",
+      "pro": "20.0",
+      "fat": "23.8",
+      "car": "24.8",
+      "na": "1086"
+    }
+  ],
+  [
+    "Spicy Beef Taco Energy Bowl",
+    {
+      "size": "352",
+      "cal": "285",
+      "pro": "9.6",
+      "fat": "17.2",
+      "car": "24.9",
+      "na": "822"
+    }
+  ],
+  [
+    "Falafel Energy Bowl",
+    {
+      "size": "397",
+      "cal": "401",
+      "pro": "10.0",
+      "fat": "24.9",
+      "car": "38.3",
+      "na": "1005"
+    }
+  ],
+  [
+    "Loaded Nachos Bowl",
+    {
+      "size": "243",
+      "cal": "598",
+      "pro": "7.5",
+      "fat": "38.6",
+      "car": "55.2",
+      "na": "1114"
+    }
+  ],
+  [
+    "Black Pepper Chicken Nuggets",
+    {
+      "size": "105",
+      "cal": "236",
+      "pro": "14.1",
+      "fat": "10.9",
+      "car": "19.7",
+      "na": "622"
+    }
+  ],
+  [
+    "Mushroom Soup",
+    {
+      "size": "240",
+      "cal": "116",
+      "pro": "1.7",
+      "fat": "5.4",
+      "car": "17.5",
+      "na": "903"
+    }
+  ],
+  [
+    "Tomato Soup",
+    {
+      "size": "240",
+      "cal": "339",
+      "pro": "2",
+      "fat": "11",
+      "car": "14.7",
+      "na": "891"
+    }
+  ],
+  [
+    "Chocolate Chip Cookie",
+    {
+      "size": "45",
+      "cal": "217",
+      "pro": "2.4",
+      "fat": "10.4",
+      "car": "28.5",
+      "na": "161"
+    }
+  ],
+  [
+    "Double Chocolate Chip Cookie",
+    {
+      "size": "45",
+      "cal": "213",
+      "pro": "2.5",
+      "fat": "9.9",
+      "car": "28.4",
+      "na": "160"
+    }
+  ],
+  [
+    "Macaroni & Cheese",
+    {
+      "size": "150",
+      "cal": "363",
+      "pro": "11.5",
+      "fat": "22.7",
+      "car": "28.4",
+      "na": "654"
+    }
+  ],
+  [
+    "Chicken Sausage Egg & Cheese",
+    {
+      "size": "329",
+      "cal": "537",
+      "pro": "35.0",
+      "fat": "22.4",
+      "car": "51.1",
+      "na": "1717"
+    }
+  ],
+  [
+    "Egg & Cheese Flatbread",
+    {
+      "size": "239",
+      "cal": "369",
+      "pro": "18.2",
+      "fat": "13.0",
+      "car": "44.0",
+      "na": "818"
+    }
+  ],
+  [
+    "Chicken Bacon Egg & Cheese Flatbread",
+    {
+      "size": "248",
+      "cal": "370",
+      "pro": "19.6",
+      "fat": "12.1",
+      "car": "44.4",
+      "na": "819"
+    }
+  ],
+  [
+    "Chicken Ham Egg & Cheese Flatbread",
+    {
+      "size": "269",
+      "cal": "401",
+      "pro": "22.5",
+      "fat": "14.2",
+      "car": "45.2",
+      "na": "1054"
+    }
+  ],
+  [
+    "White Chip Macadamia Nut Cookie",
+    {
+      "size": "45",
+      "cal": "214",
+      "pro": "3.6",
+      "fat": "11.3",
+      "car": "25.4",
+      "na": "152",
+      "source": "subwaymenusg.com"
+    }
+  ],
+  [
+    "Oatmeal Raisin Cookie",
+    {
+      "size": "45",
+      "cal": "190",
+      "pro": "2.5",
+      "fat": "6.9",
+      "car": "29.3",
+      "na": "176",
+      "source": "subwaymenusg.com"
+    }
+  ],
+  [
+    "Raspberry Cheesecake Cookie",
+    {
+      "size": "45",
+      "cal": "200",
+      "pro": "2",
+      "fat": "9",
+      "car": "29",
+      "na": null,
+      "source": "fatsecret.sg (no sodium)",
+      "partial": true
+    }
+  ],
+  [
+    "Peanut Butter Cookie",
+    {
+      "size": "45",
+      "cal": "220",
+      "pro": "4",
+      "fat": "12",
+      "car": "26",
+      "na": null,
+      "source": "fatsecret.sg (no sodium)",
+      "partial": true
+    }
+  ],
+  [
+    "Chicken Bacon Ranch",
+    {
+      "size": "291",
+      "cal": "540",
+      "pro": "35",
+      "fat": "28",
+      "car": "47",
+      "na": null,
+      "source": "fatsecret.sg (no sodium)",
+      "partial": true
+    }
+  ],
+  [
+    "Tuna",
+    {
+      "size": "236",
+      "cal": "507",
+      "pro": "21",
+      "fat": "30",
+      "car": "36",
+      "na": null,
+      "source": "fatsecret.sg (no sodium)",
+      "partial": true
+    }
+  ]
+]
