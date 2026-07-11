@@ -104,11 +104,15 @@ export const weightLogSchema = z.object({
   weight: z.number().min(20).max(500),
 });
 
-export const waterLogSchema = z.object({
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
-  ml: z.number().int().min(0).max(20000),
-  deltaMl: z.number().int().min(-5000).max(5000).optional(),
-});
+export const waterLogSchema = z
+  .object({
+    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+    ml: z.number().int().min(0).max(20000).optional(),
+    deltaMl: z.number().int().min(-5000).max(5000).optional(),
+  })
+  .refine((v) => v.ml != null || v.deltaMl != null, {
+    message: "ml or deltaMl is required",
+  });
 
 export const favoriteSchema = z.object({
   foodId: z.string().min(1),

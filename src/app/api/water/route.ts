@@ -39,9 +39,11 @@ export async function PUT(request: NextRequest) {
     where: { userId_date: { userId: session.user.id, date } },
   });
 
-  let ml = parsed.data.ml;
+  let ml: number;
   if (parsed.data.deltaMl != null) {
     ml = Math.max(0, (existing?.ml ?? 0) + parsed.data.deltaMl);
+  } else {
+    ml = parsed.data.ml ?? 0;
   }
 
   const log = await prisma.waterLog.upsert({
