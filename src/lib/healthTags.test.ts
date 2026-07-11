@@ -56,4 +56,24 @@ describe("augmentHealthTags", () => {
   it("returns null when nothing is known", () => {
     expect(augmentHealthTags(null, {})).toBeNull();
   });
+
+  it("suppresses auto-computed neutral tags", () => {
+    // Mid-range macros → *_neutral from helpers; must not appear in output
+    const result = augmentHealthTags(null, {
+      carbsPer100g: 20,
+      fatPer100g: 10,
+      sodiumPer100g: 300,
+    });
+    expect(result).toBeNull();
+  });
+
+  it("strips curated neutral tags and only adds non-neutral computed ones", () => {
+    const result = augmentHealthTags("sugar_neutral,ldl_neutral", {
+      carbsPer100g: 5,
+      fatPer100g: 10,
+      sodiumPer100g: 700,
+    });
+    expect(result).toBe("sugar_good,sodium_bad");
+    expect(result).not.toMatch(/_neutral/);
+  });
 });

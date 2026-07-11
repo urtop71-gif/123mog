@@ -47,11 +47,14 @@ interface Macros {
 
 // Fills in sugar/LDL/sodium tags for whichever of the three the stored
 // healthTags string doesn't already cover.
+// Neutral tags (*_neutral) are never shown — only good/bad (and curated non-neutral).
 export function augmentHealthTags(
   healthTags: string | null | undefined,
   macros: Macros,
 ): string | null {
-  const existing = healthTags ? healthTags.split(",").filter(Boolean) : [];
+  const existing = healthTags
+    ? healthTags.split(",").filter((t) => t && !t.endsWith("_neutral"))
+    : [];
   const hasSugarTag = existing.some((t) => t.startsWith("sugar_"));
   const hasLdlTag = existing.some((t) => t.startsWith("ldl_"));
   const hasSodiumTag = existing.some((t) => t.startsWith("sodium_"));
@@ -59,15 +62,15 @@ export function augmentHealthTags(
   const result = [...existing];
   if (!hasSugarTag) {
     const tag = carbsTagFor(macros.carbsPer100g);
-    if (tag) result.push(tag);
+    if (tag && !tag.endsWith("_neutral")) result.push(tag);
   }
   if (!hasLdlTag) {
     const tag = fatTagFor(macros.fatPer100g);
-    if (tag) result.push(tag);
+    if (tag && !tag.endsWith("_neutral")) result.push(tag);
   }
   if (!hasSodiumTag) {
     const sodiumTag = sodiumTagFor(macros.sodiumPer100g);
-    if (sodiumTag) result.push(sodiumTag);
+    if (sodiumTag && !sodiumTag.endsWith("_neutral")) result.push(sodiumTag);
   }
 
   // de-dupe while preserving order
