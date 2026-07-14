@@ -12,11 +12,23 @@
 - Forms: use shared CSS classes `.input-field`, `.btn-primary`, `.card` from `globals.css`.
 - Password policy: min 8, letter + number (Zod in `validation.ts`).
 
+## Food data (read this before adding foods)
+
+- Shared catalog foods are **not** applied by Vercel deploy. Code merge only ships scripts/JSON; rows must be inserted into Turso via a local script with prod `DATABASE_URL`.
+- Prefer additive scripts (`importUtils.importFoods` or skip-if-exists). Never use `prisma/seed.ts` on production casually — it wipes meals/foods.
+- After adding or changing an import script / `prisma/data/*`:
+  1. Commit the script/data.
+  2. Run the import against **prod** Turso (`.env` `DATABASE_URL=libsql://…`).
+  3. Verify: `npm run db:verify:basic` and/or search the new names on https://123mog.vercel.app
+  4. PR description must say: **Requires post-merge import: `npm run db:import:…`**
+- Common commands: `npm run db:import:basic`, `npm run db:import:branded`. Full checklist: `docs/FOOD_DATA.md`.
+
 ## Do not
 
 - Duplicate NextAuth config in the route handler.
 - Store custom foods as global without `userId`.
 - Commit `.env` or `*.db`.
+- Assume production food DB updates when only the import script is merged (deploy ≠ seed).
 
 ## Tests
 
@@ -24,4 +36,4 @@
 npm test
 ```
 
-Unit coverage: validation, healthTags, mealItems, rateLimit, dates.
+Unit coverage: validation, healthTags, mealItems, rateLimit, dates, foodLabel.
