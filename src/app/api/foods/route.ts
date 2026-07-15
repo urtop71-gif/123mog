@@ -21,7 +21,6 @@ export async function GET(request: NextRequest) {
       where: { userId },
       include: { food: { include: { servings: true } } },
       orderBy: { createdAt: "desc" },
-      take: 30,
     });
     return NextResponse.json(
       rows.map((r) => ({

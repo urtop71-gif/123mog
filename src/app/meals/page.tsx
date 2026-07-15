@@ -288,18 +288,26 @@ function MealsPageInner() {
         <div className="card p-4 mb-4 space-y-3">
           {favorites.length > 0 && (
             <div>
-              <h3 className="text-sm font-semibold mb-2">{t.meals.favorites}</h3>
-              <div className="flex flex-wrap gap-2">
-                {favorites.slice(0, 8).map((f) => (
-                  <button
-                    key={f.id}
-                    onClick={() => selectFood(f)}
-                    className="text-xs px-2.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800"
-                  >
-                    ★ {foodLabel(f)}
-                  </button>
+              <h3 className="text-sm font-semibold mb-2">
+                {t.meals.favorites} ({favorites.length})
+              </h3>
+              <select
+                value=""
+                onChange={(e) => {
+                  const food = favorites.find((f) => f.id === e.target.value);
+                  if (food) selectFood(food);
+                }}
+                className="input-field"
+              >
+                <option value="" disabled>
+                  {t.meals.favorites}
+                </option>
+                {favorites.map((f) => (
+                  <option key={f.id} value={f.id}>
+                    {foodLabel(f)}
+                  </option>
                 ))}
-              </div>
+              </select>
             </div>
           )}
           {recent.length > 0 && (
