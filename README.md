@@ -37,6 +37,25 @@ Open http://localhost:3000
 | `npm run lint` | ESLint |
 | `npx prisma db push` | Sync schema to SQLite |
 | `npx prisma studio` | Browse DB |
+| `npm run db:import:basic` | Additive: raw veg + protein staples → current `DATABASE_URL` |
+| `npm run db:import:branded` | Additive: USDA/Subway/Starbucks/GYG → current `DATABASE_URL` |
+| `npm run db:verify:basic` | Assert staples exist in current DB |
+| `npm run db:seed` | **Destructive** full reseed (`prisma/seed.ts`) — not for casual prod use |
+
+## Food data & production
+
+Production app: **https://123mog.vercel.app**  
+Production DB: Turso (`DATABASE_URL=libsql://…` in Vercel + local `.env`).
+
+**Deploy does not insert food rows.** After merging any food import/seed change, run the import against prod Turso, then verify:
+
+```bash
+# .env must point at Turso, not file:./dev.db
+npm run db:import:basic    # or db:import:branded / npx tsx prisma/import-….ts
+npm run db:verify:basic
+```
+
+Full checklist and script map: **[docs/FOOD_DATA.md](docs/FOOD_DATA.md)**.
 
 ## Features
 

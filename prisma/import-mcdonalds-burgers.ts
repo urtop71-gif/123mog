@@ -18,6 +18,10 @@ const foods = [
   { name: "베이컨토마토디럭스", nameEn: "Bacon Tomato Deluxe", category: "western", subcategory: "burger", caloriesPer100g: 239, proteinPer100g: 13.0, fatPer100g: 13.0, carbsPer100g: 19.0, sodiumPer100g: 460, servings: [{ unitName: "개", gramsPerUnit: 180 }, { unitName: "g", gramsPerUnit: 1 }] },
   { name: "필레오피쉬", nameEn: "Filet-O-Fish", category: "western", subcategory: "burger", caloriesPer100g: 250, proteinPer100g: 12.0, fatPer100g: 12.0, carbsPer100g: 24.0, sodiumPer100g: 430, servings: [{ unitName: "개", gramsPerUnit: 136 }, { unitName: "g", gramsPerUnit: 1 }] },
   { name: "맥치킨", nameEn: "McChicken", category: "western", subcategory: "burger", caloriesPer100g: 252, proteinPer100g: 11.0, fatPer100g: 12.0, carbsPer100g: 25.0, sodiumPer100g: 400, servings: [{ unitName: "개", gramsPerUnit: 143 }, { unitName: "g", gramsPerUnit: 1 }] },
+  { name: "더블빅맥", nameEn: "Double Big Mac", category: "western", subcategory: "burger", caloriesPer100g: 275, proteinPer100g: 14.4, fatPer100g: 15.8, carbsPer100g: 16.7, sodiumPer100g: 456, servings: [{ unitName: "개", gramsPerUnit: 215 }, { unitName: "g", gramsPerUnit: 1 }] },
+  { name: "맥스파이시상하이버거", nameEn: "McSpicy Shanghai Burger", category: "western", subcategory: "burger", caloriesPer100g: 204, proteinPer100g: 9.8, fatPer100g: 8.9, carbsPer100g: 21.5, sodiumPer100g: 430, servings: [{ unitName: "개", gramsPerUnit: 236 }, { unitName: "g", gramsPerUnit: 1 }] },
+  { name: "맥크리스피디럭스", nameEn: "McCrispy Deluxe Burger", category: "western", subcategory: "burger", caloriesPer100g: 223, proteinPer100g: 8.6, fatPer100g: 11.2, carbsPer100g: 22.7, sodiumPer100g: 410, servings: [{ unitName: "개", gramsPerUnit: 247 }, { unitName: "g", gramsPerUnit: 1 }] },
+  { name: "맥크리스피클래식", nameEn: "McCrispy Classic Burger", category: "western", subcategory: "burger", caloriesPer100g: 290, proteinPer100g: 11.3, fatPer100g: 14.8, carbsPer100g: 29.1, sodiumPer100g: 480, servings: [{ unitName: "개", gramsPerUnit: 232 }, { unitName: "g", gramsPerUnit: 1 }] },
 ]
 
 runImport(() => importFoods(foods, "McDonald's burgers"))

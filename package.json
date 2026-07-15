@@ -10,6 +10,9 @@
     "test": "vitest run",
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
+    "db:import:basic": "npx tsx prisma/import-basic-ingredients.ts",
+    "db:import:branded": "npx tsx prisma/seed-foods.ts",
+    "db:verify:basic": "npx tsx prisma/verify-basic-ingredients.ts",
     "postinstall": "prisma generate"
   },
   "prisma": {

@@ -7,6 +7,7 @@ import { useT } from "@/lib/LangContext";
 import { useToast } from "@/components/Toast";
 import { HealthTagBadges } from "@/components/HealthTagBadges";
 import { addDaysToKey, toLocalDateKey } from "@/lib/dates";
+import { foodDisplayName } from "@/lib/foodLabel";
 
 interface FoodItem {
   id: string;
@@ -27,6 +28,7 @@ interface FoodItem {
 interface MealItemInput {
   foodId: string;
   foodName: string;
+  foodNameEn?: string | null;
   quantity: number;
   unitName: string;
   estCalories?: number;
@@ -36,6 +38,7 @@ interface MealHistoryItem {
   id: string;
   foodId: string;
   foodName: string;
+  foodNameEn?: string | null;
   healthTags?: string | null;
   quantity: number;
   unitName: string;
@@ -77,8 +80,11 @@ function MealsPageInner() {
   const [editMealId, setEditMealId] = useState<string | null>(null);
   const [showCustomFoodForm, setShowCustomFoodForm] = useState(false);
 
-  const foodLabel = (food: Pick<FoodItem, "name" | "nameEn" | "category">) =>
-    lang === "en" && food.category !== "korean" && food.nameEn ? food.nameEn : food.name;
+  const foodLabel = (food: Pick<FoodItem, "name" | "nameEn">) =>
+    foodDisplayName({ name: food.name, nameEn: food.nameEn }, lang);
+
+  const cartLabel = (item: Pick<MealItemInput, "foodName" | "foodNameEn">) =>
+    foodDisplayName({ name: item.foodName, nameEn: item.foodNameEn }, lang);
 
   useEffect(() => {
     const timer = setTimeout(async () => {
@@ -128,7 +134,8 @@ function MealsPageInner() {
       ...prev,
       {
         foodId: selectedFood.id,
-        foodName: foodLabel(selectedFood),
+        foodName: selectedFood.name,
+        foodNameEn: selectedFood.nameEn ?? null,
         quantity,
         unitName,
         estCalories: estimateCalories(selectedFood, quantity, unitName),
@@ -212,6 +219,7 @@ function MealsPageInner() {
       match.items.map((item) => ({
         foodId: item.foodId,
         foodName: item.foodName,
+        foodNameEn: item.foodNameEn ?? null,
         quantity: item.quantity,
         unitName: item.unitName,
         estCalories: item.totalCalories,
@@ -484,7 +492,7 @@ function MealsPageInner() {
                   key={i}
                   className="flex justify-between items-center text-sm py-2 border-b border-gray-100 dark:border-gray-700 last:border-0"
                 >
-                  <span className="text-gray-700 dark:text-gray-300">{item.foodName}</span>
+                  <span className="text-gray-700 dark:text-gray-300">{cartLabel(item)}</span>
                   <div className="flex items-center gap-2">
                     <span className="text-gray-400 dark:text-gray-500">
                       {item.quantity}
@@ -531,6 +539,7 @@ function MealsPageInner() {
             meal.items.map((item) => ({
               foodId: item.foodId,
               foodName: item.foodName,
+              foodNameEn: item.foodNameEn ?? null,
               quantity: item.quantity,
               unitName: item.unitName,
               estCalories: item.totalCalories,
@@ -550,11 +559,14 @@ function MealHistory({
   dateKey: string;
   onEdit: (meal: MealHistoryEntry) => void;
 }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const { toast } = useToast();
   const [meals, setMeals] = useState<MealHistoryEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+
+  const historyFoodLabel = (item: Pick<MealHistoryItem, "foodName" | "foodNameEn">) =>
+    foodDisplayName({ name: item.foodName, nameEn: item.foodNameEn }, lang);
 
   const fetchMeals = useCallback(async () => {
     setLoading(true);
@@ -628,7 +640,7 @@ function MealHistory({
                   {meal.items?.map((item) => (
                     <div key={item.id} className="flex items-center flex-wrap gap-1">
                       <span>
-                        {item.foodName} {item.quantity}
+                        {historyFoodLabel(item)} {item.quantity}
                         {item.unitName}
                       </span>
                       <HealthTagBadges tags={item.healthTags} size="xs" />

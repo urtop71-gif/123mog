@@ -19,6 +19,7 @@ export default function DayExtras({
   const { toast } = useToast();
   const [waterMl, setWaterMl] = useState(0);
   const [waterTarget, setWaterTarget] = useState(2000);
+  const [addingWater, setAddingWater] = useState(false);
   const [streak, setStreak] = useState(0);
   const [weekDays, setWeekDays] = useState({ logged: 0, onTarget: 0 });
   const [weight, setWeight] = useState("");
@@ -45,15 +46,31 @@ export default function DayExtras({
     load();
   }, [load]);
 
-  const addWater = async () => {
-    const res = await fetch("/api/water", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ date: dateKey, deltaMl: 250 }),
-    });
-    if (res.ok) {
-      const data = await res.json();
-      setWaterMl(data.ml);
+  const adjustWater = async (deltaMl: number) => {
+    if (addingWater) return;
+    if (deltaMl < 0 && waterMl <= 0) return;
+    setAddingWater(true);
+    const prevMl = waterMl;
+    // Optimistic UI so taps feel instant on mobile (never below 0)
+    setWaterMl((prev) => Math.max(0, prev + deltaMl));
+    try {
+      const res = await fetch("/api/water", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ date: dateKey, deltaMl }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setWaterMl(data.ml);
+      } else {
+        setWaterMl(prevMl);
+        toast(t.common.error, "error");
+      }
+    } catch {
+      setWaterMl(prevMl);
+      toast(t.common.error, "error");
+    } finally {
+      setAddingWater(false);
     }
   };
 
@@ -97,18 +114,35 @@ export default function DayExtras({
       </div>
 
       <div className="card p-4">
-        <div className="flex justify-between items-center mb-1">
-          <span className="text-xs text-gray-500 dark:text-gray-400">{t.dashboard.water}</span>
-          <button onClick={addWater} className="text-xs font-medium text-emerald-600 hover:underline">
-            {t.dashboard.addWater}
-          </button>
+        <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">{t.dashboard.water}</div>
+        <div className="flex items-end justify-between gap-3 mb-2">
+          <div className="text-2xl font-bold leading-none">
+            {waterMl}
+            <span className="text-sm font-normal text-gray-400"> / {waterTarget} ml</span>
+          </div>
+          <div className="flex shrink-0 gap-2">
+            <button
+              type="button"
+              onClick={() => adjustWater(-250)}
+              disabled={addingWater || waterMl <= 0}
+              className="min-h-12 min-w-[5.5rem] px-3 py-3 rounded-xl border-2 border-sky-400 bg-white dark:bg-gray-800 text-sky-700 dark:text-sky-300 text-base font-bold hover:bg-sky-50 dark:hover:bg-sky-950 active:bg-sky-100 disabled:opacity-40 touch-manipulation select-none"
+              aria-label={t.dashboard.removeWater}
+            >
+              {t.dashboard.removeWater}
+            </button>
+            <button
+              type="button"
+              onClick={() => adjustWater(250)}
+              disabled={addingWater}
+              className="min-h-12 min-w-[5.5rem] px-3 py-3 rounded-xl bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white text-base font-bold shadow-md shadow-sky-500/30 disabled:opacity-60 touch-manipulation select-none"
+              aria-label={t.dashboard.addWater}
+            >
+              {t.dashboard.addWater}
+            </button>
+          </div>
         </div>
-        <div className="text-2xl font-bold">
-          {waterMl}
-          <span className="text-sm font-normal text-gray-400"> / {waterTarget} ml</span>
-        </div>
-        <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2 mt-2">
-          <div className="h-full rounded-full bg-sky-500" style={{ width: `${waterPct}%` }} />
+        <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2.5">
+          <div className="h-full rounded-full bg-sky-500 transition-[width]" style={{ width: `${waterPct}%` }} />
         </div>
       </div>
 
