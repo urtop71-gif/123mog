@@ -125,5 +125,7 @@ export const exerciseLogSchema = z.object({
 
 export const healthSyncSchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
-  activeCalories: z.number().int().min(0).max(20000),
+  // HealthKit sums (e.g. "Calculate Statistics" in Shortcuts) are floats
+  // like 437.283 kcal - only the stored value needs to be a whole number.
+  activeCalories: z.number().min(0).max(20000),
 });
