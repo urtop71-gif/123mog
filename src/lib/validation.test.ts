@@ -178,6 +178,10 @@ describe("healthSyncSchema", () => {
     expect(healthSyncSchema.safeParse({ activeCalories: 420 }).success).toBe(true);
   });
 
+  it("accepts the fractional totals HealthKit/Shortcuts actually produce", () => {
+    expect(healthSyncSchema.safeParse({ activeCalories: 437.283 }).success).toBe(true);
+  });
+
   it("rejects an out-of-range calorie value", () => {
     expect(healthSyncSchema.safeParse({ activeCalories: 99999 }).success).toBe(false);
   });

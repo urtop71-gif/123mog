@@ -31,10 +31,11 @@ export async function POST(request: NextRequest) {
   }
 
   const date = parsed.data.date || toLocalDateKey();
+  const calories = Math.round(parsed.data.activeCalories);
   const log = await prisma.exerciseLog.upsert({
     where: { userId_date: { userId: user.id, date } },
-    create: { userId: user.id, date, calories: parsed.data.activeCalories, source: "healthkit" },
-    update: { calories: parsed.data.activeCalories, source: "healthkit" },
+    create: { userId: user.id, date, calories, source: "healthkit" },
+    update: { calories, source: "healthkit" },
   });
 
   return NextResponse.json({ date: log.date, calories: log.calories });
