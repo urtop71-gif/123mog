@@ -111,7 +111,7 @@ export const translations = {
       quickQty: "빠른 수량",
       star: "즐겨찾기",
       unstar: "즐겨찾기 해제",
-      privateFood: "내 음식",
+      privateFood: "사용자 등록",
     },
     dashboard: {
       title: "대시보드",
@@ -331,7 +331,7 @@ export const translations = {
       quickQty: "Quick qty",
       star: "Favorite",
       unstar: "Unfavorite",
-      privateFood: "My food",
+      privateFood: "User-added",
     },
     dashboard: {
       title: "Dashboard",
