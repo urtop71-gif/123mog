@@ -64,7 +64,7 @@ export default function TrendChart() {
         data: data.map((d) => d.bmr),
         backgroundColor: "#6366f1",
         stack: "burned",
-        order: 3,
+        order: 2,
       },
       {
         type: "bar" as const,
@@ -73,7 +73,7 @@ export default function TrendChart() {
         backgroundColor: "#f59e0b",
         borderRadius: 4,
         stack: "burned",
-        order: 2,
+        order: 3,
       },
       {
         type: "line" as const,
