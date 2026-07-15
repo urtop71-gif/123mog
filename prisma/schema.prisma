@@ -40,6 +40,7 @@ model User {
   weightLogs       WeightLog[]
   waterLogs        WaterLog[]
   exerciseLogs     ExerciseLog[]
+  bmrLogs          BmrLog[]
 }
 
 model Food {
@@ -154,6 +155,18 @@ model ExerciseLog {
   calories  Int      @default(0) // active/exercise energy burned that day
   source    String   @default("manual") // manual, healthkit
   updatedAt DateTime @updatedAt
+
+  @@unique([userId, date])
+  @@index([userId, date])
+}
+
+model BmrLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      String // yyyy-MM-dd local date key
+  bmr       Int // manually entered basal metabolic rate (e.g. from a body composition scale)
+  createdAt DateTime @default(now())
 
   @@unique([userId, date])
   @@index([userId, date])

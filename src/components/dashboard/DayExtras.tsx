@@ -26,6 +26,8 @@ export default function DayExtras({
   const [weekDays, setWeekDays] = useState({ logged: 0, onTarget: 0 });
   const [weight, setWeight] = useState("");
   const [savingWeight, setSavingWeight] = useState(false);
+  const [bmrInput, setBmrInput] = useState("");
+  const [savingBmr, setSavingBmr] = useState(false);
   const [exerciseCalories, setExerciseCalories] = useState(0);
   const [exerciseSource, setExerciseSource] = useState<string | null>(null);
   const [exerciseInput, setExerciseInput] = useState("");
@@ -99,6 +101,24 @@ export default function DayExtras({
     if (res.ok) {
       toast(t.profile.saved);
       setWeight("");
+    } else {
+      toast(t.common.error, "error");
+    }
+  };
+
+  const saveBmr = async () => {
+    const b = parseInt(bmrInput, 10);
+    if (!b) return;
+    setSavingBmr(true);
+    const res = await fetch("/api/bmr", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ date: dateKey, bmr: b }),
+    });
+    setSavingBmr(false);
+    if (res.ok) {
+      toast(t.profile.saved);
+      setBmrInput("");
     } else {
       toast(t.common.error, "error");
     }
@@ -215,24 +235,48 @@ export default function DayExtras({
       </div>
 
       <div className="card p-4">
-        <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">{t.dashboard.weight}</div>
-        <div className="flex gap-2">
-          <input
-            type="number"
-            step="0.1"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            placeholder="kg"
-            className="input-field"
-            aria-label={t.dashboard.logWeight}
-          />
-          <button
-            onClick={saveWeight}
-            disabled={savingWeight || !weight}
-            className="btn-primary whitespace-nowrap px-3"
-          >
-            {t.common.save}
-          </button>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">{t.dashboard.weight}</div>
+            <div className="flex gap-2">
+              <input
+                type="number"
+                step="0.1"
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+                placeholder="kg"
+                className="input-field"
+                aria-label={t.dashboard.logWeight}
+              />
+              <button
+                onClick={saveWeight}
+                disabled={savingWeight || !weight}
+                className="btn-primary whitespace-nowrap px-3"
+              >
+                {t.common.save}
+              </button>
+            </div>
+          </div>
+          <div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">{t.profile.bmr}</div>
+            <div className="flex gap-2">
+              <input
+                type="number"
+                value={bmrInput}
+                onChange={(e) => setBmrInput(e.target.value)}
+                placeholder="kcal"
+                className="input-field"
+                aria-label={t.profile.bmr}
+              />
+              <button
+                onClick={saveBmr}
+                disabled={savingBmr || !bmrInput}
+                className="btn-primary whitespace-nowrap px-3"
+              >
+                {t.common.save}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 

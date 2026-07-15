@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
   const { start } = localDayRange(startKey);
   const { end } = localDayRange(today);
 
-  const [meals, exerciseLogs] = await Promise.all([
+  const [meals, exerciseLogs, bmrLogs, user] = await Promise.all([
     prisma.meal.findMany({
       where: {
         userId: session.user.id,
@@ -32,6 +32,14 @@ export async function GET(request: NextRequest) {
       },
       select: { date: true, calories: true },
     }),
+    // Fetch every BmrLog up to today (not just within the range) so a day
+    // with no entry can carry forward the most recent value known by then.
+    prisma.bmrLog.findMany({
+      where: { userId: session.user.id, date: { lte: today } },
+      orderBy: { date: "asc" },
+      select: { date: true, bmr: true },
+    }),
+    prisma.user.findUnique({ where: { id: session.user.id }, select: { bmr: true } }),
   ]);
 
   const byDate = new Map<string, { calories: number; protein: number; fat: number; carbs: number }>();
@@ -49,10 +57,17 @@ export async function GET(request: NextRequest) {
 
   const exerciseByDate = new Map(exerciseLogs.map((log) => [log.date, log.calories]));
 
+  let bmrLogIdx = 0;
+  let carriedBmr = user?.bmr ? Math.round(user.bmr) : 0;
+
   const series = Array.from({ length: days }, (_, i) => {
     const key = addDaysToKey(today, -(days - 1 - i));
     const bucket = byDate.get(key) ?? { calories: 0, protein: 0, fat: 0, carbs: 0 };
-    return { date: key, ...bucket, exercise: exerciseByDate.get(key) ?? 0 };
+    while (bmrLogIdx < bmrLogs.length && bmrLogs[bmrLogIdx].date <= key) {
+      carriedBmr = bmrLogs[bmrLogIdx].bmr;
+      bmrLogIdx++;
+    }
+    return { date: key, ...bucket, exercise: exerciseByDate.get(key) ?? 0, bmr: carriedBmr };
   });
 
   return NextResponse.json(series);

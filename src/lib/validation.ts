@@ -118,6 +118,11 @@ export const favoriteSchema = z.object({
   foodId: z.string().min(1),
 });
 
+export const bmrLogSchema = z.object({
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  bmr: z.number().int().min(500).max(5000),
+});
+
 export const exerciseLogSchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
   calories: z.number().int().min(0).max(20000),

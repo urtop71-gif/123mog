@@ -36,6 +36,7 @@ interface TrendPoint {
   fat: number;
   carbs: number;
   exercise: number;
+  bmr: number;
 }
 
 export default function TrendChart() {
@@ -59,11 +60,20 @@ export default function TrendChart() {
     datasets: [
       {
         type: "bar" as const,
+        label: t.profile.bmr,
+        data: data.map((d) => d.bmr),
+        backgroundColor: "#6366f1",
+        stack: "burned",
+        order: 2,
+      },
+      {
+        type: "bar" as const,
         label: t.dashboard.exercise,
         data: data.map((d) => d.exercise),
         backgroundColor: "#f59e0b",
         borderRadius: 4,
-        order: 2,
+        stack: "burned",
+        order: 3,
       },
       {
         type: "line" as const,
@@ -84,7 +94,10 @@ export default function TrendChart() {
       legend: { display: true, position: "top" as const, labels: { boxWidth: 12, usePointStyle: true } },
       tooltip: { backgroundColor: "#1f2937", padding: 12, cornerRadius: 8 },
     },
-    scales: { y: { beginAtZero: true }, x: { grid: { display: false } } },
+    scales: {
+      y: { beginAtZero: true, stacked: true },
+      x: { grid: { display: false }, stacked: true },
+    },
   };
 
   return (

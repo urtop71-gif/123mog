@@ -7,6 +7,7 @@ import {
   waterLogSchema,
   exerciseLogSchema,
   healthSyncSchema,
+  bmrLogSchema,
 } from "@/lib/validation";
 
 describe("registerSchema", () => {
@@ -184,5 +185,19 @@ describe("healthSyncSchema", () => {
 
   it("rejects an out-of-range calorie value", () => {
     expect(healthSyncSchema.safeParse({ activeCalories: 99999 }).success).toBe(false);
+  });
+});
+
+describe("bmrLogSchema", () => {
+  it("accepts a valid manual BMR entry", () => {
+    expect(bmrLogSchema.safeParse({ date: "2026-07-15", bmr: 1700 }).success).toBe(true);
+  });
+
+  it("rejects an implausibly low BMR", () => {
+    expect(bmrLogSchema.safeParse({ bmr: 100 }).success).toBe(false);
+  });
+
+  it("rejects a missing bmr value", () => {
+    expect(bmrLogSchema.safeParse({ date: "2026-07-15" }).success).toBe(false);
   });
 });
