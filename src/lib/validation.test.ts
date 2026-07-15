@@ -5,6 +5,8 @@ import {
   profileUpdateSchema,
   foodCreateSchema,
   waterLogSchema,
+  exerciseLogSchema,
+  healthSyncSchema,
 } from "@/lib/validation";
 
 describe("registerSchema", () => {
@@ -148,5 +150,35 @@ describe("waterLogSchema", () => {
 
   it("rejects empty body", () => {
     expect(waterLogSchema.safeParse({}).success).toBe(false);
+  });
+});
+
+describe("exerciseLogSchema", () => {
+  it("accepts a valid manual entry", () => {
+    expect(exerciseLogSchema.safeParse({ date: "2026-07-15", calories: 350 }).success).toBe(true);
+  });
+
+  it("rejects a negative calorie value", () => {
+    expect(exerciseLogSchema.safeParse({ calories: -1 }).success).toBe(false);
+  });
+
+  it("rejects a missing calorie value", () => {
+    expect(exerciseLogSchema.safeParse({ date: "2026-07-15" }).success).toBe(false);
+  });
+});
+
+describe("healthSyncSchema", () => {
+  it("accepts a valid HealthKit push", () => {
+    expect(
+      healthSyncSchema.safeParse({ date: "2026-07-15", activeCalories: 420 }).success,
+    ).toBe(true);
+  });
+
+  it("defaults date to today when omitted", () => {
+    expect(healthSyncSchema.safeParse({ activeCalories: 420 }).success).toBe(true);
+  });
+
+  it("rejects an out-of-range calorie value", () => {
+    expect(healthSyncSchema.safeParse({ activeCalories: 99999 }).success).toBe(false);
   });
 });

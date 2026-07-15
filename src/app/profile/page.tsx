@@ -393,6 +393,8 @@ export default function ProfilePage() {
 
       <ChangePasswordForm />
 
+      <HealthSyncSection />
+
       <div className="card p-6 mt-6 border-red-200 dark:border-red-900">
         <h2 className="font-semibold text-red-600 mb-2">{t.profile.deleteAccount}</h2>
         <button onClick={deleteAccount} className="w-full py-2.5 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700">
@@ -485,5 +487,117 @@ function ChangePasswordForm() {
         {saving ? t.profile.saving : t.profile.changePasswordBtn}
       </button>
     </form>
+  );
+}
+
+function HealthSyncSection() {
+  const { t } = useT();
+  const { toast } = useToast();
+  const [hasToken, setHasToken] = useState(false);
+  const [newToken, setNewToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [busy, setBusy] = useState(false);
+  const [origin, setOrigin] = useState("");
+
+  useEffect(() => {
+    setOrigin(window.location.origin);
+    fetch("/api/user/health-token")
+      .then((r) => r.json())
+      .then((d) => setHasToken(!!d.hasToken))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const generate = async () => {
+    if (hasToken && !confirm(t.profile.regenerateTokenConfirm)) return;
+    setBusy(true);
+    const res = await fetch("/api/user/health-token", { method: "POST" });
+    setBusy(false);
+    if (res.ok) {
+      const d = await res.json();
+      setNewToken(d.token);
+      setHasToken(true);
+    } else {
+      toast(t.common.error, "error");
+    }
+  };
+
+  const revoke = async () => {
+    if (!confirm(t.profile.revokeTokenConfirm)) return;
+    setBusy(true);
+    const res = await fetch("/api/user/health-token", { method: "DELETE" });
+    setBusy(false);
+    if (res.ok) {
+      setHasToken(false);
+      setNewToken(null);
+      toast(t.profile.saved);
+    } else {
+      toast(t.common.error, "error");
+    }
+  };
+
+  const copy = (text: string) => {
+    navigator.clipboard?.writeText(text);
+    toast(t.profile.copied);
+  };
+
+  if (loading) return null;
+
+  const syncUrl = `${origin}/api/integrations/health-sync`;
+
+  return (
+    <div className="card p-6 mt-6 space-y-3">
+      <h2 className="font-semibold text-gray-900 dark:text-gray-100">{t.profile.healthSyncTitle}</h2>
+      <p className="text-sm text-gray-500 dark:text-gray-400">{t.profile.healthSyncDesc}</p>
+
+      {newToken ? (
+        <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 rounded-lg p-3 space-y-2">
+          <p className="text-xs text-amber-700 dark:text-amber-300">{t.profile.tokenShownOnce}</p>
+          <div className="flex gap-2">
+            <code className="input-field flex-1 overflow-x-auto text-xs py-2">{newToken}</code>
+            <button
+              type="button"
+              onClick={() => copy(newToken)}
+              className="btn-primary px-3 whitespace-nowrap"
+            >
+              {t.profile.copy}
+            </button>
+          </div>
+        </div>
+      ) : (
+        <p className="text-sm text-gray-600 dark:text-gray-300">
+          {hasToken ? t.profile.tokenActive : t.profile.tokenNone}
+        </p>
+      )}
+
+      <div className="flex gap-2">
+        <button type="button" onClick={generate} disabled={busy} className="btn-primary px-3">
+          {hasToken ? t.profile.regenerateToken : t.profile.generateToken}
+        </button>
+        {hasToken && (
+          <button
+            type="button"
+            onClick={revoke}
+            disabled={busy}
+            className="px-3 py-2.5 rounded-lg border border-red-300 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 text-sm font-medium"
+          >
+            {t.profile.revokeToken}
+          </button>
+        )}
+      </div>
+
+      <div className="text-xs text-gray-500 dark:text-gray-400 space-y-1 pt-2 border-t border-gray-100 dark:border-gray-800">
+        <p className="font-medium text-gray-700 dark:text-gray-300">{t.profile.shortcutStepsTitle}</p>
+        <ol className="list-decimal list-inside space-y-1">
+          <li>{t.profile.shortcutStep1}</li>
+          <li>{t.profile.shortcutStep2}</li>
+          <li>
+            {t.profile.shortcutStep3}:{" "}
+            <span className="break-all font-mono text-[11px]">{syncUrl}</span>
+          </li>
+          <li>{t.profile.shortcutStep4}</li>
+          <li>{t.profile.shortcutStep5}</li>
+        </ol>
+      </div>
+    </div>
   );
 }

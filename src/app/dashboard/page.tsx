@@ -128,6 +128,7 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
         sodiumCurrent={totalSodium}
         sodiumTarget={targets.sodium}
         healthConditions={user?.healthConditions ?? ""}
+        caloriesIn={totalCalories}
       />
 
       <MealList meals={mealGroups} dateKey={dateStr} />

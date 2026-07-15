@@ -28,6 +28,10 @@ model User {
   waterTargetMl    Int            @default(2000)
   healthConditions String? // comma-separated: diabetes, high_cholesterol, hypertension
   onboardingDone   Boolean        @default(false)
+  // sha256 hex digest of the personal access token used by the iOS Shortcuts
+  // health-sync automation; null when no token has been issued. The raw token
+  // is never stored - only shown once to the user at generation time.
+  healthSyncTokenHash String?     @unique
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
   meals            Meal[]
@@ -35,6 +39,7 @@ model User {
   favorites        FavoriteFood[]
   weightLogs       WeightLog[]
   waterLogs        WaterLog[]
+  exerciseLogs     ExerciseLog[]
 }
 
 model Food {
@@ -135,6 +140,19 @@ model WaterLog {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   date      String // yyyy-MM-dd local date key
   ml        Int      @default(0)
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, date])
+  @@index([userId, date])
+}
+
+model ExerciseLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      String // yyyy-MM-dd local date key
+  calories  Int      @default(0) // active/exercise energy burned that day
+  source    String   @default("manual") // manual, healthkit
   updatedAt DateTime @updatedAt
 
   @@unique([userId, date])

@@ -11,12 +11,15 @@
 - Health tags: use `HealthTagBadges` component; `augmentHealthTags` must not duplicate sodium_/sugar_/ldl_ prefixes. Never surface `*_neutral` tags (good/bad only).
 - Forms: use shared CSS classes `.input-field`, `.btn-primary`, `.card` from `globals.css`.
 - Password policy: min 8, letter + number (Zod in `validation.ts`).
+- Per-day user data (`WeightLog`, `WaterLog`, `ExerciseLog`) uses a `yyyy-MM-dd` string `date` column with a `@@unique([userId, date])`, upserted via `toLocalDateKey()` — not a `DateTime`.
+- `POST /api/integrations/health-sync` (the iOS Shortcuts HealthKit sync) is token-authenticated, not session-authenticated: it checks `Authorization: Bearer <token>` against `User.healthSyncTokenHash`. Tokens are generated in `src/lib/healthToken.ts`, shown to the user exactly once at issuance, and only the sha256 hash is ever persisted.
 
 ## Do not
 
 - Duplicate NextAuth config in the route handler.
 - Store custom foods as global without `userId`.
 - Commit `.env` or `*.db`.
+- Store a raw health-sync token anywhere (DB, logs) — only `hashHealthSyncToken()` output.
 
 ## Tests
 
