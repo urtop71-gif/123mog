@@ -1,12 +1,33 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Line } from "react-chartjs-2";
-import { Chart as ChartJS, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend } from "chart.js";
+import { Chart } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  LineElement,
+  BarElement,
+  LineController,
+  BarController,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import { format, parseISO } from "date-fns";
 import { useT } from "@/lib/LangContext";
 
-ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
+ChartJS.register(
+  LineElement,
+  BarElement,
+  LineController,
+  BarController,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend,
+);
 
 interface TrendPoint {
   date: string;
@@ -14,6 +35,7 @@ interface TrendPoint {
   protein: number;
   fat: number;
   carbs: number;
+  exercise: number;
 }
 
 export default function TrendChart() {
@@ -35,7 +57,23 @@ export default function TrendChart() {
   const chartData = {
     labels: data.map((d) => format(parseISO(d.date), range === "week" ? "EEE" : "MM/dd")),
     datasets: [
-      { label: t.dashboard.calories, data: data.map((d) => d.calories), borderColor: "#10b981", backgroundColor: "#10b981", tension: 0.3 },
+      {
+        type: "bar" as const,
+        label: t.dashboard.exercise,
+        data: data.map((d) => d.exercise),
+        backgroundColor: "#f59e0b",
+        borderRadius: 4,
+        order: 2,
+      },
+      {
+        type: "line" as const,
+        label: t.dashboard.calories,
+        data: data.map((d) => d.calories),
+        borderColor: "#10b981",
+        backgroundColor: "#10b981",
+        tension: 0.3,
+        order: 1,
+      },
     ],
   };
 
@@ -43,7 +81,7 @@ export default function TrendChart() {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { display: false },
+      legend: { display: true, position: "top" as const, labels: { boxWidth: 12, usePointStyle: true } },
       tooltip: { backgroundColor: "#1f2937", padding: 12, cornerRadius: 8 },
     },
     scales: { y: { beginAtZero: true }, x: { grid: { display: false } } },
@@ -66,7 +104,7 @@ export default function TrendChart() {
       </div>
       <div className="h-64">
         {!loading && data.length > 0 ? (
-          <Line data={chartData} options={opts} />
+          <Chart type="bar" data={chartData} options={opts} />
         ) : (
           <div className="h-full flex items-center justify-center">
             <p className="text-sm text-gray-400 dark:text-gray-500">{loading ? "" : t.dashboard.noData}</p>

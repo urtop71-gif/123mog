@@ -17,13 +17,22 @@ export async function GET(request: NextRequest) {
   const { start } = localDayRange(startKey);
   const { end } = localDayRange(today);
 
-  const meals = await prisma.meal.findMany({
-    where: {
-      userId: session.user.id,
-      date: { gte: start, lte: end },
-    },
-    include: { items: true },
-  });
+  const [meals, exerciseLogs] = await Promise.all([
+    prisma.meal.findMany({
+      where: {
+        userId: session.user.id,
+        date: { gte: start, lte: end },
+      },
+      include: { items: true },
+    }),
+    prisma.exerciseLog.findMany({
+      where: {
+        userId: session.user.id,
+        date: { gte: startKey, lte: today },
+      },
+      select: { date: true, calories: true },
+    }),
+  ]);
 
   const byDate = new Map<string, { calories: number; protein: number; fat: number; carbs: number }>();
   for (const meal of meals) {
@@ -38,10 +47,12 @@ export async function GET(request: NextRequest) {
     byDate.set(key, bucket);
   }
 
+  const exerciseByDate = new Map(exerciseLogs.map((log) => [log.date, log.calories]));
+
   const series = Array.from({ length: days }, (_, i) => {
     const key = addDaysToKey(today, -(days - 1 - i));
     const bucket = byDate.get(key) ?? { calories: 0, protein: 0, fat: 0, carbs: 0 };
-    return { date: key, ...bucket };
+    return { date: key, ...bucket, exercise: exerciseByDate.get(key) ?? 0 };
   });
 
   return NextResponse.json(series);
