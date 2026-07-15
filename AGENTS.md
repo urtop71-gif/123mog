@@ -5,7 +5,7 @@
 - Prefer local date keys via `src/lib/dates.ts` (`toLocalDateKey`, `localDayRange`, `parseLocalDateKey`). Never use `toISOString().split('T')[0]` for "today".
 - Auth: single `authOptions` in `src/lib/auth.ts`. NextAuth route re-exports only. Use `auth()` for API/session checks.
 - Custom foods must set `userId` + `isCustom: true`. Shared foods keep `userId: null`.
-- Custom food ids are intentionally shareable: list/search only shows own customs + global foods, but any valid food id (including another user's custom) may be used when logging a meal via `computeMealItems` — do not add ownership checks that block that.
+- Custom foods are fully public: list/search (`GET /api/foods`), recents, and favoriting show/allow every user's customs alongside global foods, not just the caller's own. Any valid food id (including another user's custom) may be used when logging a meal via `computeMealItems` — do not add ownership checks that block that, and don't reintroduce owner-only filtering on the list/search/favorite paths.
 - Meal mutations that replace items use Prisma `$transaction`.
 - i18n: all user-visible strings go through `src/lib/i18n.ts` + `useT()`.
 - Health tags: use `HealthTagBadges` component; `augmentHealthTags` must not duplicate sodium_/sugar_/ldl_ prefixes. Never surface `*_neutral` tags (good/bad only).

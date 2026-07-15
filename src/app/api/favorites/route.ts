@@ -28,9 +28,6 @@ export async function POST(request: NextRequest) {
 
   const food = await prisma.food.findUnique({ where: { id: parsed.data.foodId } });
   if (!food) return NextResponse.json({ error: "Food not found" }, { status: 404 });
-  if (food.userId && food.userId !== session.user.id) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-  }
 
   await prisma.favoriteFood.upsert({
     where: {

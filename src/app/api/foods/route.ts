@@ -5,7 +5,7 @@ import { foodCreateSchema } from "@/lib/validation";
 import { augmentHealthTags } from "@/lib/healthTags";
 import { unauthorized } from "@/lib/apiErrors";
 
-// GET /api/foods?q=searchterm — shared foods + caller's private customs
+// GET /api/foods?q=searchterm — shared foods + all users' custom foods
 export async function GET(request: NextRequest) {
   const session = await auth();
   const userId = session?.user?.id;
@@ -44,8 +44,6 @@ export async function GET(request: NextRequest) {
     const foods = [];
     for (const item of items) {
       if (seen.has(item.foodId)) continue;
-      // only show if user can access (shared or own)
-      if (item.food.userId && item.food.userId !== userId) continue;
       seen.add(item.foodId);
       foods.push({
         ...item.food,
@@ -56,10 +54,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(foods);
   }
 
-  const visibility = userId
-    ? { OR: [{ userId: null }, { userId }] }
-    : { userId: null };
-
+  // Global foods and all users' custom foods are visible to everyone.
   // When searching, cast a wider net than the 20 we actually return: a common
   // substring (e.g. "우유") can match dozens of unrelated compound names
   // (donuts, cakes, breads with the word buried in the middle) that sort
@@ -69,17 +64,12 @@ export async function GET(request: NextRequest) {
   const foods = await prisma.food.findMany({
     where: q
       ? {
-          AND: [
-            visibility,
-            {
-              OR: [
-                { name: { contains: q } },
-                { nameEn: { contains: q } },
-              ],
-            },
+          OR: [
+            { name: { contains: q } },
+            { nameEn: { contains: q } },
           ],
         }
-      : visibility,
+      : undefined,
     include: {
       servings: true,
     },
