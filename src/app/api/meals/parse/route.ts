@@ -4,7 +4,6 @@ import { auth } from "@/lib/auth";
 import { aiParseSchema } from "@/lib/validation";
 import { getMealParser } from "@/lib/ai/gemini";
 import { pickBestFood, resolveUnit } from "@/lib/ai/matchFood";
-import { compressMealPhoto } from "@/lib/imageCompress";
 import { toPublicFood } from "@/lib/foodPublic";
 import { augmentHealthTags } from "@/lib/healthTags";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
@@ -35,13 +34,17 @@ export async function POST(request: NextRequest) {
   let image: { mimeType: string; base64: string } | undefined;
   if (parsed.data.imageBase64) {
     const raw = parsed.data.imageBase64.replace(/^data:image\/[a-zA-Z0-9.+-]+;base64,/, "");
-    let compressed: Buffer;
+    // Loaded only for a photo, so a missing sharp binary cannot crash GET or text parsing.
+    const { prepareMealPhoto, PhotoRejected } = await import("@/lib/imageCompress");
     try {
-      compressed = await compressMealPhoto(Buffer.from(raw, "base64"));
-    } catch {
+      const prepared = await prepareMealPhoto(Buffer.from(raw, "base64"));
+      image = { mimeType: prepared.mimeType, base64: prepared.buffer.toString("base64") };
+    } catch (error) {
+      if (error instanceof PhotoRejected && error.code === "too_large") {
+        return jsonError("image_too_large", 413);
+      }
       return jsonError("image_invalid", 400);
     }
-    image = { mimeType: "image/jpeg", base64: compressed.toString("base64") };
   }
 
   let portions;
