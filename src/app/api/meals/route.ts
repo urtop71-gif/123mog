@@ -5,6 +5,8 @@ import { computeMealItems } from "@/lib/mealItems";
 import { mealCreateSchema } from "@/lib/validation";
 import { augmentHealthTags } from "@/lib/healthTags";
 import { isValidDateKey, localDayRange, parseLocalDateKey, toLocalDateKey } from "@/lib/dates";
+import { timeZoneForUser } from "@/lib/userTime";
+import { summarizeSodium } from "@/lib/sodium";
 import { unauthorized } from "@/lib/apiErrors";
 
 export async function GET(request: NextRequest) {
@@ -18,7 +20,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "date query parameter is required (yyyy-MM-dd)" }, { status: 400 });
   }
 
-  const { start, end } = localDayRange(dateStr);
+  const timeZone = await timeZoneForUser(session.user.id);
+  const { start, end } = localDayRange(dateStr, timeZone);
 
   const meals = await prisma.meal.findMany({
     where: {
@@ -31,17 +34,18 @@ export async function GET(request: NextRequest) {
     orderBy: { createdAt: "asc" },
   });
 
-  const grouped = meals.map((meal) => ({
+  const grouped = meals.map((meal) => {
+    const sodium = summarizeSodium(meal.items);
+    return {
     id: meal.id,
     mealType: meal.mealType,
-    date: toLocalDateKey(meal.date),
+    date: toLocalDateKey(meal.date, timeZone),
     totalCalories: meal.items.reduce((sum, item) => sum + item.totalCalories, 0),
     totalProtein: meal.items.reduce((sum, item) => sum + item.totalProtein, 0),
     totalFat: meal.items.reduce((sum, item) => sum + item.totalFat, 0),
     totalCarbs: meal.items.reduce((sum, item) => sum + item.totalCarbs, 0),
-    totalSodium: meal.items.some((item) => item.totalSodium != null)
-      ? meal.items.reduce((sum, item) => sum + (item.totalSodium ?? 0), 0)
-      : null,
+    totalSodium: sodium.totalMg,
+    sodiumPartial: sodium.partial,
     items: meal.items.map((item) => ({
       id: item.id,
       foodId: item.foodId,
@@ -63,7 +67,8 @@ export async function GET(request: NextRequest) {
       totalCarbs: item.totalCarbs,
       totalSodium: item.totalSodium,
     })),
-  }));
+    };
+  });
 
   return NextResponse.json(grouped);
 }
@@ -83,8 +88,11 @@ export async function POST(request: NextRequest) {
     }
     const { mealType, date, items } = parsed.data;
 
+    const timeZone = await timeZoneForUser(session.user.id);
     const mealItems = await computeMealItems(items);
-    const mealDate = date ? parseLocalDateKey(date) : parseLocalDateKey(toLocalDateKey());
+    const mealDate = date
+      ? parseLocalDateKey(date, timeZone)
+      : parseLocalDateKey(toLocalDateKey(new Date(), timeZone), timeZone);
 
     const meal = await prisma.meal.create({
       data: {

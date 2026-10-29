@@ -3,21 +3,22 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { exerciseLogSchema } from "@/lib/validation";
 import { toLocalDateKey } from "@/lib/dates";
+import { timeZoneForUser } from "@/lib/userTime";
+import { combineExerciseLogs } from "@/lib/exercise";
 import { unauthorized } from "@/lib/apiErrors";
 
 export async function GET(request: NextRequest) {
   const session = await auth();
   if (!session?.user?.id) return unauthorized();
 
-  const date = new URL(request.url).searchParams.get("date") || toLocalDateKey();
-  const log = await prisma.exerciseLog.findUnique({
-    where: { userId_date: { userId: session.user.id, date } },
+  const timeZone = await timeZoneForUser(session.user.id);
+  const date = new URL(request.url).searchParams.get("date") || toLocalDateKey(new Date(), timeZone);
+  const logs = await prisma.exerciseLog.findMany({
+    where: { userId: session.user.id, date },
+    select: { source: true, calories: true },
   });
-  return NextResponse.json({
-    date,
-    calories: log?.calories ?? 0,
-    source: log?.source ?? null,
-  });
+  const combined = combineExerciseLogs(logs);
+  return NextResponse.json({ date, ...combined });
 }
 
 export async function PUT(request: NextRequest) {
@@ -30,12 +31,17 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
   }
 
-  const date = parsed.data.date || toLocalDateKey();
-  const log = await prisma.exerciseLog.upsert({
-    where: { userId_date: { userId: session.user.id, date } },
+  const timeZone = await timeZoneForUser(session.user.id);
+  const date = parsed.data.date || toLocalDateKey(new Date(), timeZone);
+  await prisma.exerciseLog.upsert({
+    where: { userId_date_source: { userId: session.user.id, date, source: "manual" } },
     create: { userId: session.user.id, date, calories: parsed.data.calories, source: "manual" },
-    update: { calories: parsed.data.calories, source: "manual" },
+    update: { calories: parsed.data.calories },
   });
 
-  return NextResponse.json(log);
+  const logs = await prisma.exerciseLog.findMany({
+    where: { userId: session.user.id, date },
+    select: { source: true, calories: true },
+  });
+  return NextResponse.json({ date, ...combineExerciseLogs(logs) });
 }

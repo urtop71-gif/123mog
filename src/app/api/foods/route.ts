@@ -4,11 +4,27 @@ import { auth } from "@/lib/auth";
 import { foodCreateSchema } from "@/lib/validation";
 import { augmentHealthTags } from "@/lib/healthTags";
 import { unauthorized } from "@/lib/apiErrors";
+import { toPublicFood } from "@/lib/foodPublic";
 
-// GET /api/foods?q=searchterm — shared foods + all users' custom foods
+function presentFood<T extends { userId?: string | null; healthTags: string | null; caloriesPer100g: number; carbsPer100g: number; fatPer100g: number; sodiumPer100g?: number | null }>(
+  food: T,
+  viewerId: string,
+  extra?: { isFavorite?: boolean },
+) {
+  const pub = toPublicFood(food, viewerId);
+  return {
+    ...pub,
+    healthTags: augmentHealthTags(food.healthTags, food),
+    ...extra,
+  };
+}
+
+// GET /api/foods?q=searchterm — signed-in users see shared foods and every
+// user's custom foods (customs are shareable). userId is never returned.
 export async function GET(request: NextRequest) {
   const session = await auth();
   const userId = session?.user?.id;
+  if (!userId) return unauthorized();
 
   const { searchParams } = new URL(request.url);
   const q = (searchParams.get("q") || "").trim();
@@ -16,23 +32,26 @@ export async function GET(request: NextRequest) {
   const favorites = searchParams.get("favorites") === "1";
 
   if (favorites) {
-    if (!userId) return unauthorized();
     const rows = await prisma.favoriteFood.findMany({
       where: { userId },
       include: { food: { include: { servings: true } } },
       orderBy: { createdAt: "desc" },
     });
     return NextResponse.json(
-      rows.map((r) => ({
-        ...r.food,
-        healthTags: augmentHealthTags(r.food.healthTags, r.food),
-        isFavorite: true,
-      })),
+      rows.map((r) => presentFood(r.food, userId, { isFavorite: true })),
     );
   }
 
+  if (searchParams.get("mine") === "1") {
+    const mine = await prisma.food.findMany({
+      where: { userId, isCustom: true },
+      include: { servings: true },
+      orderBy: { name: "asc" },
+    });
+    return NextResponse.json(mine.map((food) => presentFood(food, userId)));
+  }
+
   if (recent) {
-    if (!userId) return unauthorized();
     const items = await prisma.mealItem.findMany({
       where: { meal: { userId } },
       orderBy: { meal: { createdAt: "desc" } },
@@ -44,10 +63,7 @@ export async function GET(request: NextRequest) {
     for (const item of items) {
       if (seen.has(item.foodId)) continue;
       seen.add(item.foodId);
-      foods.push({
-        ...item.food,
-        healthTags: augmentHealthTags(item.food.healthTags, item.food),
-      });
+      foods.push(presentFood(item.food, userId));
       if (foods.length >= 12) break;
     }
     return NextResponse.json(foods);
@@ -99,11 +115,9 @@ export async function GET(request: NextRequest) {
     favoriteIds = new Set(favs.map((f) => f.foodId));
   }
 
-  const withTags = foods.map((food) => ({
-    ...food,
-    healthTags: augmentHealthTags(food.healthTags, food),
-    isFavorite: favoriteIds.has(food.id),
-  }));
+  const withTags = foods.map((food) =>
+    presentFood(food, userId, { isFavorite: favoriteIds.has(food.id) }),
+  );
 
   return NextResponse.json(withTags);
 }
@@ -134,8 +148,5 @@ export async function POST(request: NextRequest) {
     include: { servings: true },
   });
 
-  return NextResponse.json(
-    { ...food, healthTags: augmentHealthTags(food.healthTags, food), isFavorite: false },
-    { status: 201 },
-  );
+  return NextResponse.json(presentFood(food, session.user.id, { isFavorite: false }), { status: 201 });
 }

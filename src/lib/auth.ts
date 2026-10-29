@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { rateLimit } from "@/lib/rateLimit";
+import { isTokenVersionCurrent } from "@/lib/tokenVersion";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -43,6 +44,7 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           email: user.email,
           name: user.name,
+          tokenVersion: user.tokenVersion,
         };
       },
     }),
@@ -54,14 +56,30 @@ export const authOptions: NextAuthOptions = {
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
+        token.tokenVersion = user.tokenVersion ?? 0;
+        return token;
       }
+
+      const userId = token.id || token.sub;
+      if (!userId) return token;
+
+      const dbUser = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { tokenVersion: true, email: true, name: true },
+      });
+      if (!isTokenVersionCurrent(token.tokenVersion, dbUser?.tokenVersion ?? null)) {
+        return {};
+      }
+      token.id = userId;
+      token.email = dbUser!.email;
+      token.name = dbUser!.name;
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = (token.id as string) || token.sub || "";
-        session.user.email = (token.email as string) || session.user.email || "";
-        session.user.name = (token.name as string | null | undefined) ?? session.user.name ?? null;
+        session.user.id = token.id || "";
+        session.user.email = token.email || session.user.email || "";
+        session.user.name = token.name ?? session.user.name ?? null;
       }
       return session;
     },

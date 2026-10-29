@@ -3,8 +3,9 @@
 import { useT } from "@/lib/LangContext";
 
 interface Macro {
-  current: number;
+  current: number | null;
   target: number;
+  partial?: boolean;
 }
 
 interface SummaryCardsProps {
@@ -23,19 +24,23 @@ function MacroCard({
   color,
   highlightOver,
   large,
+  partial,
 }: {
-  current: number;
+  current: number | null;
   target: number;
   label: string;
   unit: string;
   color: string;
   highlightOver?: boolean;
   large?: boolean;
+  partial?: boolean;
 }) {
   const { t } = useT();
-  const pct = target > 0 ? Math.min((current / target) * 100, 150) : 0;
-  const isOver = current > target && target > 0;
-  const remaining = Math.max(0, target - current);
+  const known = current != null;
+  const value = current ?? 0;
+  const pct = known && target > 0 ? Math.min((value / target) * 100, 150) : 0;
+  const isOver = known && value > target && target > 0;
+  const remaining = Math.max(0, target - value);
 
   return (
     <div
@@ -51,7 +56,7 @@ function MacroCard({
       </div>
       <div className="flex items-baseline gap-1">
         <span className={`${large ? "text-3xl" : "text-2xl"} font-bold text-gray-900 dark:text-gray-100`}>
-          {Math.round(current)}
+          {known ? Math.round(value) : "—"}
         </span>
         <span className="text-sm text-gray-400 dark:text-gray-500">
           / {Math.round(target)} {unit}
@@ -71,10 +76,17 @@ function MacroCard({
             isOver && highlightOver ? "text-red-500 font-medium" : ""
           }
         >
-          {pct.toFixed(0)}%
-          {isOver && highlightOver && ` (${t.dashboard.targetExceeded})`}
+          {known ? (
+            <>
+              {pct.toFixed(0)}%
+              {isOver && highlightOver && ` (${t.dashboard.targetExceeded})`}
+              {partial && ` · ${t.dashboard.sodiumPartial}`}
+            </>
+          ) : (
+            t.dashboard.sodiumUnknown
+          )}
         </span>
-        {!isOver && target > 0 && (
+        {known && !isOver && target > 0 && (
           <span>
             {Math.round(remaining)} {unit} {t.dashboard.remaining}
           </span>
@@ -132,6 +144,7 @@ export default function SummaryCards({
           unit="mg"
           color="bg-rose-500"
           highlightOver
+          partial={sodium.partial}
         />
       ) : (
         <div className="hidden lg:block" />

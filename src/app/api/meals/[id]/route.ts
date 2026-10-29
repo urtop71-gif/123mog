@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { computeMealItems } from "@/lib/mealItems";
 import { mealUpdateSchema } from "@/lib/validation";
 import { parseLocalDateKey } from "@/lib/dates";
+import { timeZoneForUser } from "@/lib/userTime";
 import { forbidden, unauthorized } from "@/lib/apiErrors";
 
 // PUT /api/meals/[id] - update a meal (add/remove items)
@@ -36,6 +37,7 @@ export async function PUT(
     // plain reads on the shared `prisma` client, and running them inside the
     // transaction (against a separate connection than `tx`) can contend with
     // its lock on SQLite and burn through the interactive transaction timeout.
+    const timeZone = await timeZoneForUser(session.user.id);
     const mealItems = items && Array.isArray(items) ? await computeMealItems(items) : null;
 
     const updated = await prisma.$transaction(async (tx) => {
@@ -44,7 +46,7 @@ export async function PUT(
           where: { id },
           data: {
             ...(mealType && { mealType }),
-            ...(date && { date: parseLocalDateKey(date) }),
+            ...(date && { date: parseLocalDateKey(date, timeZone) }),
           },
         });
       }

@@ -1,10 +1,14 @@
 import 'dotenv/config'
 import { PrismaClient } from '@prisma/client'
 import { PrismaLibSql } from '@prisma/adapter-libsql'
+import { assertSafeToSeed } from '../src/lib/seedGuard'
+import { insertGlobalFoodIfMissing } from '../src/lib/seedCatalog'
 
 // Respects DATABASE_URL (e.g. a libsql://...?authToken=... Turso URL) so
 // this script can seed a remote database, falling back to the local dev.db
-// file when unset. Destructive either way - see the deleteMany calls below.
+// file when unset. Idempotent: inserts global foods that are missing and
+// never deletes meals, custom foods, or an existing catalog row.
+// Remote URLs are refused unless SEED_ALLOW_REMOTE=1.
 const adapter = new PrismaLibSql({ url: process.env.DATABASE_URL || 'file:./dev.db' })
 const prisma = new PrismaClient({ adapter })
 
@@ -1340,5 +1344,16 @@ const foods = [
   { name: "닥터페퍼", nameEn: "Dr Pepper", category: "beverage", subcategory: "soda", caloriesPer100g: 42, proteinPer100g: 0, fatPer100g: 0, carbsPer100g: 10.4, sodiumPer100g: 10, healthTags: "sugar_bad", servings: [{ unitName: "캔", gramsPerUnit: 355 }, { unitName: "ml", gramsPerUnit: 1 }] },
   { name: "닥터페퍼 제로", nameEn: "Dr Pepper Zero", category: "beverage", subcategory: "soda", caloriesPer100g: 0, proteinPer100g: 0, fatPer100g: 0, carbsPer100g: 0, sodiumPer100g: 10, healthTags: "sugar_good", servings: [{ unitName: "캔", gramsPerUnit: 355 }, { unitName: "ml", gramsPerUnit: 1 }] },
 ];
-async function main() { console.log("Seeding 1330 foods..."); await prisma.mealItem.deleteMany(); await prisma.meal.deleteMany(); await prisma.foodServing.deleteMany(); await prisma.food.deleteMany(); for (const f of foods) { const { servings, ...fd } = f; await prisma.food.create({ data: { ...fd, servings: { create: servings } } }); } console.log("Done!"); }
+async function main() {
+  assertSafeToSeed(process.env.DATABASE_URL);
+  console.log(`Upserting ${foods.length} catalog foods (skip existing, never delete)...`);
+  let created = 0;
+  let skipped = 0;
+  for (const food of foods) {
+    const result = await insertGlobalFoodIfMissing(prisma.food, food);
+    if (result === "created") created += 1;
+    else skipped += 1;
+  }
+  console.log(`Done. Created ${created}, skipped ${skipped} existing.`);
+}
 main().catch(e => { console.error(e); process.exit(1); }).finally(() => prisma.$disconnect());

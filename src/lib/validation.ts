@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isValidTimeZone } from "@/lib/dates";
 
 const passwordSchema = z
   .string()
@@ -97,7 +98,15 @@ export const profileUpdateSchema = z.object({
   waterTargetMl: z.number().int().min(0).max(10000).optional().nullable(),
   onboardingDone: z.boolean().optional(),
   name: z.string().trim().max(100).optional().nullable(),
+  timezone: z
+    .string()
+    .trim()
+    .max(64)
+    .refine((value) => value === "" || isValidTimeZone(value), { message: "Invalid timezone" })
+    .optional(),
 });
+
+export const foodUpdateSchema = foodCreateSchema;
 
 export const weightLogSchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { healthSyncSchema } from "@/lib/validation";
 import { hashHealthSyncToken } from "@/lib/healthToken";
-import { toLocalDateKey } from "@/lib/dates";
+import { resolveTimeZone, toLocalDateKey } from "@/lib/dates";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
 import { jsonError, unauthorized, tooMany } from "@/lib/apiErrors";
 
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
 
   const user = await prisma.user.findUnique({
     where: { healthSyncTokenHash: hashHealthSyncToken(token) },
-    select: { id: true },
+    select: { id: true, timezone: true },
   });
   if (!user) return unauthorized();
 
@@ -30,12 +30,12 @@ export async function POST(request: NextRequest) {
     return jsonError(parsed.error.issues[0]?.message || "Invalid input", 400);
   }
 
-  const date = parsed.data.date || toLocalDateKey();
+  const date = parsed.data.date || toLocalDateKey(new Date(), resolveTimeZone(user.timezone));
   const calories = Math.round(parsed.data.activeCalories);
   const log = await prisma.exerciseLog.upsert({
-    where: { userId_date: { userId: user.id, date } },
+    where: { userId_date_source: { userId: user.id, date, source: "healthkit" } },
     create: { userId: user.id, date, calories, source: "healthkit" },
-    update: { calories, source: "healthkit" },
+    update: { calories },
   });
 
   return NextResponse.json({ date: log.date, calories: log.calories });

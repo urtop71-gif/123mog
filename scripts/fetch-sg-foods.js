@@ -1,4 +1,5 @@
 // Fetch Singaporean foods from OpenFoodFacts
+/* eslint-disable @typescript-eslint/no-require-imports */
 const https = require('https');
 
 // Track 2: Manually curated Singapore hawker food nutrition data
