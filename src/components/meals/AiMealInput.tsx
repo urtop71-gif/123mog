@@ -76,10 +76,18 @@ export default function AiMealInput({
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const res = await fetch("/api/meals/parse");
-      if (!res.ok || cancelled) return;
-      const data = await res.json();
-      if (!cancelled) setEnabled(!!data.enabled);
+      try {
+        const res = await fetch("/api/meals/parse");
+        if (cancelled) return;
+        if (!res.ok) {
+          console.error("AI meal input unavailable:", res.status);
+          return;
+        }
+        const data = await res.json();
+        if (!cancelled) setEnabled(!!data.enabled);
+      } catch (error) {
+        console.error("AI meal input unavailable:", error);
+      }
     })();
     return () => {
       cancelled = true;
