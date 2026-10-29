@@ -44,32 +44,32 @@ describe("dates", () => {
   });
 
   it("uses the user timezone for today, not UTC", () => {
-    // 2026-10-29 00:30 in Seoul is still 2026-10-28 in UTC.
-    const instant = new Date(Date.UTC(2026, 9, 28, 15, 30, 0));
+    // 2026-10-29 00:30 in Singapore (UTC+8) is still 2026-10-28 in UTC.
+    const instant = new Date(Date.UTC(2026, 9, 28, 16, 30, 0));
     expect(toLocalDateKey(instant, "UTC")).toBe("2026-10-28");
-    expect(toLocalDateKey(instant, "Asia/Seoul")).toBe("2026-10-29");
+    expect(toLocalDateKey(instant, "Asia/Singapore")).toBe("2026-10-29");
   });
 
   it("stores noon and day bounds in the user timezone", () => {
-    const noon = parseLocalDateKey("2026-10-29", "Asia/Seoul");
-    expect(noon.toISOString()).toBe("2026-10-29T03:00:00.000Z");
+    const noon = parseLocalDateKey("2026-10-29", "Asia/Singapore");
+    expect(noon.toISOString()).toBe("2026-10-29T04:00:00.000Z");
 
-    const { start, end } = localDayRange("2026-10-29", "Asia/Seoul");
-    expect(start.toISOString()).toBe("2026-10-28T15:00:00.000Z");
-    expect(end.toISOString()).toBe("2026-10-29T14:59:59.999Z");
+    const { start, end } = localDayRange("2026-10-29", "Asia/Singapore");
+    expect(start.toISOString()).toBe("2026-10-28T16:00:00.000Z");
+    expect(end.toISOString()).toBe("2026-10-29T15:59:59.999Z");
     expect(start.getTime() <= noon.getTime() && noon.getTime() <= end.getTime()).toBe(true);
   });
 
-  it("keeps a UTC-noon meal inside the same Seoul calendar day", () => {
+  it("keeps a UTC-noon meal inside the same Singapore calendar day", () => {
     // Historical rows were stored as noon in the server zone (UTC on Vercel).
     const stored = new Date(Date.UTC(2026, 9, 29, 12, 0, 0));
-    expect(toLocalDateKey(stored, "Asia/Seoul")).toBe("2026-10-29");
-    const { start, end } = localDayRange("2026-10-29", "Asia/Seoul");
+    expect(toLocalDateKey(stored, "Asia/Singapore")).toBe("2026-10-29");
+    const { start, end } = localDayRange("2026-10-29", "Asia/Singapore");
     expect(stored.getTime()).toBeGreaterThanOrEqual(start.getTime());
     expect(stored.getTime()).toBeLessThanOrEqual(end.getTime());
   });
 
-  it("defaults an empty timezone to Asia/Seoul", () => {
+  it("defaults an empty timezone to Asia/Singapore", () => {
     expect(resolveTimeZone(null)).toBe(DEFAULT_TIMEZONE);
     expect(resolveTimeZone("Not/AZone")).toBe(DEFAULT_TIMEZONE);
     expect(resolveTimeZone("Asia/Tokyo")).toBe("Asia/Tokyo");

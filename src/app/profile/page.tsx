@@ -109,7 +109,7 @@ export default function ProfilePage() {
             value={profile.timezone || ""}
             onChange={(e) => setProfile({ ...profile, timezone: e.target.value })}
             className="input-field"
-            placeholder="Asia/Seoul"
+            placeholder="Asia/Singapore"
             spellCheck={false}
           />
           <p className="text-xs text-gray-400 mt-1">{t.profile.timezoneHint}</p>

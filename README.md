@@ -60,7 +60,7 @@ prisma/            # schema, seed, imports
 
 ## Notes
 
-- Dates are **yyyy-MM-dd keys in the user's timezone** (`User.timezone`, default `Asia/Seoul`). Server code must pass that zone into `src/lib/dates.ts`. The runtime zone on Vercel is UTC, so "today" is never taken from the server clock alone.
+- Dates are **yyyy-MM-dd keys in the user's timezone** (`User.timezone`, default `Asia/Singapore`). Server code must pass that zone into `src/lib/dates.ts`. The runtime zone on Vercel is UTC, so "today" is never taken from the server clock alone.
 - `npm run db:seed` only inserts missing global foods. It does not delete meals or custom foods. A remote `DATABASE_URL` (Turso / `libsql://`) is refused unless `SEED_ALLOW_REMOTE=1`.
 - In-memory rate limiting is for single-instance deploys only.
 - SQLite is fine for personal/local use; swap `DATABASE_URL` / adapter for production multi-user.

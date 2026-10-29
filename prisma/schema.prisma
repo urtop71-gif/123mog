@@ -29,7 +29,7 @@ model User {
   healthConditions String? // comma-separated: diabetes, high_cholesterol, hypertension
   onboardingDone   Boolean        @default(false)
   // IANA zone for "today" and meal day bounds. Vercel runs in UTC.
-  timezone         String         @default("Asia/Seoul")
+  timezone         String         @default("Asia/Singapore")
   // Bumped to revoke outstanding JWTs (password change). Checked in the jwt callback.
   tokenVersion     Int            @default(0)
   // sha256 hex digest of the personal access token used by the iOS Shortcuts

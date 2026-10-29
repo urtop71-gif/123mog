@@ -1,6 +1,6 @@
 /** Calendar-date helpers. Date keys are yyyy-MM-dd in a specific timezone. */
 
-export const DEFAULT_TIMEZONE = "Asia/Seoul";
+export const DEFAULT_TIMEZONE = "Asia/Singapore";
 
 export function pad2(n: number): string {
   return n < 10 ? `0${n}` : String(n);
@@ -15,7 +15,7 @@ export function isValidTimeZone(timeZone: string): boolean {
   }
 }
 
-/** Stored user timezone, or Asia/Seoul when missing/invalid. */
+/** Stored user timezone, or Asia/Singapore when missing/invalid. */
 export function resolveTimeZone(timeZone: string | null | undefined): string {
   if (timeZone && isValidTimeZone(timeZone)) return timeZone;
   return DEFAULT_TIMEZONE;
