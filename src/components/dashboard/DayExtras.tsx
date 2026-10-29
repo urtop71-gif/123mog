@@ -3,16 +3,19 @@
 import { useCallback, useEffect, useState } from "react";
 import { useT } from "@/lib/LangContext";
 import { useToast } from "@/components/Toast";
+import { energyBalance } from "@/lib/calories";
 
 export default function DayExtras({
   dateKey,
   sodiumCurrent,
+  sodiumPartial,
   sodiumTarget,
   healthConditions,
   caloriesIn,
 }: {
   dateKey: string;
   sodiumCurrent: number | null;
+  sodiumPartial?: boolean;
   sodiumTarget: number;
   healthConditions: string;
   caloriesIn: number;
@@ -30,6 +33,9 @@ export default function DayExtras({
   const [savingBmr, setSavingBmr] = useState(false);
   const [exerciseCalories, setExerciseCalories] = useState(0);
   const [exerciseSource, setExerciseSource] = useState<string | null>(null);
+  const [manualCalories, setManualCalories] = useState<number | null>(null);
+  const [healthkitCalories, setHealthkitCalories] = useState<number | null>(null);
+  const [bmr, setBmr] = useState<number | null>(null);
   const [exerciseInput, setExerciseInput] = useState("");
   const [savingExercise, setSavingExercise] = useState(false);
 
@@ -48,15 +54,19 @@ export default function DayExtras({
       const s = await statsRes.json();
       setStreak(s.streak ?? 0);
       setWeekDays({ logged: s.weekDaysLogged ?? 0, onTarget: s.weekDaysOnTarget ?? 0 });
+      setBmr(typeof s.bmr === "number" && s.bmr > 0 ? s.bmr : null);
     }
     if (exerciseRes.ok) {
       const ex = await exerciseRes.json();
       setExerciseCalories(ex.calories ?? 0);
       setExerciseSource(ex.source ?? null);
+      setManualCalories(ex.manualCalories ?? null);
+      setHealthkitCalories(ex.healthkitCalories ?? null);
     }
   }, [dateKey]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- refetch when the day changes; setState follows the awaited response
     load();
   }, [load]);
 
@@ -138,6 +148,8 @@ export default function DayExtras({
       const data = await res.json();
       setExerciseCalories(data.calories);
       setExerciseSource(data.source);
+      setManualCalories(data.manualCalories ?? null);
+      setHealthkitCalories(data.healthkitCalories ?? null);
       setExerciseInput("");
       toast(t.profile.saved);
     } else {
@@ -145,6 +157,7 @@ export default function DayExtras({
     }
   };
 
+  const balance = energyBalance(caloriesIn, bmr, exerciseCalories);
   const waterPct = waterTarget > 0 ? Math.min((waterMl / waterTarget) * 100, 100) : 0;
   const sodiumPct =
     sodiumCurrent != null && sodiumTarget > 0
@@ -164,6 +177,7 @@ export default function DayExtras({
         <div className="text-xs text-gray-400 mt-2">
           {t.dashboard.weekProgress}: {weekDays.onTarget}/{weekDays.logged || 0}
         </div>
+        <div className="text-[11px] text-gray-400 mt-1">{t.dashboard.weekProgressHint}</div>
       </div>
 
       <div className="card p-4">
@@ -205,15 +219,22 @@ export default function DayExtras({
           {exerciseCalories}
           <span className="text-sm font-normal text-gray-400"> kcal</span>
         </div>
-        <div className="text-xs text-gray-400 mb-2">
-          {exerciseSource === "healthkit"
-            ? t.dashboard.exerciseSourceHealthkit
-            : exerciseSource === "manual"
-              ? t.dashboard.exerciseSourceManual
-              : "—"}
+        <div className="text-xs text-gray-400 mb-2 space-y-0.5">
+          {healthkitCalories != null && (
+            <div>
+              {t.dashboard.exerciseSourceHealthkit}: {healthkitCalories} kcal
+            </div>
+          )}
+          {manualCalories != null && (
+            <div>
+              {t.dashboard.exerciseSourceManual}: {manualCalories} kcal
+            </div>
+          )}
+          {exerciseSource == null && "—"}
         </div>
         <div className="text-xs text-gray-400 mb-2">
-          {t.dashboard.netCalories}: {Math.round(caloriesIn - exerciseCalories)} kcal
+          {t.dashboard.energyBalance}: {balance == null ? "—" : `${balance} kcal`}
+          <span className="block text-[11px]">{t.dashboard.energyBalanceHint}</span>
         </div>
         <div className="flex gap-2">
           <input
@@ -286,10 +307,13 @@ export default function DayExtras({
           <p className="text-sm text-gray-400">—</p>
         ) : (
           <ul className="text-sm space-y-1">
-            {conditions.includes("hypertension") && sodiumPct != null && (
+            {conditions.includes("hypertension") && (
               <li>
-                {t.dashboard.sodiumProgress}: {Math.round(sodiumCurrent!)} / {sodiumTarget} mg (
-                {sodiumPct.toFixed(0)}%)
+                {t.dashboard.sodiumProgress}:{" "}
+                {sodiumCurrent == null
+                  ? t.dashboard.sodiumUnknown
+                  : `${Math.round(sodiumCurrent)} / ${sodiumTarget} mg (${sodiumPct?.toFixed(0)}%)`}
+                {sodiumPartial && sodiumCurrent != null ? ` · ${t.dashboard.sodiumPartial}` : ""}
               </li>
             )}
             {conditions.includes("diabetes") && (
@@ -300,9 +324,11 @@ export default function DayExtras({
             )}
           </ul>
         )}
-        {sodiumPct != null && !conditions.includes("hypertension") && (
+        {!conditions.includes("hypertension") && (
           <p className="text-xs text-gray-400 mt-1">
-            {t.dashboard.sodiumProgress}: {Math.round(sodiumCurrent!)} mg
+            {t.dashboard.sodiumProgress}:{" "}
+            {sodiumCurrent == null ? t.dashboard.sodiumUnknown : `${Math.round(sodiumCurrent)} mg`}
+            {sodiumPartial && sodiumCurrent != null ? ` · ${t.dashboard.sodiumPartial}` : ""}
           </p>
         )}
       </div>

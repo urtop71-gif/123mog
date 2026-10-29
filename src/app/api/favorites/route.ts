@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { favoriteSchema } from "@/lib/validation";
 import { unauthorized } from "@/lib/apiErrors";
+import { toPublicFood } from "@/lib/foodPublic";
 
 export async function GET() {
   const session = await auth();
@@ -13,7 +14,7 @@ export async function GET() {
     include: { food: { include: { servings: true } } },
     orderBy: { createdAt: "desc" },
   });
-  return NextResponse.json(rows.map((r) => r.food));
+  return NextResponse.json(rows.map((r) => toPublicFood(r.food, session.user.id)));
 }
 
 export async function POST(request: NextRequest) {

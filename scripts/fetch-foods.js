@@ -1,4 +1,5 @@
 // OpenFoodFacts fetcher - builds accurate seed data
+/* eslint-disable @typescript-eslint/no-require-imports */
 const https = require('https');
 
 const FOODS_TO_SEARCH = [
@@ -46,7 +47,7 @@ const FOODS_TO_SEARCH = [
 ]
 
 async function fetchFood(query) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const url = `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&json=1&page_size=1&fields=product_name,nutriments&sort_by=unique_scans_n`;
     https.get(url, (res) => {
       let data = '';

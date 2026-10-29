@@ -8,6 +8,7 @@ import { useToast } from "@/components/Toast";
 import { HealthTagBadges } from "@/components/HealthTagBadges";
 import { addDaysToKey, toLocalDateKey } from "@/lib/dates";
 import { foodDisplayName } from "@/lib/foodLabel";
+import { defaultServing, defaultUnitName } from "@/lib/servings";
 
 interface FoodItem {
   id: string;
@@ -21,6 +22,7 @@ interface FoodItem {
   sodiumPer100g?: number | null;
   healthTags?: string;
   isCustom?: boolean;
+  isOwner?: boolean;
   isFavorite?: boolean;
   servings: { unitName: string; gramsPerUnit: number }[];
 }
@@ -60,7 +62,8 @@ function MealsPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const initialDate = searchParams.get("date") || toLocalDateKey();
+  const dateParam = searchParams.get("date");
+  const initialDate = dateParam || toLocalDateKey();
   const initialType = (searchParams.get("type") as string) || "lunch";
 
   const [dateKey, setDateKey] = useState(initialDate);
@@ -79,6 +82,8 @@ function MealsPageInner() {
   const [submitting, setSubmitting] = useState(false);
   const [editMealId, setEditMealId] = useState<string | null>(null);
   const [showCustomFoodForm, setShowCustomFoodForm] = useState(false);
+  const [editingFood, setEditingFood] = useState<FoodItem | null>(null);
+  const [myFoods, setMyFoods] = useState<FoodItem[]>([]);
 
   const foodLabel = (food: Pick<FoodItem, "name" | "nameEn">) =>
     foodDisplayName({ name: food.name, nameEn: food.nameEn }, lang);
@@ -105,6 +110,11 @@ function MealsPageInner() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
+  const loadMine = useCallback(async () => {
+    const res = await fetch("/api/foods?mine=1");
+    if (res.ok) setMyFoods(await res.json());
+  }, []);
+
   useEffect(() => {
     (async () => {
       const [fRes, rRes] = await Promise.all([
@@ -113,8 +123,24 @@ function MealsPageInner() {
       ]);
       if (fRes.ok) setFavorites(await fRes.json());
       if (rRes.ok) setRecent(await rRes.json());
+      const mineRes = await fetch("/api/foods?mine=1");
+      if (mineRes.ok) setMyFoods(await mineRes.json());
     })();
   }, []);
+
+  useEffect(() => {
+    if (dateParam) return;
+    let cancelled = false;
+    (async () => {
+      const res = await fetch("/api/user/profile");
+      if (!res.ok || cancelled) return;
+      const profile = await res.json();
+      if (profile.timezone) setDateKey(toLocalDateKey(new Date(), profile.timezone));
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [dateParam]);
 
   const estimateCalories = (food: FoodItem, qty: number, unit: string) => {
     const serving = food.servings.find((s) => s.unitName === unit) || food.servings[0];
@@ -124,7 +150,7 @@ function MealsPageInner() {
 
   const selectFood = (food: FoodItem) => {
     setSelectedFood(food);
-    setUnitName(food.servings[1]?.unitName || food.servings[0]?.unitName || "g");
+    setUnitName(defaultUnitName(food.servings));
     setQuantity(1);
   };
 
@@ -205,6 +231,24 @@ function MealsPageInner() {
     }
   };
 
+  const deleteOwnedFood = async (food: FoodItem) => {
+    if (!confirm(t.meals.confirmDeleteFood)) return;
+    const res = await fetch(`/api/foods/${food.id}`, { method: "DELETE" });
+    if (res.status === 409) {
+      toast(t.meals.customFoodInUse, "error");
+      return;
+    }
+    if (!res.ok) {
+      toast(t.common.error, "error");
+      return;
+    }
+    toast(t.common.success);
+    if (selectedFood?.id === food.id) setSelectedFood(null);
+    setFavorites((prev) => prev.filter((f) => f.id !== food.id));
+    setRecent((prev) => prev.filter((f) => f.id !== food.id));
+    loadMine();
+  };
+
   const copyYesterday = async () => {
     const y = addDaysToKey(dateKey, -1);
     const res = await fetch(`/api/meals?date=${y}`);
@@ -283,6 +327,38 @@ function MealsPageInner() {
           ))}
         </div>
       </div>
+
+      {myFoods.length > 0 && !selectedFood && !searchQuery && (
+        <div className="card p-4 mb-4">
+          <h3 className="text-sm font-semibold mb-2">{t.meals.myFoods}</h3>
+          <ul className="space-y-1">
+            {myFoods.map((food) => (
+              <li key={food.id} className="flex items-center justify-between gap-2 text-sm">
+                <button type="button" onClick={() => selectFood(food)} className="text-left flex-1 truncate">
+                  {foodLabel(food)}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditingFood(food);
+                    setShowCustomFoodForm(true);
+                  }}
+                  className="text-xs text-blue-600 px-2 py-1"
+                >
+                  {t.meals.editBtn}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => deleteOwnedFood(food)}
+                  className="text-xs text-red-500 px-2 py-1"
+                >
+                  {t.meals.deleteBtn}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {(favorites.length > 0 || recent.length > 0) && !selectedFood && !searchQuery && (
         <div className="card p-4 mb-4 space-y-3">
@@ -396,9 +472,15 @@ function MealsPageInner() {
         {showCustomFoodForm && (
           <CustomFoodForm
             initialName={searchQuery}
-            onCancel={() => setShowCustomFoodForm(false)}
+            existing={editingFood}
+            onCancel={() => {
+              setShowCustomFoodForm(false);
+              setEditingFood(null);
+            }}
             onCreated={(food) => {
               setShowCustomFoodForm(false);
+              setEditingFood(null);
+              loadMine();
               selectFood(food);
             }}
           />
@@ -415,13 +497,37 @@ function MealsPageInner() {
                   <HealthTagBadges tags={selectedFood.healthTags} size="xs" />
                 </span>
               </div>
-              <button
-                onClick={() => setSelectedFood(null)}
-                className="text-gray-400 hover:text-gray-600"
-                aria-label="Close"
-              >
-                ✕
-              </button>
+              <div className="flex items-center gap-2">
+                {selectedFood.isOwner && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingFood(selectedFood);
+                        setShowCustomFoodForm(true);
+                        setSelectedFood(null);
+                      }}
+                      className="text-xs text-blue-600"
+                    >
+                      {t.meals.editBtn}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => deleteOwnedFood(selectedFood)}
+                      className="text-xs text-red-500"
+                    >
+                      {t.meals.deleteBtn}
+                    </button>
+                  </>
+                )}
+                <button
+                  onClick={() => setSelectedFood(null)}
+                  className="text-gray-400 hover:text-gray-600"
+                  aria-label="Close"
+                >
+                  ✕
+                </button>
+              </div>
             </div>
             <div className="text-xs text-gray-500 dark:text-gray-400 mb-3">
               P: {selectedFood.proteinPer100g}g | F: {selectedFood.fatPer100g}g | C:{" "}
@@ -584,6 +690,7 @@ function MealHistory({
   }, [dateKey]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- refetch after the date changes; setState follows the awaited response
     fetchMeals();
     const handler = () => fetchMeals();
     window.addEventListener("meals-updated", handler);
@@ -688,22 +795,31 @@ function MealHistory({
 
 function CustomFoodForm({
   initialName,
+  existing,
   onCancel,
   onCreated,
 }: {
   initialName: string;
+  existing?: FoodItem | null;
   onCancel: () => void;
   onCreated: (food: FoodItem) => void;
 }) {
   const { t } = useT();
-  const [name, setName] = useState(initialName);
-  const [calories, setCalories] = useState("");
-  const [protein, setProtein] = useState("");
-  const [fat, setFat] = useState("");
-  const [carbs, setCarbs] = useState("");
-  const [sodium, setSodium] = useState("");
-  const [servingName, setServingName] = useState("");
-  const [servingGrams, setServingGrams] = useState("");
+  const { toast } = useToast();
+  const standard = existing ? defaultServing(existing.servings) : undefined;
+  const rawOnly = standard && (standard.unitName === "g" || standard.unitName === "ml");
+  const [name, setName] = useState(existing?.name ?? initialName);
+  const [calories, setCalories] = useState(existing ? String(existing.caloriesPer100g) : "");
+  const [protein, setProtein] = useState(existing ? String(existing.proteinPer100g) : "");
+  const [fat, setFat] = useState(existing ? String(existing.fatPer100g) : "");
+  const [carbs, setCarbs] = useState(existing ? String(existing.carbsPer100g) : "");
+  const [sodium, setSodium] = useState(
+    existing?.sodiumPer100g != null ? String(existing.sodiumPer100g) : "",
+  );
+  const [servingName, setServingName] = useState(standard && !rawOnly ? standard.unitName : "");
+  const [servingGrams, setServingGrams] = useState(
+    standard && !rawOnly ? String(standard.gramsPerUnit) : "",
+  );
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
@@ -714,12 +830,12 @@ function CustomFoodForm({
     if (servingName && servingGrams) {
       servings.unshift({ unitName: servingName, gramsPerUnit: parseFloat(servingGrams) });
     }
-    const res = await fetch("/api/foods", {
-      method: "POST",
+    const res = await fetch(existing ? `/api/foods/${existing.id}` : "/api/foods", {
+      method: existing ? "PATCH" : "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name,
-        category: "general",
+        category: existing?.category || "general",
         caloriesPer100g: parseFloat(calories) || 0,
         proteinPer100g: parseFloat(protein) || 0,
         fatPer100g: parseFloat(fat) || 0,
@@ -729,7 +845,9 @@ function CustomFoodForm({
       }),
     });
     if (res.ok) {
-      onCreated(await res.json());
+      const food = await res.json();
+      if (existing) toast(t.meals.customFoodUpdated);
+      onCreated(food);
     } else {
       const data = await res.json();
       setError(data.error || "Error");
@@ -806,7 +924,7 @@ function CustomFoodForm({
           disabled={submitting || !name || !calories}
           className="flex-1 btn-primary"
         >
-          {t.meals.customFoodSave}
+          {existing ? t.common.save : t.meals.customFoodSave}
         </button>
         <button onClick={onCancel} className="btn-secondary">
           {t.meals.customFoodCancel}

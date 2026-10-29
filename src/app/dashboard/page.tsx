@@ -8,7 +8,8 @@ import MealList from "@/components/dashboard/MealList";
 import DayExtras from "@/components/dashboard/DayExtras";
 import ChartsToggle from "@/components/dashboard/ChartsToggle";
 import { augmentHealthTags } from "@/lib/healthTags";
-import { isValidDateKey, localDayRange, toLocalDateKey } from "@/lib/dates";
+import { isValidDateKey, localDayRange, resolveTimeZone, toLocalDateKey } from "@/lib/dates";
+import { summarizeSodium } from "@/lib/sodium";
 
 interface DashboardPageProps {
   searchParams: Promise<{ date?: string }>;
@@ -21,8 +22,6 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
   }
 
   const { date } = await searchParams;
-  const today = toLocalDateKey();
-  const dateStr = isValidDateKey(date) ? date : today;
 
   const user = await prisma.user.findUnique({
     where: { id: session.user.id },
@@ -38,14 +37,19 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
       height: true,
       weight: true,
       age: true,
+      timezone: true,
     },
   });
+
+  const timeZone = resolveTimeZone(user?.timezone);
+  const today = toLocalDateKey(new Date(), timeZone);
+  const dateStr = isValidDateKey(date) ? date : today;
 
   if (user && !user.onboardingDone && (!user.height || !user.weight || !user.age)) {
     redirect("/onboarding");
   }
 
-  const { start: startDate, end: endDate } = localDayRange(dateStr);
+  const { start: startDate, end: endDate } = localDayRange(dateStr, timeZone);
 
   const meals = await prisma.meal.findMany({
     where: {
@@ -93,9 +97,7 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
   const totalProtein = allItems.reduce((sum, item) => sum + item.totalProtein, 0);
   const totalFat = allItems.reduce((sum, item) => sum + item.totalFat, 0);
   const totalCarbs = allItems.reduce((sum, item) => sum + item.totalCarbs, 0);
-  const totalSodium = allItems.some((item) => item.totalSodium != null)
-    ? allItems.reduce((sum, item) => sum + (item.totalSodium ?? 0), 0)
-    : null;
+  const sodium = summarizeSodium(allItems);
 
   const targets = {
     calories: user?.dailyTarget ?? 2000,
@@ -116,16 +118,17 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
         protein={{ current: totalProtein, target: targets.protein }}
         fat={{ current: totalFat, target: targets.fat }}
         carbs={{ current: totalCarbs, target: targets.carbs }}
-        sodium={
-          totalSodium != null
-            ? { current: totalSodium, target: targets.sodium }
-            : { current: 0, target: targets.sodium }
-        }
+        sodium={{
+          current: sodium.totalMg,
+          target: targets.sodium,
+          partial: sodium.partial,
+        }}
       />
 
       <DayExtras
         dateKey={dateStr}
-        sodiumCurrent={totalSodium}
+        sodiumCurrent={sodium.totalMg}
+        sodiumPartial={sodium.partial}
         sodiumTarget={targets.sodium}
         healthConditions={user?.healthConditions ?? ""}
         caloriesIn={totalCalories}

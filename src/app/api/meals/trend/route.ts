@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
-import { addDaysToKey, localDayRange, toLocalDateKey } from "@/lib/dates";
+import { addDaysToKey, localDayRange, resolveTimeZone, toLocalDateKey } from "@/lib/dates";
+import { energyBalance } from "@/lib/calories";
+import { sumExerciseByDate } from "@/lib/exercise";
 import { unauthorized } from "@/lib/apiErrors";
 
 export async function GET(request: NextRequest) {
@@ -12,12 +14,18 @@ export async function GET(request: NextRequest) {
   const range = searchParams.get("range") === "month" ? "month" : "week";
   const days = range === "month" ? 30 : 7;
 
-  const today = toLocalDateKey();
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { bmr: true, timezone: true, dailyTarget: true },
+  });
+  const timeZone = resolveTimeZone(user?.timezone);
+  const today = toLocalDateKey(new Date(), timeZone);
   const startKey = addDaysToKey(today, -(days - 1));
-  const { start } = localDayRange(startKey);
-  const { end } = localDayRange(today);
+  const { start } = localDayRange(startKey, timeZone);
+  const { end } = localDayRange(today, timeZone);
+  const target = user?.dailyTarget ?? 2000;
 
-  const [meals, exerciseLogs, bmrLogs, user] = await Promise.all([
+  const [meals, exerciseLogs, bmrLogs] = await Promise.all([
     prisma.meal.findMany({
       where: {
         userId: session.user.id,
@@ -39,12 +47,11 @@ export async function GET(request: NextRequest) {
       orderBy: { date: "asc" },
       select: { date: true, bmr: true },
     }),
-    prisma.user.findUnique({ where: { id: session.user.id }, select: { bmr: true } }),
   ]);
 
   const byDate = new Map<string, { calories: number; protein: number; fat: number; carbs: number }>();
   for (const meal of meals) {
-    const key = toLocalDateKey(meal.date);
+    const key = toLocalDateKey(meal.date, timeZone);
     const bucket = byDate.get(key) ?? { calories: 0, protein: 0, fat: 0, carbs: 0 };
     for (const item of meal.items) {
       bucket.calories += item.totalCalories;
@@ -55,7 +62,7 @@ export async function GET(request: NextRequest) {
     byDate.set(key, bucket);
   }
 
-  const exerciseByDate = new Map(exerciseLogs.map((log) => [log.date, log.calories]));
+  const exerciseByDate = sumExerciseByDate(exerciseLogs);
 
   let bmrLogIdx = 0;
   let carriedBmr = user?.bmr ? Math.round(user.bmr) : 0;
@@ -67,7 +74,16 @@ export async function GET(request: NextRequest) {
       carriedBmr = bmrLogs[bmrLogIdx].bmr;
       bmrLogIdx++;
     }
-    return { date: key, ...bucket, exercise: exerciseByDate.get(key) ?? 0, bmr: carriedBmr };
+    const exercise = exerciseByDate.get(key) ?? 0;
+    return {
+      date: key,
+      ...bucket,
+      exercise,
+      bmr: carriedBmr,
+      expenditure: carriedBmr + exercise,
+      balance: energyBalance(bucket.calories, carriedBmr, exercise),
+      target,
+    };
   });
 
   return NextResponse.json(series);

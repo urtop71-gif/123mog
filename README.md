@@ -41,7 +41,7 @@ Open http://localhost:3000
 ## Features
 
 - Meal logging (breakfast / lunch / dinner / snack) with serving units
-- Shared food DB + **private custom foods** per user
+- Shared food DB + custom foods (visible to every signed-in user; only the owner can edit or delete them)
 - Favorites, recent foods, copy yesterday’s meal
 - BMR/TDEE targets, manual target override, health conditions
 - Sodium / LDL / blood-sugar **estimate tags** (not medical advice)
@@ -60,7 +60,8 @@ prisma/            # schema, seed, imports
 
 ## Notes
 
-- Dates are handled as **local yyyy-MM-dd** keys (see `src/lib/dates.ts`) to avoid UTC day shifts.
+- Dates are **yyyy-MM-dd keys in the user's timezone** (`User.timezone`, default `Asia/Seoul`). Server code must pass that zone into `src/lib/dates.ts`. The runtime zone on Vercel is UTC, so "today" is never taken from the server clock alone.
+- `npm run db:seed` only inserts missing global foods. It does not delete meals or custom foods. A remote `DATABASE_URL` (Turso / `libsql://`) is refused unless `SEED_ALLOW_REMOTE=1`.
 - In-memory rate limiting is for single-instance deploys only.
 - SQLite is fine for personal/local use; swap `DATABASE_URL` / adapter for production multi-user.
 - Health tags for fat/carbs/sodium are heuristics — UI shows a disclaimer.

@@ -3618,21 +3618,23 @@ const foods = [
 ];
 
 async function main() {
-  console.log("Seeding 361 foods from MFDS DB...")
-
-  await prisma.mealItem.deleteMany()
-  await prisma.meal.deleteMany()
-  await prisma.foodServing.deleteMany()
-  await prisma.food.deleteMany()
-
+  // This file is pinned to the local sqlite file. It only inserts catalog
+  // foods that are missing — it does not delete meals or existing foods.
+  console.log("Seeding missing foods from MFDS DB (non-destructive)...")
+  let created = 0
   for (const f of foods) {
+    const existing = await prisma.food.findFirst({
+      where: { name: f.name, userId: null, isCustom: false },
+      select: { id: true },
+    })
+    if (existing) continue
     const { servings, ...foodData } = f
     await prisma.food.create({
-      data: { ...foodData, servings: { create: servings } },
+      data: { ...foodData, userId: null, isCustom: false, servings: { create: servings } },
     })
+    created += 1
   }
-
-  console.log("Done! 361 foods seeded from 식약처 DB.")
+  console.log(`Done. Created ${created} foods, left existing rows and meals untouched.`)
 }
 
 main()

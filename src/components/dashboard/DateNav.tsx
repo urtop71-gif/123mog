@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useT } from "@/lib/LangContext";
-import { addDaysToKey, toLocalDateKey } from "@/lib/dates";
+import { addDaysToKey } from "@/lib/dates";
 
 interface DateNavProps {
   initialDate: string;
@@ -14,7 +14,8 @@ export default function DateNav({ initialDate }: DateNavProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dateStr = searchParams.get("date") || initialDate;
-  const today = toLocalDateKey();
+  // initialDate is "today" in the user's stored timezone, computed on the server.
+  const today = initialDate;
   const isToday = dateStr === today;
 
   const goToDate = (days: number) => {
@@ -59,6 +60,8 @@ export default function DateNav({ initialDate }: DateNavProps) {
             {t.dashboard.today}
           </button>
         )}
+        {/* File download, not an App Router page. */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a
           href="/api/meals/export"
           className="px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"

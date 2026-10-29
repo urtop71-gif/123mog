@@ -1,5 +1,6 @@
 // USDA FoodData Central fetcher
 // Uses USDA demo API key - limited to 30 requests/hour
+/* eslint-disable @typescript-eslint/no-require-imports */
 const https = require('https');
 const API_KEY = 'DEMO_KEY';
 

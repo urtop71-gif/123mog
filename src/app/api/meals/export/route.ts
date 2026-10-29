@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { toLocalDateKey } from "@/lib/dates";
+import { timeZoneForUser } from "@/lib/userTime";
 import { unauthorized } from "@/lib/apiErrors";
 
 function csvEscape(value: string | number): string {
@@ -16,6 +17,7 @@ export async function GET() {
   const session = await auth();
   if (!session?.user?.id) return unauthorized();
 
+  const timeZone = await timeZoneForUser(session.user.id);
   const meals = await prisma.meal.findMany({
     where: { userId: session.user.id },
     include: { items: { include: { food: { select: { name: true } } } } },
@@ -36,7 +38,7 @@ export async function GET() {
   ];
   const rows = meals.flatMap((meal) =>
     meal.items.map((item) => [
-      toLocalDateKey(meal.date),
+      toLocalDateKey(meal.date, timeZone),
       meal.mealType,
       item.food.name,
       item.quantity,

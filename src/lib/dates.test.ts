@@ -5,11 +5,13 @@ import {
   localDayRange,
   addDaysToKey,
   isValidDateKey,
+  resolveTimeZone,
+  DEFAULT_TIMEZONE,
 } from "@/lib/dates";
 
 describe("dates", () => {
   it("formats local date keys", () => {
-    const d = new Date(2026, 6, 9, 15, 30); // month is 0-indexed
+    const d = new Date(2026, 6, 9, 15, 30);
     expect(toLocalDateKey(d)).toBe("2026-07-09");
   });
 
@@ -37,6 +39,39 @@ describe("dates", () => {
   it("validates date keys", () => {
     expect(isValidDateKey("2026-07-09")).toBe(true);
     expect(isValidDateKey("not-a-date")).toBe(false);
+    expect(isValidDateKey("2026-02-31")).toBe(false);
     expect(isValidDateKey(null)).toBe(false);
+  });
+
+  it("uses the user timezone for today, not UTC", () => {
+    // 2026-10-29 00:30 in Seoul is still 2026-10-28 in UTC.
+    const instant = new Date(Date.UTC(2026, 9, 28, 15, 30, 0));
+    expect(toLocalDateKey(instant, "UTC")).toBe("2026-10-28");
+    expect(toLocalDateKey(instant, "Asia/Seoul")).toBe("2026-10-29");
+  });
+
+  it("stores noon and day bounds in the user timezone", () => {
+    const noon = parseLocalDateKey("2026-10-29", "Asia/Seoul");
+    expect(noon.toISOString()).toBe("2026-10-29T03:00:00.000Z");
+
+    const { start, end } = localDayRange("2026-10-29", "Asia/Seoul");
+    expect(start.toISOString()).toBe("2026-10-28T15:00:00.000Z");
+    expect(end.toISOString()).toBe("2026-10-29T14:59:59.999Z");
+    expect(start.getTime() <= noon.getTime() && noon.getTime() <= end.getTime()).toBe(true);
+  });
+
+  it("keeps a UTC-noon meal inside the same Seoul calendar day", () => {
+    // Historical rows were stored as noon in the server zone (UTC on Vercel).
+    const stored = new Date(Date.UTC(2026, 9, 29, 12, 0, 0));
+    expect(toLocalDateKey(stored, "Asia/Seoul")).toBe("2026-10-29");
+    const { start, end } = localDayRange("2026-10-29", "Asia/Seoul");
+    expect(stored.getTime()).toBeGreaterThanOrEqual(start.getTime());
+    expect(stored.getTime()).toBeLessThanOrEqual(end.getTime());
+  });
+
+  it("defaults an empty timezone to Asia/Seoul", () => {
+    expect(resolveTimeZone(null)).toBe(DEFAULT_TIMEZONE);
+    expect(resolveTimeZone("Not/AZone")).toBe(DEFAULT_TIMEZONE);
+    expect(resolveTimeZone("Asia/Tokyo")).toBe("Asia/Tokyo");
   });
 });

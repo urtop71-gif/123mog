@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { bmrLogSchema } from "@/lib/validation";
 import { toLocalDateKey } from "@/lib/dates";
+import { timeZoneForUser } from "@/lib/userTime";
 import { unauthorized } from "@/lib/apiErrors";
 
 export async function GET(request: NextRequest) {
@@ -32,7 +33,8 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
   }
 
-  const date = parsed.data.date || toLocalDateKey();
+  const timeZone = await timeZoneForUser(session.user.id);
+  const date = parsed.data.date || toLocalDateKey(new Date(), timeZone);
   const log = await prisma.bmrLog.upsert({
     where: { userId_date: { userId: session.user.id, date } },
     create: { userId: session.user.id, date, bmr: parsed.data.bmr },

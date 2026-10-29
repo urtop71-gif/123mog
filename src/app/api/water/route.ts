@@ -3,13 +3,15 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { waterLogSchema } from "@/lib/validation";
 import { toLocalDateKey } from "@/lib/dates";
+import { timeZoneForUser } from "@/lib/userTime";
 import { unauthorized } from "@/lib/apiErrors";
 
 export async function GET(request: NextRequest) {
   const session = await auth();
   if (!session?.user?.id) return unauthorized();
 
-  const date = new URL(request.url).searchParams.get("date") || toLocalDateKey();
+  const timeZone = await timeZoneForUser(session.user.id);
+  const date = new URL(request.url).searchParams.get("date") || toLocalDateKey(new Date(), timeZone);
   const log = await prisma.waterLog.findUnique({
     where: { userId_date: { userId: session.user.id, date } },
   });
@@ -34,7 +36,8 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
   }
 
-  const date = parsed.data.date || toLocalDateKey();
+  const timeZone = await timeZoneForUser(session.user.id);
+  const date = parsed.data.date || toLocalDateKey(new Date(), timeZone);
   const existing = await prisma.waterLog.findUnique({
     where: { userId_date: { userId: session.user.id, date } },
   });

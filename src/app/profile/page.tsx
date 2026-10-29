@@ -23,6 +23,7 @@ interface Profile {
   sodiumTarget?: number;
   targetsManual?: boolean;
   waterTargetMl?: number;
+  timezone?: string;
 }
 
 export default function ProfilePage() {
@@ -98,6 +99,20 @@ export default function ProfilePage() {
             onChange={(e) => setProfile({ ...profile, name: e.target.value })}
             className="input-field"
           />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            {t.profile.timezone}
+          </label>
+          <input
+            type="text"
+            value={profile.timezone || ""}
+            onChange={(e) => setProfile({ ...profile, timezone: e.target.value })}
+            className="input-field"
+            placeholder="Asia/Seoul"
+            spellCheck={false}
+          />
+          <p className="text-xs text-gray-400 mt-1">{t.profile.timezoneHint}</p>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
@@ -260,6 +275,8 @@ export default function ProfilePage() {
               {t.profile.targets}
             </h3>
             {!profile.targetsManual ? (
+              <div className="space-y-2">
+              <p className="text-[11px] text-gray-400">{t.profile.autoCalorieFloorNote}</p>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div>
                   <span className="text-gray-500">{t.profile.bmr}:</span>{" "}
@@ -293,6 +310,7 @@ export default function ProfilePage() {
                     <span className="font-medium">{Math.round(profile.sodiumTarget)}mg</span>
                   </div>
                 )}
+              </div>
               </div>
             ) : (
               <div className="grid grid-cols-2 gap-2">
@@ -428,9 +446,7 @@ function ChangePasswordForm() {
     setSaving(false);
     if (res.ok) {
       toast(t.profile.passwordChanged);
-      setCurrentPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
+      await signOut({ callbackUrl: "/login" });
     } else {
       const data = await res.json();
       toast(
@@ -445,6 +461,7 @@ function ChangePasswordForm() {
   return (
     <form onSubmit={handleSubmit} className="card p-6 space-y-4 mt-6">
       <h2 className="font-semibold text-gray-900 dark:text-gray-100">{t.profile.changePassword}</h2>
+      <p className="text-xs text-gray-400">{t.profile.passwordRevokesSessions}</p>
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           {t.profile.currentPassword}
@@ -500,6 +517,7 @@ function HealthSyncSection() {
   const [origin, setOrigin] = useState("");
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- origin is read after mount to avoid a hydration mismatch
     setOrigin(window.location.origin);
     fetch("/api/user/health-token")
       .then((r) => r.json())
