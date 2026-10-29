@@ -108,6 +108,67 @@ export const profileUpdateSchema = z.object({
 
 export const foodUpdateSchema = foodCreateSchema;
 
+export const mealCopySchema = z.object({
+  fromDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  toDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  mealType: z.enum(MEAL_TYPES).optional(),
+});
+
+export const mealSetCreateSchema = z
+  .object({
+    name: z.string().trim().min(1).max(40),
+    mealType: z.enum(MEAL_TYPES).optional().nullable(),
+    mealId: z.string().min(1).optional(),
+    items: z.array(mealItemSchema).min(1).max(30).optional(),
+  })
+  .refine((value) => !!value.mealId || (value.items && value.items.length > 0), {
+    message: "mealId or items is required",
+  });
+
+export const mealSetLogSchema = z.object({
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  mealType: z.enum(MEAL_TYPES).optional(),
+});
+
+export const aiEstimateSchema = z.object({
+  name: z.string().trim().min(1).max(100),
+  calories: z.number().min(0).max(5000),
+  protein: z.number().min(0).max(500).optional().nullable(),
+  fat: z.number().min(0).max(500).optional().nullable(),
+  carbs: z.number().min(0).max(500).optional().nullable(),
+  sodium: z.number().min(0).max(20000).optional().nullable(),
+});
+
+export const aiMealSaveSchema = z.object({
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().nullable(),
+  mealType: z.enum(MEAL_TYPES),
+  items: z
+    .array(
+      z
+        .object({
+          foodId: z.string().min(1).optional(),
+          quantity: z.number().positive().finite(),
+          unitName: z.string().min(1).max(30),
+          estimate: aiEstimateSchema.optional(),
+        })
+        .refine((item) => !!item.foodId || !!item.estimate, {
+          message: "foodId or estimate is required",
+        }),
+    )
+    .min(1)
+    .max(12),
+});
+
+export const aiParseSchema = z
+  .object({
+    text: z.string().trim().max(500).optional(),
+    imageBase64: z.string().max(12_000_000).optional(),
+    mimeType: z.string().max(40).optional(),
+  })
+  .refine((value) => !!value.text?.trim() || !!value.imageBase64, {
+    message: "text or image is required",
+  });
+
 export const weightLogSchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
   weight: z.number().min(20).max(500),

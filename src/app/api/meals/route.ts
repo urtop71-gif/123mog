@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
       date: { gte: start, lte: end },
     },
     include: {
-      items: { include: { food: { select: { name: true, nameEn: true, healthTags: true } } } },
+      items: { include: { food: { select: { name: true, nameEn: true, healthTags: true, isAiEstimate: true } } } },
     },
     orderBy: { createdAt: "asc" },
   });
@@ -51,6 +51,7 @@ export async function GET(request: NextRequest) {
       foodId: item.foodId,
       foodName: item.food.name,
       foodNameEn: item.food.nameEn,
+      isAiEstimate: item.food.isAiEstimate,
       healthTags: augmentHealthTags(item.food.healthTags, {
         carbsPer100g: item.totalGrams > 0 ? (item.totalCarbs / item.totalGrams) * 100 : null,
         fatPer100g: item.totalGrams > 0 ? (item.totalFat / item.totalGrams) * 100 : null,

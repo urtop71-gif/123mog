@@ -9,6 +9,7 @@ import { HealthTagBadges } from "@/components/HealthTagBadges";
 import { addDaysToKey, toLocalDateKey } from "@/lib/dates";
 import { foodDisplayName } from "@/lib/foodLabel";
 import { defaultServing, defaultUnitName } from "@/lib/servings";
+import AiMealInput from "@/components/meals/AiMealInput";
 
 interface FoodItem {
   id: string;
@@ -45,6 +46,7 @@ interface MealHistoryItem {
   quantity: number;
   unitName: string;
   totalCalories: number;
+  isAiEstimate?: boolean;
 }
 
 interface MealHistoryEntry {
@@ -84,6 +86,10 @@ function MealsPageInner() {
   const [showCustomFoodForm, setShowCustomFoodForm] = useState(false);
   const [editingFood, setEditingFood] = useState<FoodItem | null>(null);
   const [myFoods, setMyFoods] = useState<FoodItem[]>([]);
+  const [mealSets, setMealSets] = useState<
+    { id: string; name: string; mealType: string | null; items: { foodName: string; quantity: number; unitName: string }[] }[]
+  >([]);
+  const [copyFrom, setCopyFrom] = useState("");
 
   const foodLabel = (food: Pick<FoodItem, "name" | "nameEn">) =>
     foodDisplayName({ name: food.name, nameEn: food.nameEn }, lang);
@@ -125,6 +131,8 @@ function MealsPageInner() {
       if (rRes.ok) setRecent(await rRes.json());
       const mineRes = await fetch("/api/foods?mine=1");
       if (mineRes.ok) setMyFoods(await mineRes.json());
+      const setRes = await fetch("/api/meal-sets");
+      if (setRes.ok) setMealSets(await setRes.json());
     })();
   }, []);
 
@@ -231,6 +239,84 @@ function MealsPageInner() {
     }
   };
 
+  const reloadSets = async () => {
+    const res = await fetch("/api/meal-sets");
+    if (res.ok) setMealSets(await res.json());
+  };
+
+  useEffect(() => {
+    const handler = () => {
+      reloadSets();
+    };
+    window.addEventListener("meal-sets-updated", handler);
+    return () => window.removeEventListener("meal-sets-updated", handler);
+  }, []);
+
+  const quickAdd = (food: FoodItem) => {
+    const unit = defaultUnitName(food.servings);
+    setCart((prev) => [
+      ...prev,
+      {
+        foodId: food.id,
+        foodName: food.name,
+        foodNameEn: food.nameEn ?? null,
+        quantity: 1,
+        unitName: unit,
+        estCalories: estimateCalories(food, 1, unit),
+      },
+    ]);
+    toast(t.meals.added);
+  };
+
+  const updateCartQty = (index: number, quantity: number) => {
+    if (!(quantity > 0)) return;
+    setCart((prev) =>
+      prev.map((item, i) => {
+        if (i !== index || !(item.quantity > 0)) return item;
+        const per = (item.estCalories ?? 0) / item.quantity;
+        return { ...item, quantity, estCalories: Math.round(per * quantity) };
+      }),
+    );
+  };
+
+  const copyMeals = async (fromDate: string, wholeDay: boolean) => {
+    const res = await fetch("/api/meals/copy", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fromDate,
+        toDate: dateKey,
+        ...(wholeDay ? {} : { mealType }),
+      }),
+    });
+    if (res.status === 404) {
+      toast(t.meals.nothingToCopy, "info");
+      return;
+    }
+    if (!res.ok) {
+      toast(t.common.error, "error");
+      return;
+    }
+    toast(t.meals.copiedDay);
+    window.dispatchEvent(new Event("meals-updated"));
+    router.refresh();
+  };
+
+  const logSet = async (id: string) => {
+    const res = await fetch(`/api/meal-sets/${id}/log`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ date: dateKey, mealType }),
+    });
+    if (!res.ok) {
+      toast(t.common.error, "error");
+      return;
+    }
+    toast(t.meals.recorded);
+    window.dispatchEvent(new Event("meals-updated"));
+    router.refresh();
+  };
+
   const deleteOwnedFood = async (food: FoodItem) => {
     if (!confirm(t.meals.confirmDeleteFood)) return;
     const res = await fetch(`/api/foods/${food.id}`, { method: "DELETE" });
@@ -249,9 +335,8 @@ function MealsPageInner() {
     loadMine();
   };
 
-  const copyYesterday = async () => {
-    const y = addDaysToKey(dateKey, -1);
-    const res = await fetch(`/api/meals?date=${y}`);
+  const copyMealIntoCart = async (fromDate: string) => {
+    const res = await fetch(`/api/meals?date=${fromDate}`);
     if (!res.ok) return;
     const meals: MealHistoryEntry[] = await res.json();
     const match = meals.find((m) => m.mealType === mealType);
@@ -271,6 +356,8 @@ function MealsPageInner() {
     );
     toast(t.meals.copied);
   };
+
+  const copyYesterday = () => copyMealIntoCart(addDaysToKey(dateKey, -1));
 
   const mealLabel = (mt: string) => {
     const map: Record<string, string> = {
@@ -303,13 +390,22 @@ function MealsPageInner() {
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             {t.meals.mealType}
           </label>
-          <button
-            type="button"
-            onClick={copyYesterday}
-            className="text-xs font-medium text-emerald-600 hover:underline"
-          >
-            {t.meals.copyYesterday}
-          </button>
+          <div className="flex flex-col items-end gap-1">
+            <button
+              type="button"
+              onClick={copyYesterday}
+              className="text-xs font-medium text-emerald-600 hover:underline min-h-11"
+            >
+              {t.meals.copyYesterday}
+            </button>
+            <button
+              type="button"
+              onClick={() => copyMeals(addDaysToKey(dateKey, -1), true)}
+              className="text-xs font-medium text-emerald-600 hover:underline min-h-11"
+            >
+              {t.meals.copyDay}
+            </button>
+          </div>
         </div>
         <div className="grid grid-cols-4 gap-2">
           {MEAL_TYPES.map((mt) => (
@@ -325,6 +421,119 @@ function MealsPageInner() {
               {mealLabel(mt)}
             </button>
           ))}
+        </div>
+      </div>
+
+      <AiMealInput
+        dateKey={dateKey}
+        mealType={mealType}
+        onSaved={() => {
+          window.dispatchEvent(new Event("meals-updated"));
+          router.refresh();
+          reloadSets();
+        }}
+      />
+
+      {(favorites.length > 0 || recent.length > 0) && (
+        <div className="card p-4 mb-4 space-y-3">
+          <p className="text-[11px] text-gray-400">{t.meals.quickHint}</p>
+          {favorites.length > 0 && (
+            <div>
+              <h3 className="text-sm font-semibold mb-2">{t.meals.favorites}</h3>
+              <div className="flex flex-wrap gap-2">
+                {favorites.map((food) => (
+                  <button
+                    key={food.id}
+                    type="button"
+                    onClick={() => quickAdd(food)}
+                    className="min-h-11 px-3 py-2 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-100 text-sm text-left"
+                  >
+                    {foodLabel(food)}
+                    <span className="block text-[10px] opacity-70">1 {defaultUnitName(food.servings)}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          {recent.length > 0 && (
+            <div>
+              <h3 className="text-sm font-semibold mb-2">{t.meals.recent}</h3>
+              <div className="flex flex-wrap gap-2">
+                {recent.slice(0, 8).map((food) => (
+                  <button
+                    key={food.id}
+                    type="button"
+                    onClick={() => quickAdd(food)}
+                    className="min-h-11 px-3 py-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-sm text-left"
+                  >
+                    {foodLabel(food)}
+                    <span className="block text-[10px] opacity-70">1 {defaultUnitName(food.servings)}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {mealSets.length > 0 && (
+        <div className="card p-4 mb-4 space-y-2">
+          <h3 className="text-sm font-semibold">{t.meals.mealSets}</h3>
+          {mealSets.map((set) => (
+            <div key={set.id} className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => logSet(set.id)}
+                className="flex-1 min-h-11 text-left px-3 py-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/40"
+              >
+                <span className="font-medium text-sm">{set.name}</span>
+                <span className="block text-[11px] text-gray-500 truncate">
+                  {set.items.map((item) => `${item.foodName} ${item.quantity}${item.unitName}`).join(", ")}
+                </span>
+              </button>
+              <button
+                type="button"
+                className="text-xs text-red-500 min-h-11 px-2"
+                onClick={async () => {
+                  await fetch(`/api/meal-sets/${set.id}`, { method: "DELETE" });
+                  reloadSets();
+                }}
+              >
+                {t.meals.deleteSet}
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div className="card p-4 mb-4 space-y-2">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300" htmlFor="copy-from">
+          {t.meals.copyFromDate}
+        </label>
+        <input
+          id="copy-from"
+          type="date"
+          value={copyFrom}
+          onChange={(e) => setCopyFrom(e.target.value)}
+          className="input-field"
+        />
+        <div className="flex gap-2">
+          <button
+            type="button"
+            disabled={!copyFrom}
+            onClick={() => copyFrom && copyMealIntoCart(copyFrom)}
+            className="flex-1 min-h-11 text-sm rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-40"
+          >
+            {t.meals.copyFromMeal}
+          </button>
+          <button
+            type="button"
+            disabled={!copyFrom}
+            onClick={() => copyFrom && copyMeals(copyFrom, true)}
+            className="flex-1 min-h-11 text-sm rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-40"
+          >
+            {t.meals.copyFromDay}
+          </button>
         </div>
       </div>
 
@@ -357,51 +566,6 @@ function MealsPageInner() {
               </li>
             ))}
           </ul>
-        </div>
-      )}
-
-      {(favorites.length > 0 || recent.length > 0) && !selectedFood && !searchQuery && (
-        <div className="card p-4 mb-4 space-y-3">
-          {favorites.length > 0 && (
-            <div>
-              <h3 className="text-sm font-semibold mb-2">
-                {t.meals.favorites} ({favorites.length})
-              </h3>
-              <select
-                value=""
-                onChange={(e) => {
-                  const food = favorites.find((f) => f.id === e.target.value);
-                  if (food) selectFood(food);
-                }}
-                className="input-field"
-              >
-                <option value="" disabled>
-                  {t.meals.favorites}
-                </option>
-                {favorites.map((f) => (
-                  <option key={f.id} value={f.id}>
-                    {foodLabel(f)}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-          {recent.length > 0 && (
-            <div>
-              <h3 className="text-sm font-semibold mb-2">{t.meals.recent}</h3>
-              <div className="flex flex-wrap gap-2">
-                {recent.slice(0, 8).map((f) => (
-                  <button
-                    key={f.id}
-                    onClick={() => selectFood(f)}
-                    className="text-xs px-2.5 py-1.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
-                  >
-                    {foodLabel(f)}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       )}
 
@@ -608,8 +772,16 @@ function MealsPageInner() {
                 >
                   <span className="text-gray-700 dark:text-gray-300">{cartLabel(item)}</span>
                   <div className="flex items-center gap-2">
+                    <input
+                      type="number"
+                      min={0.1}
+                      step={0.5}
+                      value={item.quantity}
+                      onChange={(e) => updateCartQty(i, parseFloat(e.target.value) || 0)}
+                      className="input-field w-16 py-1"
+                      aria-label={t.meals.quickQty}
+                    />
                     <span className="text-gray-400 dark:text-gray-500">
-                      {item.quantity}
                       {item.unitName}
                       {item.estCalories != null && ` · ${item.estCalories}kcal`}
                     </span>
@@ -757,6 +929,7 @@ function MealHistory({
                       <span>
                         {historyFoodLabel(item)} {item.quantity}
                         {item.unitName}
+                        {item.isAiEstimate ? ` · ${t.meals.aiEstimateBadge}` : ""}
                       </span>
                       <HealthTagBadges tags={item.healthTags} size="xs" />
                       <button
@@ -771,7 +944,27 @@ function MealHistory({
                   ))}
                 </div>
               </div>
-              <div className="flex gap-1 shrink-0">
+              <div className="flex flex-col gap-1 shrink-0">
+                <button
+                  onClick={async () => {
+                    const name = window.prompt(t.meals.setName, mealLabel(meal.mealType));
+                    if (!name?.trim()) return;
+                    const res = await fetch("/api/meal-sets", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ name: name.trim(), mealId: meal.id }),
+                    });
+                    if (!res.ok) {
+                      toast(t.common.error, "error");
+                      return;
+                    }
+                    toast(t.meals.setSaved);
+                    window.dispatchEvent(new Event("meal-sets-updated"));
+                  }}
+                  className="px-3 py-2 text-xs bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-100 rounded min-h-11"
+                >
+                  {t.meals.saveSet}
+                </button>
                 <button
                   onClick={() => onEdit(meal)}
                   className="px-3 py-2 text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded hover:bg-blue-200"

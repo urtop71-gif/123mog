@@ -58,6 +58,17 @@ src/lib/           # auth, prisma, validation, i18n, dates, healthTags
 prisma/            # schema, seed, imports
 ```
 
+## Gemini quick input (optional)
+
+The meal screen can turn a spoken or typed line (and an optional photo) into foods. The browser compresses the photo, then the server compresses it again and asks Gemini only for names, amounts, and a rough calorie fallback. Matching against the food database happens in the app. Nothing is saved until you confirm the list.
+
+1. Create a free key at [Google AI Studio](https://aistudio.google.com/apikey).
+2. In the Vercel project, set `GEMINI_API_KEY` (Production, and Preview if you want it there).
+3. Optional: `GEMINI_MODEL`. The default is `gemini-3.5-flash-lite`, which is on the Gemini API free tier. `gemini-3.8-flash` is also on the free tier if you want a larger model.
+4. Redeploy. If the key is missing, the box is hidden and the rest of the app works.
+
+On the free tier, Google may use what you submit (text and photos) to improve its products. Do not send anything you need to keep private. Estimates are not medical advice.
+
 ## Notes
 
 - Dates are **yyyy-MM-dd keys in the user's timezone** (`User.timezone`, default `Asia/Singapore`). Server code must pass that zone into `src/lib/dates.ts`. The runtime zone on Vercel is UTC, so "today" is never taken from the server clock alone.
